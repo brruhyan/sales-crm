@@ -9,10 +9,11 @@ class Leads extends Model
 {   
     protected $fillable = [
         'name',
-        'company',
         'email',
         'phone',
-        'lead_by',
+        'company',
+        'source',
+        'status',
     ];
     
     use SoftDeletes;

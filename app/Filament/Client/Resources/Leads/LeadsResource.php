@@ -11,6 +11,7 @@ use App\Filament\Client\Resources\Leads\Schemas\LeadsInfolist;
 use App\Filament\Client\Resources\Leads\Tables\LeadsTable;
 use App\Models\Leads;
 use BackedEnum;
+use UnitEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -22,7 +23,9 @@ class LeadsResource extends Resource
 {
     protected static ?string $model = Leads::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::Phone;
+
+    public static string|UnitEnum|null $navigationGroup = 'Sales';
 
     protected static ?string $recordTitleAttribute = 'Leads';
 
