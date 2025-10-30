@@ -15,12 +15,19 @@ class LeadsForm
             ->components([
                 Section::make('Lead Details')
                     ->description('Lead and Company Information')
-                    ->columns(2)
+                    ->columns(6)
+                    ->columnSpanFull()
                     ->schema([
-                        TextInput::make('name')->label('Name'),
-                        TextInput::make('email')->label('Email'),
-                        TextInput::make('company')->label('Company'),
-                        TextInput::make('phone')->label('Phone'),
+                        TextInput::make('name')
+                            ->label('Name')
+                            ->columnSpan(2),
+                        TextInput::make('email')
+                            ->label('Email')
+                            ->columnSpan(2),
+                        TextInput::make('company')
+                            ->label('Company'),
+                        TextInput::make('phone')
+                            ->label('Phone'),
                     ]),
                 Section::make('Lead Status')
                     ->description('Source and Status')
