@@ -15,6 +15,7 @@ class LeadsInfolist
         return $schema
             ->components([
                 Section::make('Lead Details')
+                    ->description('Lead and Company Information')
                     ->columns(3)
                     ->schema([
                         TextEntry::make('status')
@@ -33,6 +34,7 @@ class LeadsInfolist
                                 'Referral' => 'info',
                                 'Social Media' => 'success',
                                 'Other' => 'gray',
+                                default => 'gray',
                             }),
                         
                         TextEntry::make('company')
@@ -40,13 +42,30 @@ class LeadsInfolist
                             ->color('gray'),
                     ]),
                 
-                // Section for Contact Details
                 Section::make('Contact Details')
+                    ->description('Information about the lead\'s contact person')
                     ->columns(3)
                     ->schema([
                         TextEntry::make('name')->label('Name'),
                         TextEntry::make('email')->label('Email'),
                         TextEntry::make('phone')->label('Phone'),
+                    ]),
+                
+                Section::make('Timestamps')
+                    ->description('Information about lead creation and updates')
+                    ->columns(6)
+                    ->columnSpanFull() 
+                    ->schema([
+                        TextEntry::make('created_at')
+                            ->label('Created At')
+                            ->dateTime()
+                            ->placeholder('-')
+                            ->columnSpan(2),
+                        TextEntry::make('updated_at')
+                            ->label('Updated At')
+                            ->dateTime()
+                            ->placeholder('Pending')
+                            ->columnSpan(2),
                     ]),
             ]);
     }
