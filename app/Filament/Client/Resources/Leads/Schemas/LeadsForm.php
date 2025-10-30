@@ -11,10 +11,18 @@ class LeadsForm
     {
         return $schema
             ->components([
-                TextInput::make('name')->label('Name')->required(),
-                TextInput::make('company')->label('Company')->required(),
-                TextInput::make('email')->label('Email')->required(),
-                TextInput::make('phone')->label('Phone')->required(),
+                TextInput::make('name')
+                    ->label('Name')
+                    ->required(),
+                TextInput::make('company')
+                    ->label('Company')
+                    ->required(),
+                TextInput::make('email')
+                    ->label('Email')
+                    ->required(),
+                TextInput::make('phone')
+                    ->label('Phone')
+                    ->required(),
             ]);
     }
 }
