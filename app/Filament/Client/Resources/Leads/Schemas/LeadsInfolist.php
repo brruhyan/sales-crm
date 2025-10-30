@@ -3,7 +3,7 @@
 namespace App\Filament\Client\Resources\Leads\Schemas;
 
 use Filament\Schemas\Schema;
-use Filament\Tables\Columns\TextColumn;
+use Filament\Infolists\Components\TextEntry;
 use App\Models\Leads;
 
 class LeadsInfolist
@@ -12,10 +12,11 @@ class LeadsInfolist
     {
         return $schema
             ->components([
-                TextColumn::make('name')->label('Name'),
-                TextColumn::make('email')->label('Email'),
-                TextColumn::make('phone')->label('Phone'),
-                TextColumn::make('lead_by')->label('Lead By'),
+                TextEntry::make('name')->label('Name'),
+                TextEntry::make('company')->label('Company'),
+                TextEntry::make('email')->label('Email'),
+                TextEntry::make('phone')->label('Phone'),
+                TextEntry::make('lead_by')->label('Lead By'),
             ]);
     }
 }
