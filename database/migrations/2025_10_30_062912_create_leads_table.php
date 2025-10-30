@@ -14,11 +14,12 @@ return new class extends Migration
         Schema::create('leads', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('name');
-            $table->string('company');
-            $table->string('email')->unique();
-            $table->string('phone');
-            // lead_by column removed
+            $table->string('name'); // Full name of the person or company contact
+            $table->string('email')->unique(); // Contact email address
+            $table->string('phone'); // Contact phone number
+            $table->string('company')->nullable(); // Organization they represent (if applicable)
+            $table->string('source')->nullable(); // How the lead found you
+            $table->string('status')->default('New'); // Stage of the lead
             $table->softDeletes();
         });
     }

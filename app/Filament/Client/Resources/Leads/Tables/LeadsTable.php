@@ -19,10 +19,11 @@ class LeadsTable
         return $table
             ->columns([
                 TextColumn::make('name')->label('Name'),
-                TextColumn::make('company')->label('Company'),
                 TextColumn::make('email')->label('Email'),
                 TextColumn::make('phone')->label('Phone'),
-                // lead_by column removed
+                TextColumn::make('company')->label('Company'),
+                TextColumn::make('source')->label('Source'),
+                TextColumn::make('status')->label('Status'),
             ])
             ->filters([
                 TrashedFilter::make(),

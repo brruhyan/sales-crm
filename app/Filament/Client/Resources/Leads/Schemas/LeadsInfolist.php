@@ -13,10 +13,11 @@ class LeadsInfolist
         return $schema
             ->components([
                 TextEntry::make('name')->label('Name'),
-                TextEntry::make('company')->label('Company'),
                 TextEntry::make('email')->label('Email'),
                 TextEntry::make('phone')->label('Phone'),
-                // lead_by entry removed
+                TextEntry::make('company')->label('Company'),
+                TextEntry::make('source')->label('Source'),
+                TextEntry::make('status')->label('Status'),
             ]);
     }
 }
