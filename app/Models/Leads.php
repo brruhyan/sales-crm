@@ -12,7 +12,6 @@ class Leads extends Model
         'company',
         'email',
         'phone',
-        'lead_by',
     ];
     
     use SoftDeletes;

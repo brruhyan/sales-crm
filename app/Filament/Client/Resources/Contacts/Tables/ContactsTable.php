@@ -32,8 +32,6 @@ class ContactsTable
                     ->searchable(),
                 TextColumn::make('phone')
                     ->searchable(),
-                TextColumn::make('lead_by')
-                    ->searchable(),
             ])
             ->filters([
                 //

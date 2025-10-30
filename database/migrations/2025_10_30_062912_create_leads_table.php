@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('company');
             $table->string('email')->unique();
             $table->string('phone');
-            $table->string('lead_by');
+            // lead_by column removed
             $table->softDeletes();
         });
     }

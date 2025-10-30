@@ -22,8 +22,7 @@ class ContactForm
                 TextInput::make('phone')
                     ->tel()
                     ->required(),
-                TextInput::make('lead_by')
-                    ->required(),
+                // lead_by input removed
             ]);
     }
 }

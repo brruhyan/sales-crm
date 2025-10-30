@@ -11,7 +11,6 @@ class CreateLeads extends CreateRecord
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
-        $data['lead_by'] = auth()->user()->name;
-        return $data;
+    return $data;
     }
 }

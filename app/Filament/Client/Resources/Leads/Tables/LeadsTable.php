@@ -22,7 +22,7 @@ class LeadsTable
                 TextColumn::make('company')->label('Company'),
                 TextColumn::make('email')->label('Email'),
                 TextColumn::make('phone')->label('Phone'),
-                TextColumn::make('lead_by')->label('Lead By'),
+                // lead_by column removed
             ])
             ->filters([
                 TrashedFilter::make(),

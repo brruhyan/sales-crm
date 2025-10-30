@@ -16,7 +16,7 @@ class LeadsInfolist
                 TextEntry::make('company')->label('Company'),
                 TextEntry::make('email')->label('Email'),
                 TextEntry::make('phone')->label('Phone'),
-                TextEntry::make('lead_by')->label('Lead By'),
+                // lead_by entry removed
             ]);
     }
 }

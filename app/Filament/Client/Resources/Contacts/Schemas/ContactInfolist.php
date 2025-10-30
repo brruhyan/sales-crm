@@ -22,7 +22,7 @@ class ContactInfolist
                 TextEntry::make('email')
                     ->label('Email address'),
                 TextEntry::make('phone'),
-                TextEntry::make('lead_by'),
+                // lead_by entry removed
             ]);
     }
 }
