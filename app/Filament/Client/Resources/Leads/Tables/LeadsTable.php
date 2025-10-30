@@ -10,6 +10,7 @@ use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
+use Filament\Tables\Columns\TextColumn;
 
 class LeadsTable
 {
@@ -17,7 +18,11 @@ class LeadsTable
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('name')->label('Name'),
+                TextColumn::make('company')->label('Company'),
+                TextColumn::make('email')->label('Email'),
+                TextColumn::make('phone')->label('Phone'),
+                TextColumn::make('lead_by')->label('Lead By'),
             ])
             ->filters([
                 TrashedFilter::make(),
