@@ -13,6 +13,9 @@ class ContactForm
             ->components([
                 TextInput::make('name')
                     ->required(),
+                TextInput::make('position')
+                    ->label('Position')
+                    ->required(),
                 TextInput::make('company')
                     ->required(),
                 TextInput::make('email')
@@ -22,7 +25,7 @@ class ContactForm
                 TextInput::make('phone')
                     ->tel()
                     ->required(),
-                // lead_by input removed
+
             ]);
     }
 }
