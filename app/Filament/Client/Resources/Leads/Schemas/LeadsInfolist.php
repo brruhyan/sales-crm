@@ -14,7 +14,7 @@ class LeadsInfolist
     {
         return $schema
             ->components([
-                // Top boxes for status, source, company
+                // Top boxes for status, source, company (symmetrical)
                 Section::make('Lead Details')
                     ->columns(3)
                     ->schema([
@@ -40,27 +40,8 @@ class LeadsInfolist
                             ->label('Company')
                             ->color('gray'),
                     ]),
-                // Lead Progress section
-                Section::make('Lead Progress')
-                    ->columns(3)
-                    ->schema([
-                        TextEntry::make('created_at')
-                            ->label('Created')
-                            ->dateTime()
-                            ->icon('heroicon-o-plus'),
-                        TextEntry::make('updated_at')
-                            ->label('Updated')
-                            ->dateTime()
-                            ->icon('heroicon-o-pencil'),
-                        TextEntry::make('deleted_at')
-                            ->label('Deleted')
-                            ->dateTime()
-                            ->icon('heroicon-o-trash')
-                            ->hidden(fn ($record) => !$record->deleted_at),
-                    ]),
-                // Other details
                 Section::make('Contact Details')
-                    ->columns(2)
+                    ->columns(3)
                     ->schema([
                         TextEntry::make('name')->label('Name'),
                         TextEntry::make('email')->label('Email'),
