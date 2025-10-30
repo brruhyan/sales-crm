@@ -22,6 +22,7 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 // Login Verification
 use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Filament\Client\Pages\Auth\RegisterClient;
 
 class ClientPanelProvider extends PanelProvider
 {
@@ -31,8 +32,9 @@ class ClientPanelProvider extends PanelProvider
             ->id('client')
             ->path('client')
             ->login()
+            ->registration(RegisterClient::class)
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::Emerald,
             ])
             ->discoverResources(in: app_path('Filament/Client/Resources'), for: 'App\Filament\Client\Resources')
             ->discoverPages(in: app_path('Filament/Client/Pages'), for: 'App\Filament\Client\Pages')
