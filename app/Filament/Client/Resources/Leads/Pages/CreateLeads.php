@@ -8,4 +8,10 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateLeads extends CreateRecord
 {
     protected static string $resource = LeadsResource::class;
+
+    protected function mutateFormDataBeforeCreate(array $data): array
+    {
+        $data['lead_by'] = auth()->id();
+        return $data;
+    }
 }

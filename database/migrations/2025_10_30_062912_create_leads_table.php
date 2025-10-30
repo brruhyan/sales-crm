@@ -15,9 +15,11 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('name');
+            $table->string('company');
             $table->string('email')->unique();
             $table->string('phone');
             $table->string('lead_by');
+            $table->softDeletes();
         });
     }
 
