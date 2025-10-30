@@ -13,6 +13,7 @@ use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\TabsFilter;
 
 class LeadsTable
 {
@@ -42,16 +43,24 @@ class LeadsTable
                         'danger' => 'Lost',
                     ]),
             ])
-            ->filters([
-                TrashedFilter::make(),
-                SelectFilter::make('type')
-                    ->options([
-                        'Website' => 'Website',
-                        'Referral' => 'Referral',
-                        'Social Media' => 'Social Media',
-                        'Other' => 'Other',
-                    ]),
-            ])
+                ->filters([
+                    SelectFilter::make('status')
+                        ->label('Status')
+                        ->options([
+                            'New' => 'New',
+                            'Contacted' => 'Contacted',
+                            'Qualified' => 'Qualified',
+                            'Lost' => 'Lost',
+                        ]),
+                    TrashedFilter::make(),
+                    SelectFilter::make('type')
+                        ->options([
+                            'Website' => 'Website',
+                            'Referral' => 'Referral',
+                            'Social Media' => 'Social Media',
+                            'Other' => 'Other',
+                        ]),
+                ])
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),
