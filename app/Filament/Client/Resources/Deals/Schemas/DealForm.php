@@ -9,6 +9,8 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Get;
 use Filament\Schemas\Components\Section;
 
 class DealForm
@@ -41,12 +43,14 @@ class DealForm
                             ])
                             ->default('Prospecting')
                             ->required()
+                            ->live()
                             ->columnSpan(1),
 
                         Textarea::make('description')
                             ->label('Description')
                             ->rows(3)
                             ->columnSpanFull(),
+
                     ]),
 
                 Section::make('Financial Details')
@@ -142,6 +146,22 @@ class DealForm
                             ->label('Actual Close Date')
                             ->native(false)
                             ->columnSpan(1),
+                    ]),
+                Section::make('Proof Documents')
+                    ->description('Upload supporting documents and receipts for this deal.')
+                    ->columnSpanFull()
+                    ->schema([
+                        FileUpload::make('documents') 
+                            ->label('Documents')
+                            ->multiple() 
+                            ->image() 
+                            ->acceptedFileTypes(['application/pdf']) 
+                            ->disk('public') 
+                            ->directory('deal-documents') 
+                            ->preserveFileNames() 
+                            ->minFiles(0)
+                            ->maxFiles(5) 
+                            ->columnSpanFull(),
                     ]),
             ]);
     }

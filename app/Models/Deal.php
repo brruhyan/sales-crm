@@ -23,13 +23,15 @@ class Deal extends Model
         'actual_close_date',
         'contact_id',
         'user_id',
+        'documents',
     ];
 
     protected $casts = [
         'amount' => 'decimal:2',
         'probability' => 'integer',
         'expected_close_date' => 'date',
-        'actual_close_date' => 'date',
+        'actual_close_date' => 'date',  
+        'documents' => 'array',
     ];
 
     /**

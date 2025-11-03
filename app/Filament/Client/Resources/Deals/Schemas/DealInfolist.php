@@ -146,8 +146,27 @@ class DealInfolist
                                     ->dateTime('M j, Y H:i:s')
                                     ->icon('heroicon-o-arrow-path'),
                             ]),
-                    ])
-                    ->columnSpanFull(),
+                        Section::make('Supporting Documents')
+                            ->description('Uploaded documents related to the deal')
+                            ->icon('heroicon-o-paper-clip')
+                            ->columns(1)
+                            ->schema([
+                                TextEntry::make('documents')
+                                    ->label('Documents')
+                                    ->state(function ($record) {
+                                        if (empty($record->documents) || !is_array($record->documents)) {
+                                            return 'No documents uploaded.';
+                                        }
+                                        return collect($record->documents)->map(function($doc) {
+                                            $filename = basename($doc);
+                                            return "<a href='" . asset("storage/{$doc}") . "' target='_blank' class='text-primary-600 hover:underline'>{$filename}</a>";
+                                        })->join('<br>');
+                                    })
+                                    ->html()
+                                    ->columnSpan(1),
+                            ]),
+                        ])
+                        ->columnSpanFull(),
             ]);
     }
 }
