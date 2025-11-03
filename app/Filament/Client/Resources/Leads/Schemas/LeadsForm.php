@@ -27,23 +27,29 @@ class LeadsForm
                             ->searchable()
                             ->preload()
                             ->live()
-                        ->afterStateUpdated(function (?string $state, callable $set) {
-                            if ($state) {
-                                $contact = Contact::find($state);
-                                if ($contact) {
-                                    $set('name', $contact->name);
-                                    $set('email', $contact->email);
-                                    $set('phone', $contact->phone);
-                                    $set('company', $contact->company);
+                            ->afterStateUpdated(function (?string $state, callable $set) {
+                                if ($state) {
+                                    $contact = Contact::find($state);
+                                    if ($contact) {
+                                        $set('name', $contact->name ?? '');
+                                        $set('email', $contact->email ?? '');
+                                        $set('phone', $contact->phone ?? '');
+                                        $set('company', $contact->company ?? '');
+                                    }
+                                } else {
+                                    $set('name', '');
+                                    $set('email', '');
+                                    $set('phone', '');
+                                    $set('company', '');
                                 }
-                            }
-                        })
+                            })
                             ->columnSpanFull()
                             ->helperText('Select a contact to autofill the fields below, or leave empty to create a new lead'),
 
                         TextInput::make('name')
                             ->label('Name')
                             ->required()
+                            ->live(onBlur: true)
                             ->columnSpan(1),
                         
                         TextInput::make('email')

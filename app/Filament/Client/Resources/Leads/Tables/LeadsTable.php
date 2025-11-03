@@ -25,7 +25,6 @@ class LeadsTable
                 TextColumn::make('email')->label('Email'),
                 TextColumn::make('phone')->label('Phone'),
                 TextColumn::make('company')->label('Company'),
-                TextColumn::make('type')->label('Type'),
                 BadgeColumn::make('source')
                     ->label('Source')
                     ->colors([
