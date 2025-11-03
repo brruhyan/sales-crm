@@ -26,7 +26,7 @@ class AdminUserSeeder extends Seeder
         );
         
         $this->command->info('Admin user created successfully!');
-        $this->command->info('Email: admin@maralabs.com');
-        $this->command->info('Password: Admin@123');
+        $this->command->info('Email: bryan@maralabs.ph');
+        $this->command->info('Password: Stickpage1!');
     }
 }

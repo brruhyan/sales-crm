@@ -12,6 +12,7 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Get;
 use Filament\Schemas\Components\Section;
+use Illuminate\Support\Facades\Auth;
 
 class DealForm
 {
@@ -94,7 +95,7 @@ class DealForm
                     ->schema([
                         Select::make('contact_id')
                             ->label('Contact')
-                            ->relationship('contact', 'name')
+                            ->relationship('contact', 'name', fn($query) => $query->where('user_id', Auth::id()))
                             ->searchable()
                             ->preload()
                             ->createOptionForm([

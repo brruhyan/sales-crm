@@ -9,6 +9,7 @@ use Filament\Forms\Components\Select;
 use Filament\Schemas\Components\Section;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
+use Illuminate\Support\Facades\Auth;
 
 class LeadsForm
 {
@@ -23,7 +24,7 @@ class LeadsForm
                     ->schema([
                         Select::make('contact_id')
                             ->label('Select Existing Contact (Optional)')
-                            ->relationship('contact', 'name')
+                            ->relationship('contact', 'name', fn($query) => $query->where('user_id', Auth::id()))
                             ->searchable()
                             ->preload()
                             ->live()

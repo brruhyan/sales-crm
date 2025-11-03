@@ -11,6 +11,7 @@ class Leads extends Model
     use SoftDeletes;
 
     protected $fillable = [
+        'user_id',
         'contact_id',
         'name',
         'email',
@@ -19,6 +20,14 @@ class Leads extends Model
         'source',
         'status',
     ];
+
+    /**
+     * Get the user who owns this lead.
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 
     /**
      * Get the contact associated with this lead.

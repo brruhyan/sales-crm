@@ -9,6 +9,7 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\DatePicker;
 use Filament\Schemas\Components\Section;
+use Illuminate\Support\Facades\Auth;
 
 class ProjectForm
 {
@@ -54,7 +55,7 @@ class ProjectForm
                             ->relationship(
                                 'deal', 
                                 'title',
-                                fn($query) => $query->where('status', 'Closed Won')
+                                fn($query) => $query->where('status', 'Closed Won')->where('user_id', Auth::id())
                             )
                             ->searchable()
                             ->preload()

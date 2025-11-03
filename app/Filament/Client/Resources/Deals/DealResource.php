@@ -18,6 +18,7 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Auth;
 
 class DealResource extends Resource
 {
@@ -26,7 +27,9 @@ class DealResource extends Resource
     protected static string|BackedEnum|null $navigationIcon = Heroicon::CurrencyDollar;
 
     public static string|UnitEnum|null $navigationGroup = 'Sales';
+
     protected static ?int $navigationSort = 20;
+
     protected static ?string $recordTitleAttribute = 'title';
 
     public static function form(Schema $schema): Schema
@@ -61,9 +64,19 @@ class DealResource extends Resource
         ];
     }
 
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->where('user_id', Auth::id())
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
+    }
+
     public static function getRecordRouteBindingEloquentQuery(): Builder
     {
         return parent::getRecordRouteBindingEloquentQuery()
+            ->where('user_id', Auth::id())
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);
