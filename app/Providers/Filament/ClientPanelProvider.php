@@ -22,6 +22,8 @@ use App\Filament\Client\Widgets\DealsWidget;
 use App\Filament\Widgets\DealsPerMonth;
 use App\Filament\Widgets\DealsValuePerMonth;
 use App\Filament\Widgets\ProjectsWidget;
+use App\Http\Middleware\CheckUserApproved;
+use App\Filament\Client\Pages\Auth\Register;
 
 // Login Verification
 use Filament\Models\Contracts\FilamentUser;
@@ -35,7 +37,7 @@ class ClientPanelProvider extends PanelProvider
             ->id('client')
             ->path('client')
             ->login()
-            ->registration()
+            ->registration(Register::class)
             ->passwordReset()
 
             // Header Changes
@@ -68,6 +70,7 @@ class ClientPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+                CheckUserApproved::class,
             ]);
     }
     protected function getWidgets(): array
