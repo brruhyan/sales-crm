@@ -115,6 +115,7 @@ class DealForm
                             ->label('Assigned To')
                             ->relationship('user', 'name')
                             ->searchable()
+                            ->default(fn () => Auth::id())
                             ->preload()
                             ->columnSpan(1),
 
