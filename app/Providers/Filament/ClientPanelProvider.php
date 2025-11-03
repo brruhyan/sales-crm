@@ -19,6 +19,8 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use App\Filament\Client\Widgets\DealsWidget;
+use App\Filament\Widgets\DealsPerMonth;
+use App\Filament\Widgets\DealsValuePerMonth;
 
 // Login Verification
 use Filament\Models\Contracts\FilamentUser;
@@ -48,6 +50,8 @@ class ClientPanelProvider extends PanelProvider
             ])
             ->widgets([
                 DealsWidget::class,
+                DealsPerMonth::class,
+                DealsValuePerMonth::class,
             ])
             ->middleware([
                 EncryptCookies::class,
