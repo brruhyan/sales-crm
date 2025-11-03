@@ -46,9 +46,12 @@ class LeadsInfolist
                     ->description('Information about the lead\'s contact person')
                     ->columns(3)
                     ->schema([
-                        TextEntry::make('name')->label('Name'),
-                        TextEntry::make('email')->label('Email'),
-                        TextEntry::make('phone')->label('Phone'),
+                        TextEntry::make('name')
+                            ->label('Name'),
+                        TextEntry::make('email')
+                            ->label('Email'),
+                        TextEntry::make('phone')
+                            ->label('Phone'),
                     ]),
                 
                 Section::make('Timestamps')
