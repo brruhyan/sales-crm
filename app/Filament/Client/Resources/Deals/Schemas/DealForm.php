@@ -147,20 +147,22 @@ class DealForm
                             ->native(false)
                             ->columnSpan(1),
                     ]),
-                Section::make('Proof Documents')
+                Section::make('Supporting Documents')
                     ->description('Upload supporting documents and receipts for this deal.')
                     ->columnSpanFull()
                     ->schema([
                         FileUpload::make('documents') 
                             ->label('Documents')
                             ->multiple() 
-                            ->image() 
-                            ->acceptedFileTypes(['application/pdf']) 
+                            ->acceptedFileTypes(['application/pdf', 'image/*']) 
                             ->disk('public') 
                             ->directory('deal-documents') 
-                            ->preserveFileNames() 
+                            ->visibility('public')
                             ->minFiles(0)
-                            ->maxFiles(5) 
+                            ->maxFiles(5)
+                            ->downloadable()
+                            ->openable()
+                            ->previewable(true)
                             ->columnSpanFull(),
                     ]),
             ]);
