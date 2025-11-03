@@ -27,6 +27,8 @@ class LeadsResource extends Resource
 
     public static string|UnitEnum|null $navigationGroup = 'Sales';
 
+    protected static ?int $navigationSort = 10;
+
     protected static ?string $recordTitleAttribute = 'Leads';
 
     public static function form(Schema $schema): Schema
