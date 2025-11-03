@@ -18,7 +18,7 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
-use App\Filament\Client\Widgets\LeadsWidget;
+use App\Filament\Client\Widgets\ProspectingDeals;
 
 // Login Verification
 use Filament\Models\Contracts\FilamentUser;
@@ -44,8 +44,7 @@ class ClientPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Client/Widgets'), for: 'App\Filament\Client\Widgets')
             ->widgets([
-                AccountWidget::class,
-                FilamentInfoWidget::class,
+
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -65,7 +64,7 @@ class ClientPanelProvider extends PanelProvider
     protected function getWidgets(): array
     {
         return [
-            LeadsWidget::class,
+            ProspectingDeals::class,
         ];
     }
 
