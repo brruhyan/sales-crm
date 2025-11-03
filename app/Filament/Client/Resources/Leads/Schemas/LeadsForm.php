@@ -27,17 +27,17 @@ class LeadsForm
                             ->searchable()
                             ->preload()
                             ->live()
-                            ->afterStateUpdated(function (Set $set, ?string $state) {
-                                if ($state) {
-                                    $contact = Contact::find($state);
-                                    if ($contact) {
-                                        $set('name', $contact->name);
-                                        $set('email', $contact->email);
-                                        $set('phone', $contact->phone);
-                                        $set('company', $contact->company);
-                                    }
+                        ->afterStateUpdated(function (?string $state, callable $set) {
+                            if ($state) {
+                                $contact = Contact::find($state);
+                                if ($contact) {
+                                    $set('name', $contact->name);
+                                    $set('email', $contact->email);
+                                    $set('phone', $contact->phone);
+                                    $set('company', $contact->company);
                                 }
-                            })
+                            }
+                        })
                             ->columnSpanFull()
                             ->helperText('Select a contact to autofill the fields below, or leave empty to create a new lead'),
 
