@@ -78,7 +78,7 @@ class ProjectsTable
                     ->multiple(),
             ])
             ->recordActions([
-                EditAction::make(),
+                ViewAction::make(),
                 DeleteAction::make(),
             ])
             ->bulkActions([

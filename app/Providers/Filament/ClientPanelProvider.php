@@ -34,6 +34,10 @@ class ClientPanelProvider extends PanelProvider
             ->login()
             ->registration()
             ->passwordReset()
+
+            // Header Changes
+            ->brandLogo(asset('M with border.png'))
+            ->brandLogoHeight('3rem')
             ->colors([
                 'primary' => Color::Emerald,
             ])
@@ -42,9 +46,8 @@ class ClientPanelProvider extends PanelProvider
             ->pages([
                 Dashboard::class,
             ])
-            ->discoverWidgets(in: app_path('Filament/Client/Widgets'), for: 'App\Filament\Client\Widgets')
             ->widgets([
-
+                DealsWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -64,7 +67,6 @@ class ClientPanelProvider extends PanelProvider
     protected function getWidgets(): array
     {
         return [
-            DealsWidget::class,
         ];
     }
 

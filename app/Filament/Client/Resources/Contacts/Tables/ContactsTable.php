@@ -75,7 +75,7 @@ class ContactsTable
                     ->searchable(),
             ])
             ->recordActions([
-                EditAction::make(),
+                ViewAction::make(),
                 DeleteAction::make(),
             ])
             ->toolbarActions([

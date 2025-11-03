@@ -51,10 +51,15 @@ class ProjectForm
                     ->schema([
                         Select::make('deal_id')
                             ->label('Associated Deal')
-                            ->relationship('deal', 'title')
+                            ->relationship(
+                                'deal', 
+                                'title',
+                                fn($query) => $query->where('status', 'Closed Won')
+                            )
                             ->searchable()
                             ->preload()
                             ->required()
+                            ->helperText('Only deals with status "Closed Won" are selectable')
                             ->columnSpan(1),
 
                         DatePicker::make('start_date')
