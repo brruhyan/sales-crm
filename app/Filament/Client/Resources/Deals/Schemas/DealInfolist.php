@@ -23,7 +23,6 @@ class DealInfolist
                             ->color(fn (string $state): string => match ($state) {
                                 'Prospecting' => 'gray',
                                 'Qualification' => 'info',
-                                'Needs Analysis' => 'info',
                                 'Proposal' => 'warning',
                                 'Negotiation' => 'warning',
                                 'Closed Won' => 'success',
@@ -44,7 +43,7 @@ class DealInfolist
                     ->schema([
                         TextEntry::make('amount')
                             ->label('Deal Value')
-                            ->money(fn ($record) => $record->currency ?? 'USD'),
+                            ->money(fn ($record) => $record->currency ?? 'PHP'),
                         
                         TextEntry::make('currency'),
                     ]),

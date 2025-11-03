@@ -58,7 +58,7 @@ class DealForm
                         TextInput::make('amount')
                             ->label('Deal Value')
                             ->numeric()
-                            ->prefix('$')
+                            ->prefix('₱')
                             ->default(0)
                             ->required()
                             ->columnSpan(1),
@@ -67,11 +67,9 @@ class DealForm
                             ->label('Currency')
                             ->options([
                                 'USD' => 'USD ($)',
-                                'EUR' => 'EUR (€)',
-                                'GBP' => 'GBP (£)',
-                                'JPY' => 'JPY (¥)',
+                                'PHP' => 'PHP (₱)',
                             ])
-                            ->default('USD')
+                            ->default('PHP')
                             ->required()
                             ->columnSpan(1),
 

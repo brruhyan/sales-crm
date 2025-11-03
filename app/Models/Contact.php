@@ -15,6 +15,7 @@ class Contact extends Model
         'company',
         'email',
         'phone',
+        'position'
     ];
 
     /**
