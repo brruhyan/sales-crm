@@ -4,7 +4,7 @@ namespace App\Filament\Client\Widgets;
 
 use Filament\Widgets\ChartWidget;
 
-class LeadsWidget extends ChartWidget
+class LeadWidget extends ChartWidget
 {
     protected ?string $heading = 'Leads by Status';
 

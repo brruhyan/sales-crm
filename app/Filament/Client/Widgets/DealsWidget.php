@@ -13,7 +13,7 @@ class DealsWidget extends StatsOverviewWidget
     {
         return [
             Stat::make('Open Deals', Deal::where('status', 'Prospecting')->count()),
-            Stat::make('Won Deals', Deal::where('status', 'Closed Won')->count()),
+            Stat::make('Deals Won', Deal::where('status', 'Closed Won')->count()),
             Stat::make('Lost Deals', Deal::where('status', 'Closed Lost')->count()),
             Stat::make('Total Deal Value', '₱' . number_format(Deal::sum('amount'))),
         ];
