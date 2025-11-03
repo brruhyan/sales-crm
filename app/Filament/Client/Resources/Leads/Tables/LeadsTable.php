@@ -21,11 +21,12 @@ class LeadsTable
     {
         return $table
             ->columns([
-                TextColumn::make('name')->label('Name'),
+                TextColumn::make('name')
+                    ->label('Name')
+                    ->searchable(),
                 TextColumn::make('email')->label('Email'),
                 TextColumn::make('phone')->label('Phone'),
                 TextColumn::make('company')->label('Company'),
-                TextColumn::make('type')->label('Type'),
                 BadgeColumn::make('source')
                     ->label('Source')
                     ->colors([

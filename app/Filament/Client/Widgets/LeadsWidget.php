@@ -2,38 +2,18 @@
 
 namespace App\Filament\Client\Widgets;
 
-use Filament\Widgets\ChartWidget;
+use Filament\Widgets\StatsOverviewWidget;
+use Filament\Widgets\StatsOverviewWidget\Stat;
+use App\Models\Leads;
 
-class LeadsWidget extends ChartWidget
+class LeadsWidget extends StatsOverviewWidget
 {
-    protected ?string $heading = 'Leads by Status';
-
-    protected function getData(): array
+    protected function getStats(): array
     {
-        $statuses = ['New', 'Contacted', 'Qualified', 'Lost'];
-        $counts = [];
-        foreach ($statuses as $status) {
-            $counts[$status] = \App\Models\Leads::where('status', $status)->count();
-        }
         return [
-            'labels' => array_keys($counts),
-            'datasets' => [
-                [
-                    'label' => 'Leads by Status',
-                    'data' => array_values($counts),
-                    'backgroundColor' => [
-                        '#3b82f6', // New
-                        '#f59e42', // Contacted
-                        '#10b981', // Qualified
-                        '#ef4444', // Lost
-                    ],
-                ],
-            ],
+            Stat::make('New Leads', Leads::where('status', 'New')->count()),
+            Stat::make('Qualified Leads', Leads::where('status', 'Qualified')->count()),
+            Stat::make('Lost Leads', Leads::where('status', 'Lost')->count()),
         ];
-    }
-
-    protected function getType(): string
-    {
-        return 'pie';
     }
 }

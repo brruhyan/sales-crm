@@ -18,7 +18,7 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
-use App\Filament\Client\Widgets\LeadsWidget;
+use App\Filament\Client\Widgets\DealsWidget;
 
 // Login Verification
 use Filament\Models\Contracts\FilamentUser;
@@ -34,6 +34,10 @@ class ClientPanelProvider extends PanelProvider
             ->login()
             ->registration()
             ->passwordReset()
+
+            // Header Changes
+            ->brandLogo(asset('M with border.png'))
+            ->brandLogoHeight('3rem')
             ->colors([
                 'primary' => Color::Emerald,
             ])
@@ -42,10 +46,8 @@ class ClientPanelProvider extends PanelProvider
             ->pages([
                 Dashboard::class,
             ])
-            ->discoverWidgets(in: app_path('Filament/Client/Widgets'), for: 'App\Filament\Client\Widgets')
             ->widgets([
-                AccountWidget::class,
-                FilamentInfoWidget::class,
+                DealsWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -65,7 +67,6 @@ class ClientPanelProvider extends PanelProvider
     protected function getWidgets(): array
     {
         return [
-            LeadsWidget::class,
         ];
     }
 
