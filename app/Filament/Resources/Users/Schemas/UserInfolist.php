@@ -27,6 +27,13 @@ class UserInfolist
                 
                 Section::make('Account Status')
                     ->schema([
+                        IconEntry::make('is_admin')
+                            ->label('Admin User')
+                            ->boolean()
+                            ->trueIcon('heroicon-o-shield-check')
+                            ->falseIcon('heroicon-o-shield-exclamation')
+                            ->trueColor('warning')
+                            ->falseColor('gray'),
                         IconEntry::make('approved')
                             ->label('Approved')
                             ->boolean()
@@ -40,7 +47,7 @@ class UserInfolist
                             ->placeholder('Not verified')
                             ->icon('heroicon-o-shield-check'),
                     ])
-                    ->columns(2),
+                    ->columns(3),
                 
                 Section::make('Timestamps')
                     ->schema([

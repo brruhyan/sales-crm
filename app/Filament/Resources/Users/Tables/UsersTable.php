@@ -26,6 +26,14 @@ class UsersTable
                     ->label('Email address')
                     ->searchable()
                     ->sortable(),
+                IconColumn::make('is_admin')
+                    ->boolean()
+                    ->sortable()
+                    ->label('Admin')
+                    ->trueIcon('heroicon-o-shield-check')
+                    ->falseIcon('heroicon-o-shield-exclamation')
+                    ->trueColor('warning')
+                    ->falseColor('gray'),
                 IconColumn::make('approved')
                     ->boolean()
                     ->sortable()

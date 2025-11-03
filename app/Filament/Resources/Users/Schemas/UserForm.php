@@ -36,6 +36,11 @@ class UserForm
                 
                 Section::make('Account Status')
                     ->schema([
+                        Toggle::make('is_admin')
+                            ->label('Admin User')
+                            ->helperText('Admin users can access the admin panel')
+                            ->default(false)
+                            ->inline(false),
                         Toggle::make('approved')
                             ->label('Approved')
                             ->helperText('Users must be approved to access the client panel')
