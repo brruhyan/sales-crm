@@ -51,6 +51,7 @@ class ClientPanelProvider extends PanelProvider
             ->pages([
                 Dashboard::class,
             ])
+            ->databaseNotifications()
             ->widgets([
                 DealsWidget::class,
                 ProjectsWidget::class,

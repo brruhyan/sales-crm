@@ -3,7 +3,9 @@
 namespace App\Filament\Client\Resources\Contacts\Pages;
 
 use App\Filament\Client\Resources\Contacts\ContactResource;
+use App\Filament\Imports\ContactImporter;
 use Filament\Actions\CreateAction;
+use Filament\Actions\ImportAction;
 use Filament\Resources\Pages\ListRecords;
 
 class ListContacts extends ListRecords
@@ -14,6 +16,9 @@ class ListContacts extends ListRecords
     {
         return [
             CreateAction::make(),
+            ImportAction::make()
+                ->importer(ContactImporter::class)
+                ->label('Import Contacts'),
         ];
     }
 }
