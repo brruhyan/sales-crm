@@ -27,6 +27,8 @@ class ProjectResource extends Resource
 
     public static string|UnitEnum|null $navigationGroup = 'Sales';
 
+    protected static ?int $navigationSort = 30;
+
     protected static ?string $recordTitleAttribute = 'name';
 
     public static function form(Schema $schema): Schema

@@ -5,6 +5,11 @@ namespace App\Filament\Client\Resources\Deals\Schemas;
 use Filament\Schemas\Schema;
 use Filament\Schemas\Components\Section;
 use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Components\Actions\Action;
+use Filament\Infolists\Components\Actions;
+use Filament\Support\Enums\FontWeight;
+use Illuminate\Support\Facades\Storage;
+use Filament\Support\Enums\IconPosition;
 
 class DealInfolist
 {
@@ -146,8 +151,55 @@ class DealInfolist
                                     ->dateTime('M j, Y H:i:s')
                                     ->icon('heroicon-o-arrow-path'),
                             ]),
-                    ])
-                    ->columnSpanFull(),
+                        Section::make('Supporting Documents')
+                            ->description('Uploaded documents related to the deal')
+                            ->icon('heroicon-o-paper-clip')
+                            ->columns(1)
+                            ->schema([
+                                TextEntry::make('documents')
+                                    ->label('Uploaded Files')
+                                    ->state(function ($record) {
+                                        if (empty($record->documents) || !is_array($record->documents)) {
+                                            return null;
+                                        }
+                                        return collect($record->documents)->map(function ($doc) {
+                                            $filename = basename($doc);
+                                            // URL encode the path properly for spaces and special characters
+                                            $encodedPath = str_replace(' ', '%20', $doc);
+                                            $url = url('storage/' . $encodedPath);
+                                            $fileExtension = strtolower(pathinfo($doc, PATHINFO_EXTENSION));
+                                            
+                                            // Check if file exists
+                                            $fileExists = Storage::disk('public')->exists($doc);
+                                            
+                                            // Determine icon based on file type
+                                            $icon = match(true) {
+                                                in_array($fileExtension, ['pdf']) => '<svg class="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 20 20"><path d="M4 18h12V6h-4V2H4v16zm-2 1V0h10l4 4v16H2v-1z"/></svg>',
+                                                in_array($fileExtension, ['jpg', 'jpeg', 'png', 'gif', 'webp']) => '<svg class="w-5 h-5 text-blue-500" fill="currentColor" viewBox="0 0 20 20"><path d="M4 3h12v14H4V3zm2 2v10h8V5H6z"/></svg>',
+                                                default => '<svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20"><path d="M4 3h12v14H4V3z"/></svg>',
+                                            };
+                                            
+                                            $statusBadge = !$fileExists ? '<span class="text-xs text-red-600 dark:text-red-400">(File not found)</span>' : '';
+                                            
+                                            return "<div class='flex items-center gap-3 p-3 mb-2 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 transition'>
+                                                <div class='flex-shrink-0'>{$icon}</div>
+                                                <div class='flex-1 min-w-0'>
+                                                    <a href=\"{$url}\" target=\"_blank\" rel=\"noopener noreferrer\" 
+                                                       onclick=\"window.open('{$url}', '_blank'); return false;\"
+                                                       class=\"text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 font-medium block cursor-pointer no-underline hover:underline\">
+                                                        {$filename}
+                                                    </a>
+                                                </div>
+
+                                            </div>";
+                                        })->join('');
+                                    })
+                                    ->html()
+                                    ->placeholder('No documents uploaded.')
+                                    ->columnSpan(1),
+                            ]),
+                        ])
+                        ->columnSpanFull(),
             ]);
     }
 }
