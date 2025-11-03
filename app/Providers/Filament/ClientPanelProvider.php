@@ -18,7 +18,7 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
-use App\Filament\Client\Widgets\ProspectingDeals;
+use App\Filament\Client\Widgets\DealsWidget;
 
 // Login Verification
 use Filament\Models\Contracts\FilamentUser;
@@ -64,7 +64,7 @@ class ClientPanelProvider extends PanelProvider
     protected function getWidgets(): array
     {
         return [
-            ProspectingDeals::class,
+            DealsWidget::class,
         ];
     }
 
