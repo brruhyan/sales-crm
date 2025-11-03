@@ -11,6 +11,7 @@ class Project extends Model
     use SoftDeletes;
 
     protected $fillable = [
+        'user_id',
         'name',
         'description',
         'status',
@@ -25,6 +26,14 @@ class Project extends Model
         'end_date' => 'date',
         'budget' => 'decimal:2',
     ];
+
+    /**
+     * Get the user who owns this project.
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 
     /**
      * Get the deal associated with this project.

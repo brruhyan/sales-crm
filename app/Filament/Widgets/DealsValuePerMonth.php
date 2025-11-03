@@ -6,6 +6,7 @@ use App\Models\Deal;
 use Filament\Widgets\ChartWidget;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class DealsValuePerMonth extends ChartWidget
 {
@@ -26,6 +27,7 @@ class DealsValuePerMonth extends ChartWidget
 
         // Get total deal value per month (only PHP currency for consistency)
         $dealsValuePerMonth = Deal::query()
+            ->where('user_id', Auth::id())
             ->where('status', 'Closed Won')
             ->whereNotNull('actual_close_date')
             ->where('actual_close_date', '>=', Carbon::now()->subMonths(11)->startOfMonth())
