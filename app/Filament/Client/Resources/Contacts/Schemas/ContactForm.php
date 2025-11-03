@@ -11,35 +11,31 @@ class ContactForm
     public static function configure(Schema $schema): Schema
     {
         return $schema
-            ->columns(2)
             ->components([
                 Section::make('Personal Details')
                     ->description('Contact personal information')
-                    ->columns(3)
+                    ->columns(4)
                     ->columnSpanFull()
                     ->schema([
                         TextInput::make('name')
-                            ->label('Full Name')
+                            ->label('Name')
                             ->required()
                             ->maxLength(255)
-                            ->placeholder('John Doe')
                             ->columnSpan(1),
 
                         TextInput::make('email')
-                            ->label('Email Address')
+                            ->label('Email')
                             ->email()
                             ->required()
                             ->maxLength(255)
-                            ->placeholder('john.doe@example.com')
                             ->unique(ignoreRecord: true)
-                            ->columnSpan(1),
+                            ->columnSpan(2),
 
                         TextInput::make('phone')
-                            ->label('Phone Number')
+                            ->label('Phone')
                             ->tel()
                             ->required()
                             ->maxLength(255)
-                            ->placeholder('09123456789')
                             ->columnSpan(1),
                     ]),
 
@@ -48,18 +44,15 @@ class ContactForm
                     ->columns(2)
                     ->columnSpanFull()
                     ->schema([
-                        TextInput::make('company')
-                            ->label('Company Name')
-                            ->required()
-                            ->maxLength(255)
-                            ->placeholder('Acme Corporation')
-                            ->columnSpan(1),
-
                         TextInput::make('position')
-                            ->label('Job Position')
+                            ->label('Position')
                             ->required()
                             ->maxLength(255)
-                            ->placeholder('Sales Manager')
+                            ->columnSpan(1),
+                        TextInput::make('company')
+                            ->label('Company')
+                            ->required()
+                            ->maxLength(255)
                             ->columnSpan(1),
                     ]),
             ]);

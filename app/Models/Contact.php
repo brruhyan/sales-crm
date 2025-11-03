@@ -25,4 +25,12 @@ class Contact extends Model
     {
         return $this->hasMany(Deal::class);
     }
+
+    /**
+     * Get the leads associated with this contact.
+     */
+    public function leads(): HasMany
+    {
+        return $this->hasMany(Leads::class);
+    }
 }

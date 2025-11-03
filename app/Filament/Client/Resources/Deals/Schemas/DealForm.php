@@ -16,18 +16,17 @@ class DealForm
     public static function configure(Schema $schema): Schema
     {
         return $schema
-            ->columns(3)
             ->components([
                 Section::make('Deal Information')
                     ->description('Basic deal details')
-                    ->columns(3)
+                    ->columns(2)
                     ->columnSpanFull()
                     ->schema([
                         TextInput::make('title')
                             ->label('Deal Title')
                             ->required()
                             ->maxLength(255)
-                            ->columnSpan(2),
+                            ->columnSpan(1),
                         
                         Select::make('status')
                             ->label('Status')
