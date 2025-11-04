@@ -19,13 +19,7 @@ class ViewLeads extends ViewRecord
         return [
             MarkLeadQualifiedAction::make(),
             MarkLeadLostAction::make(),
-        ];
-    }
-
-    protected function getHeaderWidgets(): array
-    {
-        return [
-            LeadsWidget::class,
+            Actions\DeleteAction::make(),
         ];
     }
 }
