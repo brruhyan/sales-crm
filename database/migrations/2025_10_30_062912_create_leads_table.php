@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('leads', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
-            $table->foreignId('contact_id')->nullable()->constrained('contacts')->onDelete('set null');
             $table->timestamps();
             $table->string('name'); // Full name of the person or company contact
             $table->string('email'); // Contact email address (removed unique constraint)
