@@ -44,12 +44,6 @@ class ContactsTable
                     ->sortable()
                     ->icon('heroicon-o-building-office'),
 
-                TextColumn::make('position')
-                    ->label('Position')
-                    ->searchable()
-                    ->sortable()
-                    ->icon('heroicon-o-briefcase'),
-
                 TextColumn::make('deals_count')
                     ->label('Deals')
                     ->counts('deals')

@@ -38,12 +38,6 @@ class DealsTable
                     ->money(fn ($record) => $record->currency ?? 'USD')
                     ->sortable(),
 
-                TextColumn::make('probability')
-                    ->label('Win %')
-                    ->suffix('%')
-                    ->sortable()
-                    ->toggleable(),
-
                 TextColumn::make('status')
                     ->badge()
                     ->sortable()
@@ -57,11 +51,6 @@ class DealsTable
                         'Closed Lost' => 'danger',
                         default => 'gray',
                     }),
-
-                TextColumn::make('user.name')
-                    ->label('Assigned To')
-                    ->sortable()
-                    ->toggleable(),
 
                 TextColumn::make('source')
                     ->label('Source')

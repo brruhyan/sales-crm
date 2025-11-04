@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->boolean('approved')->default(false)->after('email');
+        Schema::table('leads', function (Blueprint $table) {
+            $table->foreignId('contact_id')->nullable()->after('user_id')->constrained('contacts')->onDelete('set null');
         });
     }
 
@@ -21,8 +21,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('approved');
+        Schema::table('leads', function (Blueprint $table) {
+            $table->dropForeign(['contact_id']);
+            $table->dropColumn('contact_id');
         });
     }
 };

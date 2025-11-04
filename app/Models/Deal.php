@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Leads;
 
 class Deal extends Model
 {
@@ -22,6 +23,7 @@ class Deal extends Model
         'expected_close_date',
         'actual_close_date',
         'contact_id',
+        'lead_id',
         'user_id',
         'documents',
     ];
@@ -88,5 +90,10 @@ class Deal extends Model
     public function scopeActive($query)
     {
         return $query->whereNotIn('status', ['Closed Won', 'Closed Lost']);
+    }
+
+    public function lead(): BelongsTo
+    {
+        return $this->belongsTo(Leads::class, 'lead_id');
     }
 }

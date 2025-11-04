@@ -40,11 +40,6 @@ class ProjectsTable
                         default => 'gray',
                     }),
 
-                TextColumn::make('budget')
-                    ->label('Budget')
-                    ->money('PHP')
-                    ->sortable(),
-
                 TextColumn::make('start_date')
                     ->label('Start Date')
                     ->date('M j, Y')
