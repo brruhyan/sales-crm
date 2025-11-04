@@ -19,4 +19,9 @@ class LeadsWidget extends StatsOverviewWidget
             Stat::make('Lost Leads', Leads::where('user_id', $userId)->where('status', 'Lost')->count()),
         ];
     }
+    
+    public static function canView(): bool
+    {
+        return request()->routeIs('filament.client.resources.leads.index');
+    }
 }

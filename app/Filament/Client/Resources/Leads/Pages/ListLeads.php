@@ -5,6 +5,7 @@ namespace App\Filament\Client\Resources\Leads\Pages;
 use App\Filament\Client\Resources\Leads\LeadsResource;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
+use App\Filament\Client\Widgets\LeadsWidget;
 
 class ListLeads extends ListRecords
 {
@@ -14,6 +15,13 @@ class ListLeads extends ListRecords
     {
         return [
             CreateAction::make(),
+        ];
+    }
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            LeadsWidget::class,
         ];
     }
 }

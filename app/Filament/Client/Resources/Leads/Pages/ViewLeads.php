@@ -8,6 +8,7 @@ use Filament\Actions;
 use Filament\Resources\Pages\ViewRecord;
 use App\Filament\Client\Actions\MarkLeadQualifiedAction;
 use App\Filament\Client\Actions\MarkLeadLostAction;
+use App\Filament\Client\Widgets\LeadsWidget;
 
 class ViewLeads extends ViewRecord
 {
@@ -18,6 +19,13 @@ class ViewLeads extends ViewRecord
         return [
             MarkLeadQualifiedAction::make(),
             MarkLeadLostAction::make(),
+        ];
+    }
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            LeadsWidget::class,
         ];
     }
 }

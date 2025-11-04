@@ -24,6 +24,7 @@ use App\Filament\Widgets\DealsValuePerMonth;
 use App\Filament\Widgets\ProjectsWidget;
 use App\Http\Middleware\CheckUserApproved;
 use App\Filament\Client\Pages\Auth\Register;
+use App\Filament\Client\Widgets\LeadsWidget;
 
 // Login Verification
 use Filament\Models\Contracts\FilamentUser;
@@ -58,6 +59,7 @@ class ClientPanelProvider extends PanelProvider
                 DealsPerMonth::class,
                 DealsValuePerMonth::class,
             ])
+            ->discoverWidgets(in: app_path('Filament/Client/Widgets'), for: 'App\Filament\Client\Widgets')
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
