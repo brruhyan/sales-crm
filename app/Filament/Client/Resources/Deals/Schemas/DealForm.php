@@ -34,12 +34,11 @@ class DealForm
                         Select::make('status')
                             ->label('Status')
                             ->options([
-                                'Prospecting' => 'Prospecting',
-                                'Qualification' => 'Qualification',
+                                'Open' => 'Open',
                                 'Closed Won' => 'Closed Won',
                                 'Closed Lost' => 'Closed Lost',
                             ])
-                            ->default('Prospecting')
+                            ->default('Open')
                             ->required()
                             ->live()
                             ->columnSpan(1),
@@ -85,7 +84,7 @@ class DealForm
 
                         Select::make('source')
                             ->label('Associated Lead')
-                            ->required()
+                            ->required()    
                             ->searchable()
                             ->relationship(
                                 'lead',

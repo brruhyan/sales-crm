@@ -15,7 +15,7 @@ class DealsWidget extends StatsOverviewWidget
         $userId = Auth::id();
         
         return [
-            Stat::make('Open Deals', Deal::where('user_id', $userId)->where('status', 'Prospecting')->count()),
+            Stat::make('Open Deals', Deal::where('user_id', $userId)->where('status', 'Open')->count()),
             Stat::make('Deals Won', Deal::where('user_id', $userId)->where('status', 'Closed Won')->count()),
             Stat::make('Lost Deals', Deal::where('user_id', $userId)->where('status', 'Closed Lost')->count()),
             Stat::make('Total Deal Value', '₱' . number_format(Deal::where('user_id', $userId)->where('status', 'Closed Won')->sum('amount'))),

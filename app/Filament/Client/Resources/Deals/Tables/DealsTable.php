@@ -102,7 +102,7 @@ class DealsTable
             ])
             ->recordActions([
                 ViewAction::make(),
-                DeleteAction::make(),
+                EditAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
