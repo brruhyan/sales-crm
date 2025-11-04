@@ -13,9 +13,11 @@ return new class extends Migration
     {
         Schema::create('leads', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('contact_id')->nullable()->constrained('contacts')->onDelete('set null');
             $table->timestamps();
             $table->string('name'); // Full name of the person or company contact
-            $table->string('email')->unique(); // Contact email address
+            $table->string('email'); // Contact email address (removed unique constraint)
             $table->string('phone'); // Contact phone number
             $table->string('company')->nullable(); // Organization they represent (if applicable)
             $table->string('source')->nullable(); // How the lead found you
