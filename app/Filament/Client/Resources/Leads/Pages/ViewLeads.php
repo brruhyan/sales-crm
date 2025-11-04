@@ -6,6 +6,8 @@ use App\Filament\Client\Resources\Leads\LeadsResource;
 use Filament\Actions\EditAction;
 use Filament\Actions;
 use Filament\Resources\Pages\ViewRecord;
+use App\Filament\Client\Actions\MarkLeadQualifiedAction;
+use App\Filament\Client\Actions\MarkLeadLostAction;
 
 class ViewLeads extends ViewRecord
 {
@@ -14,8 +16,8 @@ class ViewLeads extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
-            EditAction::make(),
-            Actions\DeleteAction::make(),
+            MarkLeadQualifiedAction::make(),
+            MarkLeadLostAction::make(),
         ];
     }
 }
