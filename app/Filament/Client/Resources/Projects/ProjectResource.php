@@ -67,18 +67,12 @@ class ProjectResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
-            ->where('user_id', Auth::id())
-            ->withoutGlobalScopes([
-                SoftDeletingScope::class,
-            ]);
+            ->where('user_id', Auth::id());
     }
 
     public static function getRecordRouteBindingEloquentQuery(): Builder
     {
         return parent::getRecordRouteBindingEloquentQuery()
-            ->where('user_id', Auth::id())
-            ->withoutGlobalScopes([
-                SoftDeletingScope::class,
-            ]);
+            ->where('user_id', Auth::id());
     }
 }

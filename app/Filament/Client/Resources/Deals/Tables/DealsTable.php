@@ -43,10 +43,6 @@ class DealsTable
                     ->sortable()
                     ->color(fn (string $state): string => match ($state) {
                         'Prospecting' => 'gray',
-                        'Qualification' => 'info',
-                        'Needs Analysis' => 'info',
-                        'Proposal' => 'warning',
-                        'Negotiation' => 'warning',
                         'Closed Won' => 'success',
                         'Closed Lost' => 'danger',
                         default => 'gray',
