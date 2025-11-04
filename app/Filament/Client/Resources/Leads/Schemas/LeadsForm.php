@@ -22,6 +22,11 @@ class LeadsForm
                     ->columns(4)
                     ->columnSpanFull()
                     ->schema([
+                        TextInput::make('lead_title')
+                            ->label('Lead Title')
+                            ->required()
+                            ->maxLength(255)
+                            ->columnSpanFull(),
                         Select::make('contact_id')
                             ->label('Select Existing Contact (Optional)')
                             ->relationship('contact', 'name', fn($query) => $query->where('user_id', Auth::id()))
@@ -94,7 +99,7 @@ class LeadsForm
                                 'Qualified' => 'Qualified',
                                 'Lost' => 'Lost',
                             ])
-                            ->default('Contacted')
+                            ->default('New')
                             ->required()
                             ->columnSpan(1),
                     ]),

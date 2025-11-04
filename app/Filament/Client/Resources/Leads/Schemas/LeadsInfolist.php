@@ -19,6 +19,11 @@ class LeadsInfolist
                             ->icon('heroicon-o-user-group')
                             ->columns(3)
                             ->schema([
+                                TextEntry::make('lead_title')
+                                    ->label('Lead Title')
+                                    ->icon('heroicon-o-chat-bubble-left-ellipsis')
+                                    ->copyable()
+                                    ->columnSpan(1),
                                 TextEntry::make('name')
                                     ->label('Name')
                                     ->icon('heroicon-o-user')
@@ -43,7 +48,7 @@ class LeadsInfolist
                                     ->label('Company')
                                     ->icon('heroicon-o-building-office')
                                     ->placeholder('No company')
-                                    ->columnSpanFull(),
+                                    ->columnSpan(1),
                             ]),
 
                         Section::make('Lead Status')
@@ -76,26 +81,6 @@ class LeadsInfolist
                                         default => 'gray',
                                     })
                                     ->columnSpan(1),
-                            ]),
-                    ])
-                    ->columnSpanFull(),
-
-                Section::make()
-                    ->schema([
-                        Section::make('Timestamps')
-                            ->description('Lead creation and update information')
-                            ->icon('heroicon-o-clock')
-                            ->columns(2)
-                            ->schema([
-                                TextEntry::make('created_at')
-                                    ->label('Created At')
-                                    ->dateTime('M j, Y H:i:s')
-                                    ->icon('heroicon-o-plus-circle'),
-
-                                TextEntry::make('updated_at')
-                                    ->label('Updated At')
-                                    ->dateTime('M j, Y H:i:s')
-                                    ->icon('heroicon-o-arrow-path'),
                             ]),
                     ])
                     ->columnSpanFull(),

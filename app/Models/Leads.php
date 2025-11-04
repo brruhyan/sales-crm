@@ -11,6 +11,7 @@ class Leads extends Model
     use SoftDeletes;
 
     protected $fillable = [
+        'lead_title',
         'user_id',
         'contact_id',
         'name',

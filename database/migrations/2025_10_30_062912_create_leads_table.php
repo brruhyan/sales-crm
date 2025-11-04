@@ -13,14 +13,15 @@ return new class extends Migration
     {
         Schema::create('leads', function (Blueprint $table) {
             $table->id();
+            $table->string('lead_title');
             $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
             $table->timestamps();
-            $table->string('name'); // Full name of the person or company contact
-            $table->string('email'); // Contact email address (removed unique constraint)
-            $table->string('phone'); // Contact phone number
-            $table->string('company')->nullable(); // Organization they represent (if applicable)
-            $table->string('source')->nullable(); // How the lead found you
-            $table->string('status')->default('New'); // Stage of the lead
+            $table->string('name'); 
+            $table->string('email');
+            $table->string('phone'); 
+            $table->string('company')->nullable();
+            $table->string('source')->nullable(); 
+            $table->string('status')->default('New'); 
             $table->softDeletes();
         });
     }

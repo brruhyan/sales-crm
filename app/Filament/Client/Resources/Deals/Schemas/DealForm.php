@@ -36,9 +36,6 @@ class DealForm
                             ->options([
                                 'Prospecting' => 'Prospecting',
                                 'Qualification' => 'Qualification',
-                                'Needs Analysis' => 'Needs Analysis',
-                                'Proposal' => 'Proposal',
-                                'Negotiation' => 'Negotiation',
                                 'Closed Won' => 'Closed Won',
                                 'Closed Lost' => 'Closed Lost',
                             ])
@@ -53,6 +50,45 @@ class DealForm
                             ->columnSpanFull(),
 
                     ]),
+                Section::make('Associations')
+                    ->description('Contact and associated deal')
+                    ->columns(3)
+                    ->columnSpanFull()
+                    ->schema([
+                        Select::make('contact_id')
+                            ->label('Contact')
+                            ->relationship('contact', 'name', fn($query) => $query->where('user_id', Auth::id()))
+                            ->searchable()
+                            ->preload()
+                            ->createOptionForm([
+                        TextInput::make('name')
+                            ->required(),
+                        TextInput::make('email')
+                            ->email()
+                            ->required(),
+                        TextInput::make('phone')
+                            ->tel(),
+                        TextInput::make('company'),
+                        TextInput::make('position'),
+                            ])
+                            ->columnSpan(1),
+
+                        Select::make('user_id')
+                            ->label('Assigned To')
+                            ->relationship('user', 'name')
+                            ->searchable()
+                            ->default(fn () => Auth::id())
+                            ->preload()
+                            ->columnSpan(1),
+
+                        Select::make('source')
+                            ->label('Associated Lead')
+                            ->searchable()
+                            ->preload()
+                            ->relationship('lead', 'lead_title', fn($query) => $query->where('user_id', Auth::id()))
+                            ->columnSpan(1),
+                    ]),
+
 
                 Section::make('Financial Details')
                     ->description('Deal value and financial information')
@@ -88,52 +124,7 @@ class DealForm
                             ->columnSpan(1),
                     ]),
 
-                Section::make('Associations')
-                    ->description('Contact and team member assignment')
-                    ->columns(3)
-                    ->columnSpanFull()
-                    ->schema([
-                        Select::make('contact_id')
-                            ->label('Contact')
-                            ->relationship('contact', 'name', fn($query) => $query->where('user_id', Auth::id()))
-                            ->searchable()
-                            ->preload()
-                            ->createOptionForm([
-                                TextInput::make('name')
-                                    ->required(),
-                                TextInput::make('email')
-                                    ->email()
-                                    ->required(),
-                                TextInput::make('phone')
-                                    ->tel(),
-                                TextInput::make('company'),
-                                TextInput::make('position'),
-                            ])
-                            ->columnSpan(1),
-
-                        Select::make('user_id')
-                            ->label('Assigned To')
-                            ->relationship('user', 'name')
-                            ->searchable()
-                            ->default(fn () => Auth::id())
-                            ->preload()
-                            ->columnSpan(1),
-
-                        Select::make('source')
-                            ->label('Deal Source')
-                            ->options([
-                                'Inbound Lead' => 'Inbound Lead',
-                                'Outbound' => 'Outbound',
-                                'Referral' => 'Referral',
-                                'Website' => 'Website',
-                                'Social Media' => 'Social Media',
-                                'Event' => 'Event',
-                                'Partner' => 'Partner',
-                                'Other' => 'Other',
-                            ])
-                            ->columnSpan(1),
-                    ]),
-
+            
                 Section::make('Timeline')
                     ->description('Deal timeline and important dates')
                     ->columns(2)
