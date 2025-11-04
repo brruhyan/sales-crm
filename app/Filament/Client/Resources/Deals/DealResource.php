@@ -75,4 +75,12 @@ class DealResource extends Resource
         return parent::getRecordRouteBindingEloquentQuery()
             ->where('user_id', Auth::id());
     }
+
+    public static function getNavigationBadge(): ?string
+    {
+        $count = static::$model::where('status', 'Closed Won', Auth::id())->count();
+
+        return $count > 0 ? (string)$count : null;
+    }
+
 }

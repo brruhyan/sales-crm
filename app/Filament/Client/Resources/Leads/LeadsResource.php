@@ -81,4 +81,11 @@ class LeadsResource extends Resource
                 SoftDeletingScope::class,
             ]);
     }
+
+    public static function getNavigationBadge(): ?string
+    {
+        $count = static::$model::where('status', 'New', Auth::id())->count();
+
+        return $count > 0 ? (string)$count : null;
+    }
 }
