@@ -17,6 +17,7 @@ class ViewDeal extends ViewRecord
         return [
             MarkDealClosedWonAction::make(),
             MarkDealClosedLostAction::make(),
+            Actions\DeleteAction::make(),
         ];
     }
 }
