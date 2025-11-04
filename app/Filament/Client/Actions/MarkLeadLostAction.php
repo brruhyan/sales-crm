@@ -4,6 +4,7 @@ namespace App\Filament\Client\Actions;
 
 use Filament\Actions\Action;
 use App\Models\Leads;
+use Filament\Notifications\Notification;
 
 class MarkLeadLostAction extends Action
 {
@@ -16,6 +17,15 @@ class MarkLeadLostAction extends Action
             ->color('danger')
             ->icon('heroicon-o-x-circle')
             ->requiresConfirmation()
-            ->action(fn (Leads $record) => $record->update(['status' => 'Lost']));
+            ->action(function (Leads $record) {
+                $record->update(['status' => 'Lost']);
+
+                Notification::make()
+                    ->title('Lead marked as Lost.')
+                    ->icon('heroicon-o-x-circle')
+                    ->iconColor('danger')
+                    ->success()
+                    ->send();
+            });
     }
 }
