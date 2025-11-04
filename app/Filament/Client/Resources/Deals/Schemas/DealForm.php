@@ -57,6 +57,7 @@ class DealForm
                     ->schema([
                         Select::make('contact_id')
                             ->label('Contact')
+                            ->required()
                             ->relationship('contact', 'name', fn($query) => $query->where('user_id', Auth::id()))
                             ->searchable()
                             ->preload()
@@ -76,6 +77,7 @@ class DealForm
                         Select::make('user_id')
                             ->label('Assigned To')
                             ->relationship('user', 'name')
+                            ->required()
                             ->searchable()
                             ->default(fn () => Auth::id())
                             ->preload()
@@ -83,9 +85,17 @@ class DealForm
 
                         Select::make('source')
                             ->label('Associated Lead')
+                            ->required()
                             ->searchable()
+                            ->relationship(
+                                'lead',
+                                'lead_title',
+                                fn($query) => $query
+                                    ->where('status', 'Qualified')
+                                    ->where('user_id', Auth::id())
+                            )
+                            ->helperText('A lead must be of "qualified" status to be associated with a deal.')
                             ->preload()
-                            ->relationship('lead', 'lead_title', fn($query) => $query->where('user_id', Auth::id()))
                             ->columnSpan(1),
                     ]),
 
