@@ -34,11 +34,7 @@ class DealInfolist
                                     ->label('Status')
                                     ->badge()
                                     ->color(fn (string $state): string => match ($state) {
-                                        'Prospecting' => 'gray',
-                                        'Qualification' => 'info',
-                                        'Needs Analysis' => 'primary',
-                                        'Proposal' => 'warning',
-                                        'Negotiation' => 'warning',
+                                        'Open' => 'gray',
                                         'Closed Won' => 'success',
                                         'Closed Lost' => 'danger',
                                         default => 'gray',
