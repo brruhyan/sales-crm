@@ -118,8 +118,8 @@ class DealInfolist
                                     ->badge()
                                     ->color('info'),
 
-                                TextEntry::make('source')
-                                    ->label('Source')
+                                TextEntry::make('lead.lead_title')
+                                    ->label('Associated Lead')
                                     ->badge()
                                     ->icon('heroicon-o-link')
                                     ->color('gray'),
