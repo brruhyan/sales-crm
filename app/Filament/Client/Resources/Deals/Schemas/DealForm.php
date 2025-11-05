@@ -75,6 +75,7 @@ class DealForm
 
                         Select::make('user_id')
                             ->label('Assigned To')
+                            ->disabled()
                             ->relationship('user', 'name')
                             ->required()
                             ->searchable()
@@ -141,11 +142,13 @@ class DealForm
                     ->schema([
                         DatePicker::make('expected_close_date')
                             ->label('Expected Close Date')
+                            ->required()
                             ->native(false)
                             ->columnSpan(1),
 
                         DatePicker::make('actual_close_date')
                             ->label('Actual Close Date')
+                            ->required()
                             ->native(false)
                             ->columnSpan(1),
                     ]),
@@ -155,6 +158,7 @@ class DealForm
                     ->schema([
                         FileUpload::make('documents') 
                             ->label('Documents')
+                            ->required()
                             ->multiple() 
                             ->acceptedFileTypes(['application/pdf', 'image/*']) 
                             ->disk('public') 
