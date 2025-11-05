@@ -65,6 +65,6 @@ class PartialMatchDuplicate implements ValidationRule
             return !in_array($word, $stopWords) && strlen($word) > 2;
         });
 
-        return array_values($keywords); // Re-index the array
+        return array_values($keywords); 
     }
 }
