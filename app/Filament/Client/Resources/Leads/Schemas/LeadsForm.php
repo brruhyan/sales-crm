@@ -11,6 +11,9 @@ use Filament\Schemas\Components\Section;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Leads;
+use Illuminate\Validation\Rule;
+use App\Rules\PartialMatchDuplicate;
 
 class LeadsForm
 {
@@ -26,7 +29,11 @@ class LeadsForm
                         TextInput::make('lead_title')
                             ->label('Lead Title')
                             ->required()
-                            ->unique(ignoreRecord: true)
+                            ->rules([
+                                new PartialMatchDuplicate(
+                                    request()->route('record')?->id ?? null
+                                ),
+                            ])
                             ->validationMessages([
                                 'unique' => 'This lead has already been added/taken.',
                             ])

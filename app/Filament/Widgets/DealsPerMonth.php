@@ -26,7 +26,7 @@ class DealsPerMonth extends ChartWidget
 
         $dealsPerMonth = Deal::query()
             ->where('user_id', Auth::id())
-            ->where('status', 'Closed Won')
+            ->where('status', 'Deal Won')
             ->whereNotNull('actual_close_date')
             ->where('actual_close_date', '>=', Carbon::now()->subMonths(11)->startOfMonth())
             ->select(
