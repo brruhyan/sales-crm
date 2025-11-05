@@ -9,6 +9,7 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Select;
 use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Grid;
 
 class ProductsForm
 {
@@ -18,23 +19,30 @@ class ProductsForm
             ->components([
                 Section::make('Product Information')
                     ->description('Details about the product')
+                    ->columns(3)
                     ->columnSpanFull()
                     ->schema([
                         TextInput::make('product_name')
                             ->label('Product Name')
+                            ->columnSpanFull()
                             ->required(),
                         Textarea::make('description')
+                            ->columnSpanFull()
                             ->label('Description'),
+                Grid::make(1)
+                    ->columnSpan(1)
+                    ->schema([
                         TextInput::make('price')
                             ->label('Price')
-                            ->columnSpan(1)
                             ->prefix('₱')
                             ->numeric()
                             ->required(),
                         Toggle::make('sellable')
-                            ->label('Sellable')
+                            ->label('Authorized Seller')
                             ->default(true),
                     ]),
+
+                    ])
             ]);
     }
 }
