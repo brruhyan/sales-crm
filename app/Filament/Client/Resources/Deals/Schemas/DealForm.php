@@ -28,6 +28,10 @@ class DealForm
                     ->schema([
                         TextInput::make('title')
                             ->label('Deal Title')
+                            ->unique(ignoreRecord: true)
+                            ->validationMessages([
+                                'unique' => 'This deal has already been added/taken.',
+                            ])
                             ->required()
                             ->extraAttributes([
                                 'readonly' => true,
