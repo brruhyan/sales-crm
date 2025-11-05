@@ -16,7 +16,7 @@ class LeadsWidget extends StatsOverviewWidget
         return [
             Stat::make('New Leads', Leads::where('user_id', $userId)->where('status', 'New')->count()),
             Stat::make('Qualified Leads', Leads::where('user_id', $userId)->where('status', 'Qualified')->count()),
-            Stat::make('Lost Leads', Leads::where('user_id', $userId)->where('status', 'Lost')->count()),
+            Stat::make('Declined Leads', Leads::where('user_id', $userId)->where('status', 'Declined')->count()),
         ];
     }
     

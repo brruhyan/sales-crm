@@ -16,9 +16,9 @@ class DealsWidget extends StatsOverviewWidget
         
         return [
             Stat::make('Open Deals', Deal::where('user_id', $userId)->where('status', 'Open')->count()),
-            Stat::make('Deals Won', Deal::where('user_id', $userId)->where('status', 'Closed Won')->count()),
-            Stat::make('Lost Deals', Deal::where('user_id', $userId)->where('status', 'Closed Lost')->count()),
-            Stat::make('Total Deal Value', '₱' . number_format(Deal::where('user_id', $userId)->where('status', 'Closed Won')->sum('amount'))),
+            Stat::make('Deals Won', Deal::where('user_id', $userId)->where('status', 'Deal Won')->count()),
+            Stat::make('Lost Deals', Deal::where('user_id', $userId)->where('status', 'Lost')->count()),
+            Stat::make('Total Deal Value', '₱' . number_format(Deal::where('user_id', $userId)->where('status', 'Deal Won')->sum('amount'))),
         ];
     }
 }
