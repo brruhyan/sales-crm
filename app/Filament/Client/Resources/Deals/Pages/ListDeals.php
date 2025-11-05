@@ -6,7 +6,6 @@ use App\Filament\Client\Resources\Deals\DealResource;
 use Filament\Actions;
 use App\Filament\Client\Widgets\DealsWidget;
 use Filament\Resources\Pages\ListRecords;
-use App\Filament\Client\Widgets\DealsWidget;
 
 class ListDeals extends ListRecords
 {
