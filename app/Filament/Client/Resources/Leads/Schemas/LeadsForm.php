@@ -11,6 +11,8 @@ use Filament\Schemas\Components\Section;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Leads;
+use Illuminate\Validation\Rule;
 
 class LeadsForm
 {

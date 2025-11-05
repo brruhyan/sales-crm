@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 class CreateContact extends CreateRecord
 {
     protected static string $resource = ContactResource::class;
-
+    
     protected function mutateFormDataBeforeCreate(array $data): array
     {
         $data['user_id'] = Auth::id();
