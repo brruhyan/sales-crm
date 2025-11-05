@@ -35,6 +35,7 @@ class DealForm
                             ->label('Status')
                             ->options([
                                 'Open' => 'Open',
+                                'Proposal' => 'Proposal',
                                 'Closed Won' => 'Closed Won',
                                 'Closed Lost' => 'Closed Lost',
                             ])

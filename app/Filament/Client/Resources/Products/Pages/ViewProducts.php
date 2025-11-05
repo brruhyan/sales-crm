@@ -4,6 +4,7 @@ namespace App\Filament\Client\Resources\Products\Pages;
 
 use App\Filament\Client\Resources\Products\ProductsResource;
 use Filament\Actions\EditAction;
+use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\ViewRecord;
 
 class ViewProducts extends ViewRecord
@@ -14,6 +15,7 @@ class ViewProducts extends ViewRecord
     {
         return [
             EditAction::make(),
+            DeleteAction::make(),
         ];
     }
 }
