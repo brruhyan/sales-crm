@@ -5,7 +5,6 @@ namespace App\Filament\Client\Resources\Deals\Pages;
 use App\Filament\Client\Resources\Deals\DealResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
-use App\Filament\Client\Widgets\DealsWidget;
 
 class ListDeals extends ListRecords
 {
