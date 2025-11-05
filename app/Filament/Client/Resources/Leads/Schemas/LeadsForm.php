@@ -5,6 +5,7 @@ namespace App\Filament\Client\Resources\Leads\Schemas;
 use App\Models\Contact;
 use Filament\Schemas\Schema;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Select;
 use Filament\Schemas\Components\Section;
 use Filament\Forms\Get;
