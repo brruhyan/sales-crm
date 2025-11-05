@@ -18,7 +18,7 @@ class MarkDealClosedWonAction extends Action
             ->icon('heroicon-o-check-circle')
             ->requiresConfirmation()
             ->action(function (Deal $record) {
-                $record->update(['status' => 'Closed Won']);
+                $record->update(['status' => 'Deal Won']);
 
                 Notification::make()
                     ->title('Deal marked as Won.')

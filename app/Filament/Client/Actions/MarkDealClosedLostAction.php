@@ -18,7 +18,7 @@ class MarkDealClosedLostAction extends Action
             ->icon('heroicon-o-x-circle')
             ->requiresConfirmation()
             ->action(function (Deal $record) {
-                $record->update(['status' => 'Closed Lost']);
+                $record->update(['status' => 'Lost']);
 
                 Notification::make()
                     ->title('Deal marked as Lost.')
