@@ -81,6 +81,7 @@ class LeadsForm
                     ->schema([
                         Select::make('source')
                             ->label('Source')
+                            ->required()
                             ->options([
                                 'Website' => 'Website',
                                 'Referral' => 'Referral',
