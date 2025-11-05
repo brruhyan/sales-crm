@@ -26,6 +26,10 @@ class LeadsForm
                         TextInput::make('lead_title')
                             ->label('Lead Title')
                             ->required()
+                            ->unique(ignoreRecord: true)
+                            ->validationMessages([
+                                'unique' => 'This lead has already been added/taken.',
+                            ])
                             ->maxLength(255)
                             ->columnSpanFull(),
                         Select::make('contact_id')
@@ -67,10 +71,12 @@ class LeadsForm
                         
                         TextInput::make('company')
                             ->label('Company')
+                            ->required()
                             ->columnSpan(1),
                         
                         TextInput::make('phone')
                             ->label('Phone')
+                            ->required()
                             ->tel()
                             ->columnSpan(1),
                     ]),
@@ -99,7 +105,7 @@ class LeadsForm
                                 'New' => 'New',
                                 'Contacted' => 'Contacted',
                                 'Qualified' => 'Qualified',
-                                'Lost' => 'Lost',
+                                'Declined' => 'Declined',
                             ])
                             ->default('New')
                             ->required()

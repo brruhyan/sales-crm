@@ -29,6 +29,8 @@ class ProjectResource extends Resource
     public static string|UnitEnum|null $navigationGroup = 'Sales';
 
     protected static ?int $navigationSort = 30;
+    
+    protected static bool $shouldRegisterNavigation = false;
 
     protected static ?string $recordTitleAttribute = 'name';
 

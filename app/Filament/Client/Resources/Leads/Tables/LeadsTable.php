@@ -21,18 +21,22 @@ class LeadsTable
     {
         return $table
             ->columns([
+                TextColumn::make('lead_title')
+                    ->label('Lead Title')
+                    ->searchable(),
                 TextColumn::make('name')
                     ->label('Customer')
                     ->searchable(),
-                TextColumn::make('email')->label('Email'),
-                TextColumn::make('phone')->label('Phone'),
+                TextColumn::make('company')
+                    ->label('Company')
+                    ->searchable(),
                 BadgeColumn::make('status')
                     ->label('Status')
                     ->colors([
                         'primary' => 'New',
                         'warning' => 'Contacted',
                         'success' => 'Qualified',
-                        'danger' => 'Lost',
+                        'danger' => 'Declined',
                     ]),
             ])
                 ->filters([

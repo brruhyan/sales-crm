@@ -35,8 +35,8 @@ class DealInfolist
                                     ->badge()
                                     ->color(fn (string $state): string => match ($state) {
                                         'Open' => 'gray',
-                                        'Closed Won' => 'success',
-                                        'Closed Lost' => 'danger',
+                                        'Deal Won' => 'success',
+                                        'Lost' => 'danger',
                                         default => 'gray',
                                     })
                                     ->columnSpan(1),

@@ -13,15 +13,15 @@ class MarkLeadLostAction extends Action
         $name ??= 'markLost';
         
         return parent::make($name)
-            ->label('Mark as Lost')
+            ->label('Mark as Declined')
             ->color('danger')
             ->icon('heroicon-o-x-circle')
             ->requiresConfirmation()
             ->action(function (Leads $record) {
-                $record->update(['status' => 'Lost']);
+                $record->update(['status' => 'Declined']);
 
                 Notification::make()
-                    ->title('Lead marked as Lost.')
+                    ->title('Lead marked as Declined.')
                     ->icon('heroicon-o-x-circle')
                     ->iconColor('danger')
                     ->success()
