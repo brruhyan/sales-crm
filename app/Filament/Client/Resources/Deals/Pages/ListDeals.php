@@ -4,6 +4,7 @@ namespace App\Filament\Client\Resources\Deals\Pages;
 
 use App\Filament\Client\Resources\Deals\DealResource;
 use Filament\Actions;
+use App\Filament\Client\Widgets\DealsWidget;
 use Filament\Resources\Pages\ListRecords;
 
 class ListDeals extends ListRecords

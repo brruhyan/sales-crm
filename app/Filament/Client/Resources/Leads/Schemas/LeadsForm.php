@@ -66,10 +66,12 @@ class LeadsForm
                         
                         TextInput::make('company')
                             ->label('Company')
+                            ->required()
                             ->columnSpan(1),
                         
                         TextInput::make('phone')
                             ->label('Phone')
+                            ->required()
                             ->tel()
                             ->columnSpan(1),
                     ]),

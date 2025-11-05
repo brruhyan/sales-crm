@@ -13,6 +13,7 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Get;
 use Filament\Schemas\Components\Section;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Leads;
 
 class DealForm
 {
@@ -28,7 +29,36 @@ class DealForm
                         TextInput::make('title')
                             ->label('Deal Title')
                             ->required()
-                            ->maxLength(255)
+                            ->extraAttributes([
+                                'readonly' => true,
+                                'style' => 'background-color: transparent; color: inherit; pointer-events: none; cursor: default;'
+                            ])
+                            ->columnSpanFull()
+                            ->prefix('Implementation'),
+                        Select::make('source')
+                            ->label('Associated Lead')
+                            ->required()    
+                            ->searchable()
+                            ->relationship(
+                                'lead',
+                                'lead_title',
+                                fn($query) => $query
+                                    ->where('status', 'Qualified')
+                                    ->where('user_id', Auth::id())
+                            )
+                            ->helperText('A lead must be of "qualified" status to be associated with a deal.')
+                            ->preload()
+                            ->live()
+                            ->afterStateUpdated(function (?string $state, callable $set) {
+                                if ($state) {
+                                    $lead = Leads::find($state);
+                                    if ($lead) {
+                                        $set('title', $lead->lead_title ?? '');
+                                    }
+                                } else {
+                                    $set('title', '');
+                                }
+                            })
                             ->columnSpan(1),
                         
                         Select::make('status')
@@ -50,8 +80,8 @@ class DealForm
 
                     ]),
                 Section::make('Associations')
-                    ->description('Contact and associated deal')
-                    ->columns(3)
+                    ->description('Contact and associated lead')
+                    ->columns(2)
                     ->columnSpanFull()
                     ->schema([
                         Select::make('contact_id')
@@ -76,25 +106,11 @@ class DealForm
                         Select::make('user_id')
                             ->label('Assigned To')
                             ->disabled()
+                            ->columnSpan(2)
                             ->relationship('user', 'name')
                             ->required()
                             ->searchable()
                             ->default(fn () => Auth::id())
-                            ->preload()
-                            ->columnSpan(1),
-
-                        Select::make('source')
-                            ->label('Associated Lead')
-                            ->required()    
-                            ->searchable()
-                            ->relationship(
-                                'lead',
-                                'lead_title',
-                                fn($query) => $query
-                                    ->where('status', 'Qualified')
-                                    ->where('user_id', Auth::id())
-                            )
-                            ->helperText('A lead must be of "qualified" status to be associated with a deal.')
                             ->preload()
                             ->columnSpan(1),
                     ]),
