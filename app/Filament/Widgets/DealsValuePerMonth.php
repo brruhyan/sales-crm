@@ -19,13 +19,11 @@ class DealsValuePerMonth extends ChartWidget
 
     protected function getData(): array
     {
-        // Get the last 12 months
         $months = collect();
         for ($i = 11; $i >= 0; $i--) {
             $months->push(Carbon::now()->subMonths($i));
         }
 
-        // Get total deal value per month (only PHP currency for consistency)
         $dealsValuePerMonth = Deal::query()
             ->where('user_id', Auth::id())
             ->where('status', 'Deal Won')
@@ -42,7 +40,6 @@ class DealsValuePerMonth extends ChartWidget
                 return $item->year . '-' . str_pad($item->month, 2, '0', STR_PAD_LEFT);
             });
 
-        // Map the data to labels and values
         $data = $months->map(function ($month) use ($dealsValuePerMonth) {
             $key = $month->format('Y-m');
             return $dealsValuePerMonth->get($key)?->total_value ?? 0;
