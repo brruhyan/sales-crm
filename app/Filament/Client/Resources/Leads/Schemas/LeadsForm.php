@@ -25,6 +25,10 @@ class LeadsForm
                         TextInput::make('lead_title')
                             ->label('Lead Title')
                             ->required()
+                            ->unique(ignoreRecord: true)
+                            ->validationMessages([
+                                'unique' => 'This lead has already been added/taken.',
+                            ])
                             ->maxLength(255)
                             ->columnSpanFull(),
                         Select::make('contact_id')

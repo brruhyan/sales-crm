@@ -57,7 +57,7 @@ class DealForm
                                 if ($state) {
                                     $lead = Leads::find($state);
                                     if ($lead) {
-                                        $set('title', $lead->lead_title ?? '');
+                                        $set('title', 'Implementation of: ' . $lead->lead_title ?? '');
                                     }
                                 } else {
                                     $set('title', '');

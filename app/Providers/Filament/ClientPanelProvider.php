@@ -54,8 +54,8 @@ class ClientPanelProvider extends PanelProvider
             ])
             ->databaseNotifications()
             ->widgets([
+                LeadsWidget::class,
                 DealsWidget::class,
-                ProjectsWidget::class,
                 DealsPerMonth::class,
                 DealsValuePerMonth::class,
             ])

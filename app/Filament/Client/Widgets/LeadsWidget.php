@@ -20,8 +20,4 @@ class LeadsWidget extends StatsOverviewWidget
         ];
     }
     
-    public static function canView(): bool
-    {
-        return request()->routeIs('filament.client.resources.leads.index');
-    }
 }
