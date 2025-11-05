@@ -33,16 +33,18 @@ class PartialMatchDuplicate implements ValidationRule
             ->when($this->leadId, function ($query) {
                 return $query->where('id', '!=', $this->leadId);
             })
-            ->pluck('lead_title');
+            ->with('user')
+            ->get();
 
-        foreach ($existingLeads as $existingTitle) {
-            $existingKeywords = $this->extractKeywords($existingTitle);
+        foreach ($existingLeads as $existingLead) {
+            $existingKeywords = $this->extractKeywords($existingLead->lead_title);
             $matchedKeywords = array_intersect($inputKeywords, $existingKeywords);
 
             $matchPercentage = count($matchedKeywords) / max(count($inputKeywords), count($existingKeywords));
 
             if ($matchPercentage >= 0.5) {
-                $fail("A similar lead '{$existingTitle}' already exists. This may be a duplicate based on matching keywords.");
+                $creatorName = $existingLead->user->name ?? 'Unknown';
+                $fail("A similar lead '{$existingLead->lead_title}' by {$creatorName} already exists.");
                 return;
             }
         }
