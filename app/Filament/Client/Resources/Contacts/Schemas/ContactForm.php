@@ -5,6 +5,7 @@ namespace App\Filament\Client\Resources\Contacts\Schemas;
 use Filament\Schemas\Schema;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
+use Illuminate\Validation\Rule;
 
 class ContactForm
 {
@@ -21,8 +22,15 @@ class ContactForm
                             ->label('Name')
                             ->required()
                             ->maxLength(255)
-                            ->columnSpan(1),
-
+                            ->columnSpan(1)
+                            ->unique(
+                                'contacts',
+                                'name',
+                                ignoreRecord: true,
+                            )
+                            ->validationMessages([
+                                'unique' => 'This contact already exists for the specified company.',
+                            ]),
                         TextInput::make('email')
                             ->label('Email')
                             ->email()

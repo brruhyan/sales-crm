@@ -29,6 +29,7 @@ class DealForm
                         TextInput::make('title')
                             ->label('Deal Title')
                             ->unique(ignoreRecord: true)
+                            ->helperText('Deal title is auto-generated when associated lead is selected.')
                             ->validationMessages([
                                 'unique' => 'This deal has already been added/taken.',
                             ])
@@ -37,8 +38,7 @@ class DealForm
                                 'readonly' => true,
                                 'style' => 'background-color: transparent; color: inherit; pointer-events: none; cursor: default;'
                             ])
-                            ->columnSpanFull()
-                            ->prefix('Implementation'),
+                            ->columnSpanFull(),
                         Select::make('source')
                             ->label('Associated Lead')
                             ->required()    
@@ -57,7 +57,7 @@ class DealForm
                                 if ($state) {
                                     $lead = Leads::find($state);
                                     if ($lead) {
-                                        $set('title', 'Implementation of: ' . $lead->lead_title ?? '');
+                                        $set('title', 'Implementation of ' . $lead->lead_title ?? '');
                                     }
                                 } else {
                                     $set('title', '');
