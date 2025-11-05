@@ -63,7 +63,7 @@ class LeadsInfolist
                                         'New' => 'info',
                                         'Contacted' => 'warning',
                                         'Qualified' => 'success',
-                                        'Lost' => 'danger',
+                                        'Declined' => 'danger',
                                         default => 'gray',
                                     })
                                     ->columnSpan(1),

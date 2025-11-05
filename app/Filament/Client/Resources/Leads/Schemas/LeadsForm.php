@@ -100,7 +100,7 @@ class LeadsForm
                                 'New' => 'New',
                                 'Contacted' => 'Contacted',
                                 'Qualified' => 'Qualified',
-                                'Lost' => 'Lost',
+                                'Declined' => 'Declined',
                             ])
                             ->default('New')
                             ->required()

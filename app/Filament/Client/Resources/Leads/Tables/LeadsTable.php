@@ -36,7 +36,7 @@ class LeadsTable
                         'primary' => 'New',
                         'warning' => 'Contacted',
                         'success' => 'Qualified',
-                        'danger' => 'Lost',
+                        'danger' => 'Declined',
                     ]),
             ])
                 ->filters([
