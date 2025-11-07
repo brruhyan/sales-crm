@@ -60,7 +60,7 @@ class ClientPanelProvider extends PanelProvider
                 DealsPerMonth::class,
                 DealsValuePerMonth::class,
             ])
-        ->discoverWidgets(in: app_path('Filament/Client/Widgets'), for: 'App\Filament\Client\Widgets')
+            ->discoverWidgets(in: app_path('Filament/Client/Widgets'), for: 'App\Filament\Client\Widgets')
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
