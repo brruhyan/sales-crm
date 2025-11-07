@@ -13,54 +13,66 @@ class ProductsInfolist
     {
         return $schema
             ->components([
-                Section::make('Service Information')
-                    ->description('Details about the service')
-                    ->columns(2)
+                Section::make()
+                    ->columns(1)
                     ->schema([
                         TextEntry::make('product_name')
                             ->label('Service Name')
-                            ->columnSpanFull(),
-                        TextEntry::make('price')
-                            ->label('Price')
-                            ->money('PHP'),
+                            ->columnSpanFull()
+                            ->size('lg')
+                            ->weight('bold'),
+                        TextEntry::make('company_name')
+                            ->label('Company Name')
+                            ->columnSpanFull()
+                            ->color('gray'),
                         TextEntry::make('description')
                             ->label('Description')
                             ->columnSpanFull()
-                            ->prose(),
+                            ->prose()
+                            ->size('md'),
                     ]),
 
-                Section::make('Service Details')
+                Section::make('FEATURES')
                     ->columns(1)
                     ->schema([
                         TextEntry::make('features')
-                            ->label('Features')
+                            ->label('')
                             ->columnSpanFull()
-                            ->prose()
-                            ->formatStateUsing(fn ($state) => $state ? '<ul style="list-style-type: disc; margin-left: 1.5rem;"><li>' . implode('</li><li>', array_filter(explode("\n", $state))) . '</li></ul>' : 'N/A')
-                            ->html(),
-                        TextEntry::make('benefits')
-                            ->label('Benefits')
-                            ->columnSpanFull()
-                            ->prose()
-                            ->formatStateUsing(fn ($state) => $state ? '<ul style="list-style-type: disc; margin-left: 1.5rem;"><li>' . implode('</li><li>', array_filter(explode("\n", $state))) . '</li></ul>' : 'N/A')
-                            ->html(),
-                        TextEntry::make('use_cases')
-                            ->label('Use Cases')
-                            ->columnSpanFull()
-                            ->prose()
-                            ->formatStateUsing(fn ($state) => $state ? '<ul style="list-style-type: disc; margin-left: 1.5rem;"><li>' . implode('</li><li>', array_filter(explode("\n", $state))) . '</li></ul>' : 'N/A')
+                            ->formatStateUsing(fn ($state) => $state ? '<ul style="list-style-type: disc; margin-left: 1.5rem; padding: 0;"><li style="margin-bottom: 0.5rem;">' . implode('</li><li style="margin-bottom: 0.5rem;">', array_filter(array_map('trim', explode("\n", $state)))) . '</li></ul>' : 'N/A')
                             ->html(),
                     ]),
 
-                Section::make('Additional Information')
+                Section::make('BENEFITS')
+                    ->columns(1)
+                    ->schema([
+                        TextEntry::make('benefits')
+                            ->label('')
+                            ->columnSpanFull()
+                            ->formatStateUsing(fn ($state) => $state ? '<ul style="list-style-type: disc; margin-left: 1.5rem; padding: 0;"><li style="margin-bottom: 0.5rem;">' . implode('</li><li style="margin-bottom: 0.5rem;">', array_filter(array_map('trim', explode("\n", $state)))) . '</li></ul>' : 'N/A')
+                            ->html(),
+                    ]),
+
+                Section::make('USE CASES')
+                    ->columns(1)
+                    ->schema([
+                        TextEntry::make('use_cases')
+                            ->label('')
+                            ->columnSpanFull()
+                            ->formatStateUsing(fn ($state) => $state ? '<ul style="list-style-type: disc; margin-left: 1.5rem; padding: 0;"><li style="margin-bottom: 0.5rem;">' . implode('</li><li style="margin-bottom: 0.5rem;">', array_filter(array_map('trim', explode("\n", $state)))) . '</li></ul>' : 'N/A')
+                            ->html(),
+                    ]),
+
+                Section::make()
                     ->columns(2)
                     ->schema([
+                        TextEntry::make('price')
+                            ->label('Price')
+                            ->money('PHP'),
                         TextEntry::make('link')
                             ->label('Learn More')
                             ->url(fn ($state) => $state)
                             ->openUrlInNewTab()
                             ->columnSpanFull(),
-
                     ]),
             ]);
     }
