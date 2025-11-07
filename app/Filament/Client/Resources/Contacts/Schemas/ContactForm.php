@@ -6,6 +6,8 @@ use Filament\Schemas\Schema;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Illuminate\Validation\Rule;
+use App\Rules\ContactDuplicateChecker;
+use Filament\Schemas\Components\Utilities\Get;
 
 class ContactForm
 {
@@ -23,11 +25,14 @@ class ContactForm
                             ->required()
                             ->maxLength(255)
                             ->columnSpan(1)
-                            ->unique(
-                                'contacts',
-                                'name',
-                                ignoreRecord: true,
-                            )
+                            ->rules([
+                                function (Get $get) {
+                                    return new ContactDuplicateChecker(
+                                        $get('company'),
+                                        request()->route('record')?->id ?? null
+                                    );
+                                }
+                            ])
                             ->validationMessages([
                                 'unique' => 'This contact already exists for the specified company.',
                             ]),
