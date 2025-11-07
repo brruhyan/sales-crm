@@ -12,6 +12,7 @@ class ProductsTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->recordUrl(null)
             ->columns([
                 TextColumn::make('product_name')
                     ->label('Service Name')
@@ -25,12 +26,17 @@ class ProductsTable
                     ->label('Description')
                     ->limit(50)
                     ->tooltip(fn ($record) => $record->description),
+                TextColumn::make('link')
+                    ->label('Learn More')
+                    ->url(fn ($record) => $record->link)
+                    ->openUrlInNewTab()
+                    ->limit(30)
+                    ->tooltip(fn ($record) => $record->link),
             ])
             ->filters([
                 TrashedFilter::make(),
             ])
             ->recordActions([
-                ViewAction::make(),
             ]);
     }
 }
