@@ -10,23 +10,33 @@ class ProductSeeder extends Seeder
 {
     use WithoutModelEvents;
 
-    /**
-     * Seed the products table with company services.
-     */
+
     public function run(): void
     {
         $services = [
             [
                 'product_name' => 'Data Fusion 360',
                 'description' => 'Advanced Data Integration and Analytics Platform',
-                'features' => "Real-time data integration\nAdvanced analytics and reporting",
-                'benefits' => "Improved decision-making\nIncreased operational efficiency",
-                'use_cases' => "Business intelligence\nMarketing analytics",
+                'category' => 'MaraBiz',
                 'link' => 'https://maralabs.ph/marabiz/datafusion-360/',
-                'price' => 5000.00,
                 'sellable' => true,
             ],
 
+            [
+                'product_name' => 'AksyonSentral',
+                'description' => 'Incident Managment and Data Aggregator Platform',
+                'category' => 'MaraBiz',
+                'link' => 'https://maralabs.ph/marabiz/aksyon-sentral/',
+                'sellable' => true,
+            ],
+
+            [
+                'product_name' => 'AksyonMap',
+                'description' => 'Geographic Information System (GIS) and Mapping Product',
+                'category' => 'MaraBiz',
+                'link' => 'https://maralabs.ph/marabiz/aksyon-map/',
+                'sellable' => true,
+            ]
         ];
 
         foreach ($services as $service) {

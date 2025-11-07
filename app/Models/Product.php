@@ -13,19 +13,17 @@ class Product extends Model
     protected $fillable = [
         'product_name',
         'image',
-        'company_name',
+        'category',
         'description',
         'features',
         'benefits',
         'use_cases',
         'link',
-        'price',
         'sellable',
         'user_id',
     ];
 
     protected $casts = [
-        'price' => 'decimal:2',
         'sellable' => 'boolean',
     ];
 

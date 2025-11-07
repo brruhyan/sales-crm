@@ -18,9 +18,9 @@ class ProductsTable
                     ->label('Service Name')
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('price')
-                    ->label('Price')
-                    ->money('PHP')
+                TextColumn::make('category')
+                    ->label('Category')
+                    ->searchable()
                     ->sortable(),
                 TextColumn::make('description')
                     ->label('Description')
