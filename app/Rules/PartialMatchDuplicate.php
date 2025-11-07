@@ -43,8 +43,7 @@ class PartialMatchDuplicate implements ValidationRule
             $matchPercentage = count($matchedKeywords) / max(count($inputKeywords), count($existingKeywords));
 
             if ($matchPercentage >= 0.5) {
-                $creatorName = $existingLead->user->name ?? 'Unknown';
-                $fail("A similar lead '{$existingLead->lead_title}' by {$creatorName} already exists.");
+                $fail("A similar lead — {$existingLead->lead_title} — already exists.");
                 return;
             }
         }

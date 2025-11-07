@@ -94,6 +94,7 @@ class LeadsForm
                     ->schema([
                         Select::make('industry')
                             ->label('Industry')
+                            ->helperText('Select industry first before proceeding to Category')
                             ->required()
                             ->options([
                                 'Technology' => 'Technology',
@@ -121,8 +122,8 @@ class LeadsForm
                                 }
                             })
                             ->columnSpan(1),
-                        Select::make('industry_type')
-                            ->label('Industry Type')
+                        Select::make('category')
+                            ->label('Category')
                             ->required()
                             ->options(function (callable $get) {
                                 $industry = $get('industry');
