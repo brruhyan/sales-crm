@@ -87,6 +87,69 @@ class LeadsForm
                             ->tel()
                             ->columnSpan(1),
                     ]),
+                Section::make('Lead Type')
+                    ->description('Lead Classification')
+                    ->columns(2)
+                    ->columnSpanFull()
+                    ->schema([
+                        Select::make('industry')
+                            ->label('Industry')
+                            ->required()
+                            ->options([
+                                'Technology' => 'Technology',
+                                'Healthcare' => 'Healthcare',
+                                'Finance' => 'Finance',
+                                'Education' => 'Education',
+                            ])
+                            ->reactive()
+                            ->afterStateUpdated(function (?string $state, callable $set) {
+                                if ($state === 'Technology') {
+                                    $set('lead_type', 'Tech Lead');
+                                    $set('industry_type', 'Software');
+                                } elseif ($state === 'Healthcare') {
+                                    $set('lead_type', 'Health Lead');
+                                    $set('industry_type', 'Hospital');
+                                } elseif ($state === 'Finance') {
+                                    $set('lead_type', 'Finance Lead');
+                                    $set('industry_type', 'Banking');
+                                } elseif ($state === 'Education') {
+                                    $set('lead_type', 'Education Lead');
+                                    $set('industry_type', 'School');
+                                } else {
+                                    $set('lead_type', 'General Lead');
+                                    $set('industry_type', null);
+                                }
+                            })
+                            ->columnSpan(1),
+                        Select::make('industry_type')
+                            ->label('Industry Type')
+                            ->required()
+                            ->options(function (callable $get) {
+                                $industry = $get('industry');
+
+                                return match ($industry) {
+                                    'Technology' => [
+                                        'Software' => 'Software',
+                                        'Hardware' => 'Hardware',
+                                        'AI' => 'AI',
+                                    ],
+                                    'Healthcare' => [
+                                        'Hospital' => 'Hospital',
+                                        'Pharmaceutical' => 'Pharmaceutical',
+                                    ],
+                                    'Finance' => [
+                                        'Banking' => 'Banking',
+                                        'Investment' => 'Investment',
+                                    ],
+                                    'Education' => [
+                                        'School' => 'School',
+                                        'University' => 'University',
+                                    ],
+                                    default => [],
+                                };
+                            })
+                            ->columnSpan(1),
+                    ]),
                     
                 Section::make('Lead Status')
                     ->description('Source and Status')
@@ -99,9 +162,7 @@ class LeadsForm
                             ->options([
                                 'Website' => 'Website',
                                 'Referral' => 'Referral',
-                                'Social Media' => 'Social Media',
                                 'Event' => 'Event',
-                                'Cold Call' => 'Cold Call',
                                 'Other' => 'Other',
                             ])
                             ->columnSpan(1),
