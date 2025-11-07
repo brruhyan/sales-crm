@@ -62,42 +62,30 @@ class ContactDuplicateChecker implements ValidationRule
         }
     }
 
-    /**
-     * Normalize name by converting to lowercase and removing extra spaces
-     */
     private function normalizeName(string $name): string
     {
         return strtolower(trim(preg_replace('/\s+/', ' ', $name)));
     }
 
-    /**
-     * Normalize company name
-     */
     private function normalizeCompany(string $company): string
     {
         return strtolower(trim(preg_replace('/\s+/', ' ', $company)));
     }
 
-    /**
-     * Check if two names are similar using keyword matching
-     */
+
     private function isSimilarName(string $name1, string $name2): bool
     {
-        // Extract keywords (typically first and last names)
         $keywords1 = array_filter(explode(' ', $name1));
         $keywords2 = array_filter(explode(' ', $name2));
 
-        // If either is empty, they're not similar
         if (empty($keywords1) || empty($keywords2)) {
             return false;
         }
 
-        // Check for exact match first
         if ($name1 === $name2) {
             return true;
         }
 
-        // Check if all keywords from the shorter name appear in the longer name
         $shorter = count($keywords1) <= count($keywords2) ? $keywords1 : $keywords2;
         $longer = count($keywords1) > count($keywords2) ? $keywords1 : $keywords2;
 
@@ -108,7 +96,6 @@ class ContactDuplicateChecker implements ValidationRule
             }
         }
 
-        // If 100% of shorter name keywords match, consider them similar
         return $matchCount === count($shorter) && count($shorter) > 0;
     }
 }

@@ -12,14 +12,18 @@ class Product extends Model
 
     protected $fillable = [
         'product_name',
+        'image',
+        'category',
         'description',
-        'price',
+        'features',
+        'benefits',
+        'use_cases',
+        'link',
         'sellable',
         'user_id',
     ];
 
     protected $casts = [
-        'price' => 'decimal:2',
         'sellable' => 'boolean',
     ];
 

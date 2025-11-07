@@ -2,11 +2,6 @@
 
 namespace App\Filament\Client\Resources\Products\Tables;
 
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\ForceDeleteBulkAction;
-use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
@@ -17,38 +12,31 @@ class ProductsTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->recordUrl(null)
             ->columns([
                 TextColumn::make('product_name')
-                    ->label('Product Name')
+                    ->label('Service Name')
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('price')
-                    ->label('Price')
-                    ->money('PHP')
+                TextColumn::make('category')
+                    ->label('Category')
+                    ->searchable()
                     ->sortable(),
-                TextColumn::make('sellable')
-                    ->label('Authorized Seller')
-                    ->badge()
-                    ->formatStateUsing(fn ($state) => $state == 1 ? 'Yes' : 'No')
-                    ->colors([
-                        'success' => fn ($state) => (int) $state === 1,
-                        'danger' => fn ($state) => (int) $state === 0,
-                    ])
-                    ->sortable(),
+                TextColumn::make('description')
+                    ->label('Description')
+                    ->limit(50)
+                    ->tooltip(fn ($record) => $record->description),
+                TextColumn::make('link')
+                    ->label('Learn More')
+                    ->url(fn ($record) => $record->link)
+                    ->openUrlInNewTab()
+                    ->limit(30)
+                    ->tooltip(fn ($record) => $record->link),
             ])
             ->filters([
                 TrashedFilter::make(),
             ])
             ->recordActions([
-                ViewAction::make(),
-                EditAction::make(),
-            ])
-            ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                    ForceDeleteBulkAction::make(),
-                    RestoreBulkAction::make(),
-                ]),
             ]);
     }
 }
