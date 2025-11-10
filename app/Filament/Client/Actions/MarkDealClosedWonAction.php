@@ -15,6 +15,7 @@ class MarkDealClosedWonAction extends Action
         return parent::make($name)
             ->label('Mark as Won')
             ->color('success')
+            ->visible(fn (Deal $record) => $record->status !== 'Deal Won')
             ->icon('heroicon-o-check-circle')
             ->requiresConfirmation()
             ->action(function (Deal $record) {

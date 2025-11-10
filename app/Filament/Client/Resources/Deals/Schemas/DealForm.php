@@ -14,6 +14,7 @@ use Filament\Forms\Get;
 use Filament\Schemas\Components\Section;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Leads;
+use App\Rules\PartialMatchDuplicateDeal;
 
 class DealForm
 {
@@ -29,15 +30,12 @@ class DealForm
                         TextInput::make('title')
                             ->label('Deal Title')
                             ->unique(ignoreRecord: true)
-                            ->helperText('Deal title is auto-generated when associated lead is selected.')
-                            ->validationMessages([
+                            ->rules([new PartialMatchDuplicateDeal()])
+                            ->helperText('Select Associated Lead to auto-fill this field.')
+                            ->validationMessages([  
                                 'unique' => 'This deal has already been added/taken.',
                             ])
                             ->required()
-                            ->extraAttributes([
-                                'readonly' => true,
-                                'style' => 'background-color: transparent; color: inherit; pointer-events: none; cursor: default;'
-                            ])
                             ->columnSpanFull(),
                         Select::make('source')
                             ->label('Associated Lead')

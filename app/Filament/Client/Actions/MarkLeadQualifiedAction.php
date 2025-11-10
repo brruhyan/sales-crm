@@ -15,6 +15,7 @@ class MarkLeadQualifiedAction extends Action
         return parent::make($name)
             ->label('Mark as Qualified')
             ->color('success')
+            ->visible(fn (Leads $record) => $record->status !== 'Qualified')
             ->icon('heroicon-o-check-circle')
             ->requiresConfirmation()
             ->action(function (Leads $record) {

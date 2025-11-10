@@ -15,6 +15,7 @@ class MarkLeadLostAction extends Action
         return parent::make($name)
             ->label('Mark as Declined')
             ->color('danger')
+            ->visible(fn (Leads $record) => $record->status !== 'Declined')
             ->icon('heroicon-o-x-circle')
             ->requiresConfirmation()
             ->action(function (Leads $record) {

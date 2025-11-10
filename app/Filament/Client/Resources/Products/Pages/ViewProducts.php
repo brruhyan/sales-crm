@@ -12,7 +12,7 @@ class ViewProducts extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
-            // Read-only view - no edit or delete actions
+
         ];
     }
 }
