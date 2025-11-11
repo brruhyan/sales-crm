@@ -61,33 +61,29 @@ class MetricsInfolist
                         Section::make('List of Deals Won')
                             ->columns(1)
                             ->description('All deals won')
-                            ->schema(function ($record) {
-                                $deals = Deal::where('user_id', $record->id)
-                                    ->where('status', 'Deal Won')
-                                    ->take(5)
-                                    ->get();
+                            ->schema([
+                                TextEntry::make('deals_list')
+                                    ->label('Deals')
+                                    ->columnSpanFull()
+                                    ->badge()
+                                    ->color('success')
+                                    ->state(function ($record) {
+                                        $deals = Deal::where('user_id', $record->id)
+                                            ->where('status', 'Deal Won')
+                                            ->take(5)
+                                            ->get();
 
-                                if ($deals->isEmpty()) {
-                                    return [
-                                        TextEntry::make('no_deals')
-                                            ->label('Deals Won')
-                                            ->badge()
-                                            ->color('success')
-                                            ->state('—')
-                                            ->columnSpanFull(),
-                                    ];
-                                }
+                                        if ($deals->isEmpty()) {
+                                            return '—';
+                                        }
 
-                                $deals->each(function ($deal) use (&$schema) {
-                                    $schema[] = TextEntry::make('deal_' . $deal->id)
-                                        ->state($deal->title . ' (₱' . number_format($deal->amount) . ')')
-                                        ->badge()
-                                        ->color('success')
-                                        ->columnSpanFull();
-                                });
-
-                                return $schema;
-                            }),
+                                        return $deals->map(function ($deal) {
+                                            return '• ' . e($deal->title) . ' (₱' . number_format($deal->amount) . ')';
+                                        })->join("<br>");
+                                    })
+                                    ->html()
+                                    ->columnSpanFull(),
+                            ]),
                     ]),
 
                 Section::make()
