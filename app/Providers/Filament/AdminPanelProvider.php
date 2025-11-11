@@ -19,6 +19,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use App\Http\Middleware\CheckIsAdmin;
+use Filafly\Themes\Brisk\BriskTheme;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -29,6 +30,8 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->viteTheme('resources/css/filament/admin/theme.css')
+            ->plugin(BriskTheme::make())
             ->brandLogo(asset('M with border.png'))
             ->brandLogoHeight('3rem')
             ->colors([
