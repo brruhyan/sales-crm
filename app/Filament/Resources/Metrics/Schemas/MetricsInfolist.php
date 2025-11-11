@@ -65,8 +65,6 @@ class MetricsInfolist
                                 TextEntry::make('deals_list')
                                     ->label('Deals')
                                     ->columnSpanFull()
-                                    ->badge()
-                                    ->color('success')
                                     ->state(function ($record) {
                                         $deals = Deal::where('user_id', $record->id)
                                             ->where('status', 'Deal Won')
@@ -78,7 +76,7 @@ class MetricsInfolist
                                         }
 
                                         return $deals->map(function ($deal) {
-                                            return '• ' . e($deal->title) . ' (₱' . number_format($deal->amount) . ')';
+                                            return '• ' . $deal->title . ' (₱' . number_format($deal->amount) . ')';
                                         })->join("<br>");
                                     })
                                     ->html()
