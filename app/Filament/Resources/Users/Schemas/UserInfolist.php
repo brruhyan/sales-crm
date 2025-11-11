@@ -13,55 +13,45 @@ class UserInfolist
     {
         return $schema
             ->components([
-                Section::make('User Information')
+                Section::make()
+                    ->columnSpanFull()
                     ->schema([
-                        TextEntry::make('name')
-                            ->label('Name')
-                            ->icon('heroicon-o-user'),
-                        TextEntry::make('email')
-                            ->label('Email Address')
-                            ->icon('heroicon-o-envelope')
-                            ->copyable(),
-                    ])
-                    ->columns(2),
-                
-                Section::make('Account Status')
-                    ->schema([
-                        IconEntry::make('is_admin')
-                            ->label('Admin User')
-                            ->boolean()
-                            ->trueIcon('heroicon-o-shield-check')
-                            ->falseIcon('heroicon-o-shield-exclamation')
-                            ->trueColor('warning')
-                            ->falseColor('gray'),
-                        IconEntry::make('approved')
-                            ->label('Approved')
-                            ->boolean()
-                            ->trueIcon('heroicon-o-check-circle')
-                            ->falseIcon('heroicon-o-x-circle')
-                            ->trueColor('success')
-                            ->falseColor('danger'),
-                        TextEntry::make('email_verified_at')
-                            ->label('Email Verified At')
-                            ->dateTime('M j, Y H:i:s')
-                            ->placeholder('Not verified')
-                            ->icon('heroicon-o-shield-check'),
-                    ])
-                    ->columns(3),
-                
-                Section::make('Timestamps')
-                    ->schema([
-                        TextEntry::make('created_at')
-                            ->label('Created At')
-                            ->dateTime('M j, Y H:i:s')
-                            ->icon('heroicon-o-clock'),
-                        TextEntry::make('updated_at')
-                            ->label('Updated At')
-                            ->dateTime('M j, Y H:i:s')
-                            ->icon('heroicon-o-arrow-path'),
-                    ])
-                    ->columns(2)
-                    ->collapsed(),
+                        Section::make('User Information')
+                            ->columns(3)
+                            ->schema([
+                                TextEntry::make('name')
+                                    ->label('Name')
+                                    ->columnSpan(1)
+                                    ->icon('heroicon-o-user'),
+                                TextEntry::make('email')
+                                    ->label('Email Address')
+                                    ->icon('heroicon-o-envelope')
+                                    ->copyable(),
+                            ]),
+                        Section::make('Account Status')
+                            ->schema([
+                                IconEntry::make('is_admin')
+                                    ->label('Admin User')
+                                    ->boolean()
+                                    ->trueIcon('heroicon-o-shield-check')
+                                    ->falseIcon('heroicon-o-shield-exclamation')
+                                    ->trueColor('warning')
+                                    ->falseColor('gray'),
+                                IconEntry::make('approved')
+                                    ->label('Approved')
+                                    ->boolean()
+                                    ->trueIcon('heroicon-o-check-circle')
+                                    ->falseIcon('heroicon-o-x-circle')
+                                    ->trueColor('success')
+                                    ->falseColor('danger'),
+                                TextEntry::make('email_verified_at')
+                                    ->label('Email Verified At')
+                                    ->dateTime('M j, Y')
+                                    ->placeholder('Not verified')
+                                    ->icon('heroicon-o-shield-check'),
+                            ])
+                            ->columns(3),
+                    ]),
             ]);
     }
 }
