@@ -7,6 +7,7 @@ use Filament\Widgets\StatsOverviewWidget\Stat;
 use App\Filament\Client\Widgets\State;
 use App\Models\Deal;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class DealsWidget extends StatsOverviewWidget
 {
@@ -18,7 +19,12 @@ class DealsWidget extends StatsOverviewWidget
             Stat::make('Open Deals', Deal::where('user_id', $userId)->where('status', 'Open')->count()),
             Stat::make('Deals Won', Deal::where('user_id', $userId)->where('status', 'Deal Won')->count()),
             Stat::make('Lost Deals', Deal::where('user_id', $userId)->where('status', 'Lost')->count()),
-            Stat::make('Total Deal Value', '₱' . number_format(Deal::where('user_id', $userId)->where('status', 'Deal Won')->sum('amount'))),
+            Stat::make(
+                'Total Deal Value',
+                Str::limit(
+                    '₱' . number_format(Deal::where('user_id', $userId)->where('status', 'Deal Won')->sum('amount')),
+                    50
+                )),
         ];
     }
 }

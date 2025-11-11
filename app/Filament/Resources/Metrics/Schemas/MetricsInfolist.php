@@ -24,6 +24,7 @@ class MetricsInfolist
                 ->schema([
                     Section::make('Metrics Details')
                         ->columns(3)
+                        ->description('Deals won and its corresponding value.')
                         ->schema([
                             TextEntry::make('name')
                                 ->label('Name')
