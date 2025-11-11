@@ -30,6 +30,7 @@ use App\Filament\Client\Widgets\LeadsWidget;
 // Login Verification
 use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Filafly\Themes\Brisk\BriskTheme;
 
 class ClientPanelProvider extends PanelProvider
 {
@@ -41,7 +42,8 @@ class ClientPanelProvider extends PanelProvider
             ->login()
             ->registration(Register::class)
             ->passwordReset()
-
+            ->viteTheme('resources/css/filament/client/theme.css')
+            ->plugin(BriskTheme::make())
             // Header Changes
             ->brandLogo(asset('M with border.png'))
             ->brandLogoHeight('3rem')
