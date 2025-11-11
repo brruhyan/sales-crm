@@ -52,6 +52,39 @@ class MetricsInfolist
                                 ->color('warning')
                         ]),
                 ]),
+                Section::make()
+                ->columnSpanFull()
+                ->schema([
+                    Section::make('Recent Deal Metrics')
+                        ->columns(4)
+                        ->description('Recent deals won and its corresponding value.')
+                        ->schema([
+                            TextEntry::make('recent_deal_won')
+                                ->label('Most Recent Deal Won')
+                                ->icon('heroicon-o-folder')
+                                ->badge()
+                                ->color('success')
+                                ->columnSpan(2)
+                                ->state(function ($record) {
+                                    return Deal::where('user_id', $record->id) 
+                                        ->where('status', 'Deal Won')
+                                        ->latest()
+                                        ->value('title') ?? '—';
+                                })
+                                ->columnSpanFull(),
+                            TextEntry::make('recent_deal_value')
+                                ->label('Most Recent Deal Value')
+                                ->badge()
+                                ->color('primary')
+                                ->state(function ($record) {
+                                    $totalValue = Deal::where('user_id', $record->id)
+                                        ->where('status', 'Deal Won')
+                                        ->latest()
+                                        ->sum('amount');
+                                    return '₱' . number_format($totalValue);
+                                })
+                        ]),
+                ]),
             ]);
     }
 }
