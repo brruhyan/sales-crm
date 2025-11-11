@@ -24,17 +24,18 @@ class DealsPerMonth extends ChartWidget
             $months->push(Carbon::now()->subMonths($i));
         }
 
+        $userId = $this->record->id ?? Auth::id();
+
         $dealsPerMonth = Deal::query()
-            ->where('user_id', Auth::id())
+            ->where('user_id', $userId)
             ->where('status', 'Deal Won')
-            ->whereNotNull('actual_close_date')
-            ->where('actual_close_date', '>=', Carbon::now()->subMonths(11)->startOfMonth())
+            ->where(DB::raw('COALESCE(actual_close_date, updated_at)'), '>=', Carbon::now()->subMonths(11)->startOfMonth())
             ->select(
                 DB::raw('COUNT(*) as count'),
-                DB::raw('YEAR(actual_close_date) as year'),
-                DB::raw('MONTH(actual_close_date) as month')
+                DB::raw('YEAR(COALESCE(actual_close_date, updated_at)) as year'),
+                DB::raw('MONTH(COALESCE(actual_close_date, updated_at)) as month')
             )
-            ->groupBy('year', 'month')
+            ->groupBy(DB::raw('YEAR(COALESCE(actual_close_date, updated_at))'), DB::raw('MONTH(COALESCE(actual_close_date, updated_at))'))
             ->get()
             ->keyBy(function ($item) {
                 return $item->year . '-' . str_pad($item->month, 2, '0', STR_PAD_LEFT);
