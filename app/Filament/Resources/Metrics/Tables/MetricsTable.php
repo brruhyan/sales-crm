@@ -26,7 +26,7 @@ class MetricsTable
                     ->label('Name')
                     ->searchable()
                     ->sortable()
-                    ->icon('heroicon-o-chart-bar')
+                    ->icon('heroicon-o-user')
                     ->copyable(),
                 TextColumn::make('qualified_leads_count')
                     ->label('Qualified Leads')
