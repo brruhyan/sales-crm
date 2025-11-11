@@ -7,7 +7,8 @@ export default defineConfig({
         laravel({
             input: ['resources/css/app.css', 
                 'resources/js/app.js',
-                'vendor/andreia/filament-nord-theme/resources/css/theme.css'
+                'resources/css/filament/client/theme.css',
+                'resources/css/filament/admin/theme.css',
             ],
             refresh: true,
         }),

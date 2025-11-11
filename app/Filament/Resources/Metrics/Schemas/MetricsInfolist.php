@@ -16,8 +16,6 @@ class MetricsInfolist
 {
     public static function configure(Schema $schema): Schema
     {
-        $userId = Auth::id();
-
         return $schema
             ->components([
                 Section::make()
@@ -76,7 +74,7 @@ class MetricsInfolist
                                         }
 
                                         return $deals->map(function ($deal) {
-                                            return '• ' . $deal->title . ' (₱' . number_format($deal->amount) . ')';
+                                            return '• ' . e($deal->title) . ' (₱' . number_format($deal->amount) . ')';
                                         })->join("<br>");
                                     })
                                     ->html()
