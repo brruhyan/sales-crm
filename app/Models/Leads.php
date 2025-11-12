@@ -29,6 +29,7 @@ class Leads extends Model
     protected $casts = [
         'documents' => 'array',
         'qualified_documents' => 'array',
+        'product' => 'array',
     ];
 
     /**

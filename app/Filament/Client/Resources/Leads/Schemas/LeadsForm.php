@@ -129,7 +129,7 @@ class LeadsForm
                                 'Smart Campus' => 'Smart Campus',
                                 'Others' => 'Others',
                             ])
-                            ->helperText('Select the product this lead is interested in.')
+                            ->helperText('Select the product(s) this lead is interested in.')
                             ->columnSpan(1),
                     ]),
 
