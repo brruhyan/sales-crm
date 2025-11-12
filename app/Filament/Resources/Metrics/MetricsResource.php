@@ -24,6 +24,10 @@ class MetricsResource extends Resource
     protected static ?string $navigationLabel = 'Metrics';
 
     public static string|UnitEnum|null $navigationGroup = 'Metrics View';
+    
+    protected static ?string $modelLabel = 'Metric';
+
+    protected static ?string $pluralModelLabel = 'Metrics';
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::ChartBar;
 

@@ -90,7 +90,32 @@ class MetricsInfolist
                                     ->html()
                                     ->columnSpanFull(),
                             ]),
+                        Section::make('List of Qualified Leads')
+                            ->columns(1)
+                            ->description('All qualified leads')
+                            ->schema([
+                                TextEntry::make('leads_list')
+                                    ->label('Leads')
+                                    ->columnSpanFull()
+                                    ->state(function ($record) {
+                                        $leads = Leads::where('user_id', $record->id)
+                                            ->where('status', 'Qualified')
+                                            ->take(5)
+                                            ->get();
+
+                                        if ($leads->isEmpty()) {
+                                            return '—';
+                                        }
+
+                                        return $leads->map(function ($lead) {
+                                            return '• ' . e($lead->lead_title);
+                                        })->join("<br>");
+                                    })
+                                    ->html()
+                                    ->columnSpanFull(),
+                            ]),
                     ]),
+ 
 
                 Section::make()
                     ->columnSpanFull()
