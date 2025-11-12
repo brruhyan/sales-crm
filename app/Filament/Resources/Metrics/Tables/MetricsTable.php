@@ -30,7 +30,7 @@ class MetricsTable
                     ->copyable(),
                 TextColumn::make('qualified_leads_count')
                     ->label('Qualified Leads')
-                ->state(function (User $record): string {
+                    ->state(function (User $record): string {
                     return (string) Leads::where('user_id', $record->id)
                         ->where('status', 'Qualified')
                         ->count();
