@@ -7,6 +7,7 @@ use Filament\Schemas\Schema;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\CheckboxList;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Forms\Set;
@@ -109,10 +110,10 @@ class LeadsForm
 
                         Select::make('product')
                             ->label('Product')
+                            ->multiple()
                             ->required()
                             ->searchable()
                             ->preload()
-                            ->reactive()
                             ->options([
                                 'DataFusion 360' => 'DataFusion 360',
                                 'AksyonSentral' => 'AksyonSentral',
@@ -127,8 +128,8 @@ class LeadsForm
                                 'Smart City' => 'Smart City',
                                 'Smart Campus' => 'Smart Campus',
                                 'Others' => 'Others',
-                                ])
-                            ->helperText('Select the product this lead is interested in.')
+                            ])
+                            ->helperText('Select the product(s) this lead is interested in.')
                             ->columnSpan(1),
                     ]),
 
