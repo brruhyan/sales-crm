@@ -24,6 +24,7 @@ class User extends Authenticatable
         'password',
         'approved',
         'is_admin',
+        'documents',
     ];
 
     /**
@@ -48,6 +49,7 @@ class User extends Authenticatable
             'password' => 'hashed',
             'approved' => 'boolean',
             'is_admin' => 'boolean',
+            'documents' => 'array',
         ];
     }
     
