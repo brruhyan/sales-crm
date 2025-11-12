@@ -11,9 +11,8 @@ class ViewUser extends ViewRecord
     protected static string $resource = UserResource::class;
 
     protected function getHeaderActions(): array
-    {
+    {   
         return [
-            EditAction::make(),
             ApproveUserAction::make(),
         ];
     }
