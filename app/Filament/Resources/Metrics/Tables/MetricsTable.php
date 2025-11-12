@@ -30,7 +30,7 @@ class MetricsTable
                     ->copyable(),
                 TextColumn::make('qualified_leads_count')
                     ->label('Qualified Leads')
-                ->state(function (User $record): string {
+                    ->state(function (User $record): string {
                     return (string) Leads::where('user_id', $record->id)
                         ->where('status', 'Qualified')
                         ->count();
@@ -59,13 +59,22 @@ class MetricsTable
                     })
                     ->color('warning')
                     ->sortable(),
+                TextColumn::make('Pending Deal Value')
+                    ->label('Pending Deal Value')
+                    ->badge()
+                    ->state(function (User $record): string {
+                        $totalValue = Deal::where('user_id', $record->id)
+                            ->where('status', '!=', 'Deal Won')
+                            ->sum('amount');
+                        return '₱' . number_format($totalValue);
+                    })
+                    ->color('warning')
             ])
             ->filters([
                 
             ])
             ->recordActions([
                 ViewAction::make(),
-                EditAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
