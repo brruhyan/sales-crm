@@ -22,6 +22,7 @@ class MarkDealClosedWonAction extends Action
             ->form([
                 FileUpload::make('documents')
                     ->label('Winning Documents')
+                    ->required()
                     ->helperText('Upload documents that contributed to winning this deal.')
                     ->multiple()
                     ->acceptedFileTypes(['application/pdf', 'image/*'])
