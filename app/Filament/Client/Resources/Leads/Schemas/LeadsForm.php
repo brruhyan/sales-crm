@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Leads;
 use Illuminate\Validation\Rule;
 use App\Rules\PartialMatchDuplicate;
+use Filament\Forms\Components\FileUpload;
 
 class LeadsForm
 {
@@ -173,12 +174,30 @@ class LeadsForm
                             ->options([
                                 'New' => 'New',
                                 'Contacted' => 'Contacted',
-                                'Qualified' => 'Qualified',
-                                'Declined' => 'Declined',
                             ])
                             ->default('New')
                             ->required()
                             ->columnSpan(1),
+                    ]),
+
+                Section::make('Supporting Documents')
+                    ->description('Upload supporting documents and receipts for this lead.')
+                    ->columnSpanFull()
+                    ->schema([
+                        FileUpload::make('documents') 
+                            ->label('Documents')
+                            ->required()
+                            ->multiple() 
+                            ->acceptedFileTypes(['application/pdf', 'image/*']) 
+                            ->disk('public') 
+                            ->directory('deal-documents') 
+                            ->visibility('public')
+                            ->minFiles(0)
+                            ->maxFiles(5)
+                            ->downloadable()
+                            ->openable()
+                            ->previewable(true)
+                            ->columnSpanFull(),
                     ]),
             ]);
     }

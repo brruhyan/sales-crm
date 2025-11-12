@@ -22,6 +22,13 @@ class Leads extends Model
         'company',
         'source',
         'status',
+        'documents',
+        'qualified_documents',
+    ];
+
+    protected $casts = [
+        'documents' => 'array',
+        'qualified_documents' => 'array',
     ];
 
     /**

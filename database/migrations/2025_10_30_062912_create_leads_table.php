@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('source')->nullable(); 
             $table->string('status')->default('New'); 
             $table->softDeletes();
+            $table->json('documents')->nullable(); 
         });
     }
 

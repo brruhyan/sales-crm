@@ -26,7 +26,6 @@ return new class extends Migration
             $table->foreignId('contact_id')->nullable()->constrained('contacts')->onDelete('set null'); 
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
             
-            $table->json('documents')->nullable(); // Store uploaded documents
             
             $table->timestamps();
             $table->softDeletes(); 
