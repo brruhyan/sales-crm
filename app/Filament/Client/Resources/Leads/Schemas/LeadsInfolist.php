@@ -104,7 +104,6 @@ class LeadsInfolist
                                 TextEntry::make('documents')
                                     ->label('Uploaded Files')
                                     ->state(function ($record) {
-                                        // Merge both documents and qualified_documents
                                         $allDocuments = [];
                                         
                                         if (!empty($record->documents) && is_array($record->documents)) {
@@ -161,6 +160,21 @@ class LeadsInfolist
                                     })
                                     ->html()
                                     ->placeholder('No documents uploaded.')
+                                    ->columnSpan(1),
+                            ]), // <-- closes Supporting Documents section
+
+                        Section::make('Timestamps')      
+                            ->description('Record creation and update times')
+                            ->icon('heroicon-o-clock')
+                            ->columns(2)
+                            ->schema([
+                                TextEntry::make('created_at')
+                                    ->label('Created At')
+                                    ->dateTime('F j, Y, g:i a')
+                                    ->columnSpan(1),
+                                TextEntry::make('updated_at')
+                                    ->label('Last Updated')
+                                    ->dateTime('F j, Y, g:i a')
                                     ->columnSpan(1),
                             ]),
                     ])

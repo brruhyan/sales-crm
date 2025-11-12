@@ -38,6 +38,12 @@ class LeadsTable
                         'success' => 'Qualified',
                         'danger' => 'Declined',
                     ]),
+                TextColumn::make('created_at')
+                    ->label('Date Created')
+                    ->date(),
+                TextColumn::make('updated_at')
+                    ->label('Last Updated')
+                    ->date(),
             ])
                 ->filters([
                     SelectFilter::make('status')
