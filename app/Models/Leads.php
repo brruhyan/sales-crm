@@ -13,7 +13,7 @@ class Leads extends Model
     protected $fillable = [
         'lead_title',
         'user_id',
-        'industry',
+        'product',
         'category',
         'contact_id',
         'name',
@@ -22,6 +22,13 @@ class Leads extends Model
         'company',
         'source',
         'status',
+        'documents',
+        'qualified_documents',
+    ];
+
+    protected $casts = [
+        'documents' => 'array',
+        'qualified_documents' => 'array',
     ];
 
     /**

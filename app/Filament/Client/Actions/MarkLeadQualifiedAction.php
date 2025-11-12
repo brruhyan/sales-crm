@@ -5,6 +5,8 @@ namespace App\Filament\Client\Actions;
 use Filament\Actions\Action;
 use App\Models\Leads;
 use Filament\Notifications\Notification;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms;
 
 class MarkLeadQualifiedAction extends Action
 {
@@ -17,9 +19,28 @@ class MarkLeadQualifiedAction extends Action
             ->color('success')
             ->visible(fn (Leads $record) => $record->status !== 'Qualified')
             ->icon('heroicon-o-check-circle')
-            ->requiresConfirmation()
-            ->action(function (Leads $record) {
-                $record->update(['status' => 'Qualified']);
+            ->form([
+                FileUpload::make('qualified_documents')
+                    ->label('Qualifying Documents')
+                    ->required()
+                    ->helperText('Upload documents that qualify this lead.')
+                    ->multiple()
+                    ->acceptedFileTypes(['application/pdf', 'image/*'])
+                    ->disk('public')
+                    ->directory('qualified-lead-documents')
+                    ->visibility('public')
+                    ->minFiles(0)
+                    ->maxFiles(5)
+                    ->downloadable()
+                    ->openable()
+                    ->previewable(true)
+                    ->columnSpanFull(),
+            ])
+            ->action(function (Leads $record, array $data) {
+                $record->update([
+                    'status' => 'Qualified',
+                    'qualified_documents' => $data['qualified_documents'] ?? null,
+                ]);
 
                 Notification::make()
                     ->title('Lead marked as Qualified.')

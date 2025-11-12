@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('leads', function (Blueprint $table) {
             $table->id();
             $table->string('lead_title');
-            $table->string('industry');
+            $table->string('product');
             $table->string('category');
             $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
             $table->timestamps();
@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('source')->nullable(); 
             $table->string('status')->default('New'); 
             $table->softDeletes();
+            $table->json('documents')->nullable(); 
         });
     }
 

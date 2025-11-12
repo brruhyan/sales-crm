@@ -25,30 +25,37 @@ class ContactDuplicateChecker implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-
-        if (empty($this->company)) {
+        if (empty($this->company) || strtolower($this->company) === 'none') {
             return;
         }
 
+        if (empty($value)) {
+            return;
+        }
 
-        $existingContact = Contact::where('user_id', Auth::id())
+        $exactMatchQuery = Contact::where('user_id', Auth::id())
             ->where('name', $value)
-            ->where('company', $this->company)
-            ->when($this->contactId, function ($query) {
-                return $query->where('id', '!=', $this->contactId);
-            })
-            ->first();
+            ->where('company', $this->company);
+        
+        if ($this->contactId) {
+            $exactMatchQuery->where('id', '!=', $this->contactId);
+        }
+        
+        $existingContact = $exactMatchQuery->first();
 
         if ($existingContact) {
             $fail("The contact '{$existingContact->name}' already exists in '{$existingContact->company}'.");
             return;
         }
 
-        $existingContacts = Contact::where('user_id', Auth::id())
-            ->when($this->contactId, function ($query) {
-                return $query->where('id', '!=', $this->contactId);
-            })
-            ->get();
+        $similarQuery = Contact::where('user_id', Auth::id())
+            ->where('company', $this->company);
+        
+        if ($this->contactId) {
+            $similarQuery->where('id', '!=', $this->contactId);
+        }
+        
+        $existingContacts = $similarQuery->get();
 
         $normalizedName = $this->normalizeName($value);
 

@@ -22,7 +22,7 @@ class Deal extends Model
         'contact_id',
         'lead_id',
         'user_id',
-        'documents',
+        
     ];
 
     protected $casts = [

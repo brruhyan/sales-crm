@@ -31,6 +31,7 @@ class DealForm
                     ->schema([
                         TextInput::make('title')
                             ->label('Deal Title')
+                            ->disabled()
                             ->unique(ignoreRecord: true)
                             ->rules([
                                 new PartialMatchDuplicateDeal(),
@@ -86,6 +87,7 @@ class DealForm
 
                         Textarea::make('description')
                             ->label('Description')
+                            ->required()
                             ->rows(3)
                             ->columnSpanFull(),
 
@@ -178,25 +180,6 @@ class DealForm
                             ->required()
                             ->native(false)
                             ->columnSpan(1),
-                    ]),
-                Section::make('Supporting Documents')
-                    ->description('Upload supporting documents and receipts for this deal.')
-                    ->columnSpanFull()
-                    ->schema([
-                        FileUpload::make('documents') 
-                            ->label('Documents')
-                            ->required()
-                            ->multiple() 
-                            ->acceptedFileTypes(['application/pdf', 'image/*']) 
-                            ->disk('public') 
-                            ->directory('deal-documents') 
-                            ->visibility('public')
-                            ->minFiles(0)
-                            ->maxFiles(5)
-                            ->downloadable()
-                            ->openable()
-                            ->previewable(true)
-                            ->columnSpanFull(),
                     ]),
             ]);
     }
