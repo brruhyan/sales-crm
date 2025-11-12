@@ -107,50 +107,27 @@ class LeadsForm
                             ])
                             ->columnSpan(1),
 
-                        Select::make('category')
-                            ->label('Category')
-                            ->required()
-                            ->options([
-                                'Business Operations' => 'Business Operations',
-                                'Security' => 'Security',
-                                'Smart Projects' => 'Smart Projects',
-                                'Other' => 'Other',
-                            ])
-                            ->live()
-                            ->columnSpan(1),
-
                         Select::make('product')
                             ->label('Product')
                             ->required()
                             ->searchable()
                             ->preload()
                             ->reactive()
-                            ->options(function (Get $get) {
-                                return match ($get('category')) {
-                                    'Business Operations' => [
-                                        'DataFusion 360' => 'DataFusion 360',
-                                        'AksyonSentral' => 'AksyonSentral',
-                                        'AksyonMap' => 'AksyonMap',
-                                        'AksyonCare' => 'AksyonCare',
-                                        'AksyonERP' => 'AksyonERP',
-                                        'AksyonGov' => 'AksyonGov',
-                                    ],
-                                    'Security' => [
-                                        'CWAT' => 'CWAT',
-                                        'AksyonShield' => 'AksyonShield',
-                                        'AksyonCrypt' => 'AksyonCrypt',
-                                        'AksyonChain' => 'AksyonChain',
-                                    ],
-                                    'Smart Projects' => [
-                                        'Smart City' => 'Smart City',
-                                        'Smart Campus' => 'Smart Campus',
-                                    ],
-                                    'Other' => [
-                                        'Others' => 'Others',
-                                    ],
-                                    default => [],
-                                };
-                            })
+                            ->options([
+                                'DataFusion 360' => 'DataFusion 360',
+                                'AksyonSentral' => 'AksyonSentral',
+                                'AksyonMap' => 'AksyonMap',
+                                'AksyonCare' => 'AksyonCare',
+                                'AksyonERP' => 'AksyonERP',
+                                'AksyonGov' => 'AksyonGov',
+                                'CWAT' => 'CWAT',
+                                'AksyonShield' => 'AksyonShield',
+                                'AksyonCrypt' => 'AksyonCrypt',
+                                'AksyonChain' => 'AksyonChain',
+                                'Smart City' => 'Smart City',
+                                'Smart Campus' => 'Smart Campus',
+                                'Others' => 'Others',
+                                ])
                             ->helperText('Select the product this lead is interested in.')
                             ->columnSpan(1),
                     ]),
