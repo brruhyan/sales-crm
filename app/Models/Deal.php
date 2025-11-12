@@ -22,7 +22,8 @@ class Deal extends Model
         'contact_id',
         'lead_id',
         'user_id',
-
+        'documents',
+        'won_documents',
     ];
 
     protected $casts = [
@@ -31,6 +32,7 @@ class Deal extends Model
         'expected_close_date' => 'date',
         'actual_close_date' => 'date',  
         'documents' => 'array',
+        'won_documents' => 'array',
     ];
 
     public function contact(): BelongsTo
