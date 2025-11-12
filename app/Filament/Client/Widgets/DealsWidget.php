@@ -24,7 +24,7 @@ class DealsWidget extends StatsOverviewWidget
                 Str::limit(
                     '₱' . number_format(Deal::where('user_id', $userId)->where('status', 'Deal Won')->sum('amount')),
                     50
-                )),
+                )), 
         ];
     }
 }

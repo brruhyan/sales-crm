@@ -27,6 +27,18 @@ class DealsTable
                     ->searchable()
                     ->sortable(),
 
+                TextColumn::make('contact.email')
+                    ->label('Email')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('contact.phone')
+                    ->label('Phone')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
                 TextColumn::make('contact.company')
                     ->label('Company')
                     ->searchable()

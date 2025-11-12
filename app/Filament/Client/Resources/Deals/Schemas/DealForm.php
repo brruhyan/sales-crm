@@ -31,7 +31,6 @@ class DealForm
                     ->schema([
                         TextInput::make('title')
                             ->label('Deal Title')
-                            ->disabled()
                             ->unique(ignoreRecord: true)
                             ->helperText('Select Associated Lead to auto-fill this field.')
                             ->validationMessages([  
@@ -58,9 +57,11 @@ class DealForm
                                     $lead = Leads::find($state);
                                     if ($lead) {
                                         $set('title', 'Implementation of ' . $lead->lead_title ?? '');
+                                        $set('contact_id', $lead->contact_id);
                                     }
                                 } else {
                                     $set('title', '');
+                                    $set('contact_id', null);
                                 }
                             })
                             ->columnSpan(1),
@@ -82,36 +83,25 @@ class DealForm
                             ->required()
                             ->rows(3)
                             ->columnSpanFull(),
-
                     ]),
                 Section::make('Associations')
-                    ->description('Contact and associated lead')
+                    ->description('Contact and team member assignment')
                     ->columns(2)
                     ->columnSpanFull()
                     ->schema([
                         Select::make('contact_id')
                             ->label('Contact')
-                            ->required()
+                            ->disabled()
+                            ->dehydrated(true)
                             ->relationship('contact', 'name', fn($query) => $query->where('user_id', Auth::id()))
-                            ->searchable()
                             ->preload()
-                            ->createOptionForm([
-                        TextInput::make('name')
-                            ->required(),
-                        TextInput::make('email')
-                            ->email()
-                            ->required(),
-                        TextInput::make('phone')
-                            ->tel(),
-                        TextInput::make('company'),
-                        TextInput::make('position'),
-                            ])
+                            ->helperText('Auto-populated from the selected lead.')
                             ->columnSpan(1),
 
                         Select::make('user_id')
                             ->label('Assigned To')
                             ->disabled()
-                            ->columnSpan(2)
+                            ->dehydrated(true)
                             ->relationship('user', 'name')
                             ->required()
                             ->searchable()
@@ -119,8 +109,6 @@ class DealForm
                             ->preload()
                             ->columnSpan(1),
                     ]),
-
-
                 Section::make('Financial Details')
                     ->description('Deal value and financial information')
                     ->columns(3)

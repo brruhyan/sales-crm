@@ -161,7 +161,7 @@ class LeadsInfolist
                                     ->html()
                                     ->placeholder('No documents uploaded.')
                                     ->columnSpan(1),
-                            ]), // <-- closes Supporting Documents section
+                            ]), 
 
                         Section::make('Timestamps')      
                             ->description('Record creation and update times')
