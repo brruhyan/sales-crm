@@ -15,7 +15,6 @@ class Leads extends Model
         'lead_type',
         'user_id',
         'product',
-        'category',
         'contact_id',
         'name',
         'email',

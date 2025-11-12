@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('lead_title');
             $table->string('product');
-            $table->string('category');
             $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
             $table->timestamps();
             $table->string('name'); 
