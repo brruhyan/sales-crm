@@ -73,8 +73,7 @@ class DealForm
                             ->label('Status')
                             ->options([
                                 'Open' => 'Open',
-                                'Deal Won' => 'Deal Won',
-                                'Lost' => 'Lost',
+                                'Proposal Sent' => 'Proposal Sent',
                             ])
                             ->default('Open')
                             ->required()

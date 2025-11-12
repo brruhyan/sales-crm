@@ -5,6 +5,8 @@ namespace App\Filament\Client\Actions;
 use Filament\Actions\Action;
 use App\Models\Deal;
 use Filament\Notifications\Notification;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms;
 
 class MarkDealClosedWonAction extends Action
 {
@@ -17,9 +19,27 @@ class MarkDealClosedWonAction extends Action
             ->color('success')
             ->visible(fn (Deal $record) => $record->status !== 'Deal Won')
             ->icon('heroicon-o-check-circle')
-            ->requiresConfirmation()
-            ->action(function (Deal $record) {
-                $record->update(['status' => 'Deal Won']);
+            ->form([
+                FileUpload::make('won_documents')
+                    ->label('Winning Documents')
+                    ->helperText('Upload documents that contributed to winning this deal.')
+                    ->multiple()
+                    ->acceptedFileTypes(['application/pdf', 'image/*'])
+                    ->disk('public')
+                    ->directory('won-deal-documents')
+                    ->visibility('public')
+                    ->minFiles(0)
+                    ->maxFiles(5)
+                    ->downloadable()
+                    ->openable()
+                    ->previewable(true)
+                    ->columnSpanFull(),
+            ])
+            ->action(function (Deal $record, array $data) {
+                $record->update([
+                    'status' => 'Deal Won',
+                    'won_documents' => $data['won_documents'] ?? null,
+                ]);
 
                 Notification::make()
                     ->title('Deal marked as Won.')
