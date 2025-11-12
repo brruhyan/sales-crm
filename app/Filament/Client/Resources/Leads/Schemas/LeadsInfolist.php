@@ -58,8 +58,10 @@ class LeadsInfolist
                                     ->icon('heroicon-o-cube-transparent')
                                     ->copyable()
                                     ->columnSpan(1),
-                                TextEntry::make('category')
-                                    ->label('Category')
+                                TextEntry::make('lead_type')
+                                    ->label('Type')
+                                    ->badge()
+                                    ->color('primary')
                                     ->icon('heroicon-o-tag')
                                     ->copyable()
                                     ->columnSpan(1),
@@ -161,7 +163,7 @@ class LeadsInfolist
                                     ->html()
                                     ->placeholder('No documents uploaded.')
                                     ->columnSpan(1),
-                            ]), // <-- closes Supporting Documents section
+                            ]), 
 
                         Section::make('Timestamps')      
                             ->description('Record creation and update times')

@@ -22,7 +22,7 @@ class Deal extends Model
         'contact_id',
         'lead_id',
         'user_id',
-        
+
     ];
 
     protected $casts = [
@@ -33,25 +33,18 @@ class Deal extends Model
         'documents' => 'array',
     ];
 
-    /**
-     * Get the contact associated with this deal.
-     */
     public function contact(): BelongsTo
     {
         return $this->belongsTo(Contact::class);
     }
 
-    /**
-     * Get the user (sales rep) who owns this deal.
-     */
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * Get the projects associated with this deal.
-     */
+
     public function projects(): HasMany
     {
         return $this->hasMany(Project::class);
