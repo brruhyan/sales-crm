@@ -47,6 +47,14 @@ class DealTrackingsTable
                     ->badge()
                     ->color('primary')
                     ->sortable(),
+                TextColumn::make('created_at')
+                    ->label('Created At')
+                    ->dateTime('M d, Y H:i A')
+                    ->sortable(),
+                TextColumn::make('updated_at')
+                    ->label('Last Updated')
+                    ->dateTime('M d, Y H:i A')
+                    ->sortable(),
             ])
             ->filters([
                 //
