@@ -49,7 +49,7 @@ class DealsTable
                     ->label('Value')
                     ->money(fn ($record) => $record->currency ?? 'USD')
                     ->sortable(),
-
+                
                 TextColumn::make('status')
                     ->badge()
                     ->sortable()
