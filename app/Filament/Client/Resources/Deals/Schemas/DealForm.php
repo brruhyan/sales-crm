@@ -33,14 +33,6 @@ class DealForm
                             ->label('Deal Title')
                             ->disabled()
                             ->unique(ignoreRecord: true)
-                            ->rules([
-                                new PartialMatchDuplicateDeal(),
-                                function (Get $get) {
-                                    return new DealTitleMustContainLeadKeywords(
-                                        $get('source')
-                                    );
-                                }
-                            ])
                             ->helperText('Select Associated Lead to auto-fill this field.')
                             ->validationMessages([  
                                 'unique' => 'This deal has already been added/taken.',
