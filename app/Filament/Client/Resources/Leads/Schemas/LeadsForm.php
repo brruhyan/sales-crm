@@ -95,6 +95,18 @@ class LeadsForm
                             ->maxLength(255)
                             ->columnSpanFull(),
 
+                        Select::make('lead_type')
+                            ->label('Lead Type')
+                            ->required()
+                            ->options([
+                                'Procurement' => 'Procurement',
+                                'Implementation' => 'Implementation',
+                                'Support' => 'Support',
+                                'Consultation' => 'Consultation',
+                                'Other' => 'Other',
+                            ])
+                            ->columnSpan(1),
+
                         Select::make('category')
                             ->label('Category')
                             ->required()

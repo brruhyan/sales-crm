@@ -31,8 +31,10 @@ class DealForm
                     ->schema([
                         TextInput::make('title')
                             ->label('Deal Title')
+                            ->disabled()
+                            ->dehydrated(true)
                             ->unique(ignoreRecord: true)
-                            ->helperText('Select Associated Lead to auto-fill this field.')
+                            ->helperText('Auto-populated from the associated lead.')
                             ->validationMessages([  
                                 'unique' => 'This deal has already been added/taken.',
                             ])
@@ -56,7 +58,8 @@ class DealForm
                                 if ($state) {
                                     $lead = Leads::find($state);
                                     if ($lead) {
-                                        $set('title', 'Implementation of ' . $lead->lead_title ?? '');
+                                        $leadType = $lead->lead_type ?? 'Implementation';
+                                        $set('title', ucfirst($leadType) . ' of ' . $lead->lead_title ?? '');
                                         $set('contact_id', $lead->contact_id);
                                     }
                                 } else {
