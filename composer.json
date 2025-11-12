@@ -8,6 +8,7 @@
     "require": {
         "php": "^8.2",
         "andreia/filament-nord-theme": "^2.0",
+        "devonab/filament-easy-footer": "^2.1",
         "filafly/brisk": "^1.0",
         "filament/filament": "^4.1",
         "filament/infolists": "^4.1",
