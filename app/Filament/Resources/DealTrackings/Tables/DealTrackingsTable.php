@@ -6,9 +6,9 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use App\Models\Deal;
-use Filament\Tables\Columns\TextColumn;
 use App\Models\Leads;
 use App\Models\User;
 
@@ -17,7 +17,6 @@ class DealTrackingsTable
     public static function configure(Table $table): Table
     {
         return $table
-            ->query(Deal::query()->where('status', 'Deal Won'))
             ->columns([
                 TextColumn::make('user.name')
                     ->label('Deal by')
@@ -26,13 +25,6 @@ class DealTrackingsTable
                 TextColumn::make('title')
                     ->label('Deal Title')
                     ->searchable()
-                    ->sortable(),
-                TextColumn::make('amount')
-                    ->label('Deal Amount')
-                    ->formatStateUsing(fn ($state) => '₱' . number_format($state, 0))
-                    ->searchable()
-                    ->badge()
-                    ->color('success')
                     ->sortable(),
                 TextColumn::make('status')
                     ->label('Deal Status')
@@ -43,10 +35,17 @@ class DealTrackingsTable
                             'lost' => 'danger',      
                             'open' => 'secondary',    
                             'proposal sent' => 'primary',  
-                            default => 'secondary', // fallback color
+                            default => 'secondary', 
                         };
                     })
                     ->searchable()
+                    ->sortable(),
+                TextColumn::make('amount')
+                    ->label('Deal Amount')
+                    ->formatStateUsing(fn ($state) => '₱' . number_format($state, 0))
+                    ->searchable()
+                    ->badge()
+                    ->color('primary')
                     ->sortable(),
             ])
             ->filters([
