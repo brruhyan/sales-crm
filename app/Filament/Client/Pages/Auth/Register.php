@@ -20,7 +20,7 @@ class Register extends BaseRegister
                 $this->getPasswordConfirmationFormComponent(),
                 FileUpload::make('documents')
                     ->label('Required Documents')
-                    ->helperText('Please upload valid identification documents, certifications, or any required documents. All documents are mandatory.')
+                    ->helperText('Please upload valid identification documents.')
                     ->multiple()
                     ->required()
                     ->maxFiles(10)
@@ -35,9 +35,11 @@ class Register extends BaseRegister
 
     protected function mutateFormDataBeforeRegister(array $data): array
     {
-        // Store document paths as JSON
-        $data['documents'] = isset($data['documents']) ? json_encode($data['documents']) : json_encode([]);
-        $data['password'] = Hash::make($data['password']);
+        // Don't encode documents - the model will handle it with the array cast
+        // Just ensure it's an array
+        if (!isset($data['documents']) || !is_array($data['documents'])) {
+            $data['documents'] = [];
+        }
         
         return $data;
     }

@@ -22,6 +22,7 @@ class AdminUserSeeder extends Seeder
                 'is_admin' => true,
                 'approved' => true,
                 'email_verified_at' => now(),
+                'documents' => [], // Let the model cast handle the JSON encoding
             ]
         );
         
