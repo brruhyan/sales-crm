@@ -59,6 +59,16 @@ class MetricsTable
                     })
                     ->color('warning')
                     ->sortable(),
+                TextColumn::make('Pending Deal Value')
+                    ->label('Pending Deal Value')
+                    ->badge()
+                    ->state(function (User $record): string {
+                        $totalValue = Deal::where('user_id', $record->id)
+                            ->where('status', '!=', 'Deal Won')
+                            ->sum('amount');
+                        return '₱' . number_format($totalValue);
+                    })
+                    ->color('warning')
             ])
             ->filters([
                 

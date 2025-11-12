@@ -22,7 +22,7 @@ class MetricsInfolist
                     ->columnSpanFull()
                     ->schema([
                         Section::make('Metrics Details')
-                            ->columns(3)
+                            ->columns(4)
                             ->description('Deals won and its corresponding value.')
                             ->schema([
                                 TextEntry::make('name')
@@ -46,6 +46,16 @@ class MetricsInfolist
                                     ->state(function (User $record): string {
                                         $totalValue = Deal::where('user_id', $record->id)
                                             ->where('status', 'Deal Won')
+                                            ->sum('amount');
+                                        return '₱' . number_format($totalValue);
+                                    })
+                                    ->color('warning'),
+                                TextEntry::make('Pending Deal Value')
+                                    ->label('Pending Deal Value')
+                                    ->badge()
+                                    ->state(function (User $record): string { 
+                                        $totalValue = Deal::where('user_id', $record->id)
+                                            ->where('status', '!=', 'Deal Won')
                                             ->sum('amount');
                                         return '₱' . number_format($totalValue);
                                     })
