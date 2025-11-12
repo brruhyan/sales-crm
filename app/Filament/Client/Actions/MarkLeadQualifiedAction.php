@@ -22,6 +22,7 @@ class MarkLeadQualifiedAction extends Action
             ->form([
                 FileUpload::make('qualified_documents')
                     ->label('Qualifying Documents')
+                    ->required()
                     ->helperText('Upload documents that qualify this lead.')
                     ->multiple()
                     ->acceptedFileTypes(['application/pdf', 'image/*'])

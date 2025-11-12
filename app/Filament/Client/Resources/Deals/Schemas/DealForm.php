@@ -31,6 +31,7 @@ class DealForm
                     ->schema([
                         TextInput::make('title')
                             ->label('Deal Title')
+                            ->disabled()
                             ->unique(ignoreRecord: true)
                             ->rules([
                                 new PartialMatchDuplicateDeal(),
@@ -86,6 +87,7 @@ class DealForm
 
                         Textarea::make('description')
                             ->label('Description')
+                            ->required()
                             ->rows(3)
                             ->columnSpanFull(),
 
