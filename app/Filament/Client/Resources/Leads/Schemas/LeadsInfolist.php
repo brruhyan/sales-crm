@@ -48,6 +48,22 @@ class LeadsInfolist
                                     ->placeholder('No company')
                                     ->columnSpan(1),
                             ]),
+                        Section::make('Product Information')
+                            ->description('Product and Category Details')
+                            ->icon('heroicon-o-archive-box')
+                            ->columns(3)
+                            ->schema([
+                                TextEntry::make('product')
+                                    ->label('Product')
+                                    ->icon('heroicon-o-cube-transparent')
+                                    ->copyable()
+                                    ->columnSpan(1),
+                                TextEntry::make('category')
+                                    ->label('Category')
+                                    ->icon('heroicon-o-tag')
+                                    ->copyable()
+                                    ->columnSpan(1),
+                            ]),
 
                         Section::make('Lead Status')
                             ->description('Source and current status')

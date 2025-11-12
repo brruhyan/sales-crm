@@ -8,7 +8,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Select;
 use Filament\Schemas\Components\Section;
-use Filament\Forms\Get;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Forms\Set;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Leads;
@@ -22,24 +22,11 @@ class LeadsForm
     {
         return $schema
             ->components([
-                Section::make('Lead Details')
-                    ->description('Lead and Company Information')
+                Section::make('Lead Contact Information')
+                    ->description('Contact details for this lead')
                     ->columns(4)
                     ->columnSpanFull()
                     ->schema([
-                        TextInput::make('lead_title')
-                            ->label('Lead Title')
-                            ->required()
-                            ->rules([
-                                new PartialMatchDuplicate(
-                                    request()->route('record')?->id ?? null
-                                ),
-                            ])
-                            ->validationMessages([
-                                'unique' => 'This lead has already been added/taken.',
-                            ])
-                            ->maxLength(255)
-                            ->columnSpanFull(),
                         Select::make('contact_id')
                             ->label('Select Existing Contact (Optional)')
                             ->relationship('contact', 'name', fn($query) => $query->where('user_id', Auth::id()))
@@ -70,89 +57,92 @@ class LeadsForm
                             ->required()
                             ->live(onBlur: true)
                             ->columnSpan(1),
-                        
+
                         TextInput::make('email')
                             ->label('Email')
                             ->email()
                             ->required()
                             ->columnSpan(1),
-                        
+
                         TextInput::make('company')
                             ->label('Company')
                             ->required()
                             ->columnSpan(1),
-                        
+
                         TextInput::make('phone')
                             ->label('Phone')
                             ->required()
                             ->tel()
                             ->columnSpan(1),
                     ]),
-                Section::make('Lead Type')
-                    ->description('Lead Classification')
+
+                Section::make('Product Lead Details')
+                    ->description('Product details and specifications')
                     ->columns(2)
                     ->columnSpanFull()
                     ->schema([
-                        Select::make('industry')
-                            ->label('Industry')
-                            ->helperText('Select industry first before proceeding to Category')
+                        TextInput::make('lead_title')
+                            ->label('Lead Title')
                             ->required()
-                            ->options([
-                                'Technology' => 'Technology',
-                                'Healthcare' => 'Healthcare',
-                                'Finance' => 'Finance',
-                                'Education' => 'Education',
+                            ->rules([
+                                new PartialMatchDuplicate(
+                                    request()->route('record')?->id ?? null
+                                ),
                             ])
-                            ->reactive()
-                            ->afterStateUpdated(function (?string $state, callable $set) {
-                                if ($state === 'Technology') {
-                                    $set('lead_type', 'Tech Lead');
-                                    $set('industry_type', 'Software');
-                                } elseif ($state === 'Healthcare') {
-                                    $set('lead_type', 'Health Lead');
-                                    $set('industry_type', 'Hospital');
-                                } elseif ($state === 'Finance') {
-                                    $set('lead_type', 'Finance Lead');
-                                    $set('industry_type', 'Banking');
-                                } elseif ($state === 'Education') {
-                                    $set('lead_type', 'Education Lead');
-                                    $set('industry_type', 'School');
-                                } else {
-                                    $set('lead_type', 'General Lead');
-                                    $set('industry_type', null);
-                                }
-                            })
-                            ->columnSpan(1),
+                            ->validationMessages([
+                                'unique' => 'This lead has already been added/taken.',
+                            ])
+                            ->maxLength(255)
+                            ->columnSpanFull(),
+
                         Select::make('category')
                             ->label('Category')
                             ->required()
-                            ->options(function (callable $get) {
-                                $industry = $get('industry');
+                            ->options([
+                                'Business Operations' => 'Business Operations',
+                                'Security' => 'Security',
+                                'Smart Projects' => 'Smart Projects',
+                                'Other' => 'Other',
+                            ])
+                            ->live()
+                            ->columnSpan(1),
 
-                                return match ($industry) {
-                                    'Technology' => [
-                                        'Software' => 'Software',
-                                        'Hardware' => 'Hardware',
-                                        'AI' => 'AI',
+                        Select::make('product')
+                            ->label('Product')
+                            ->required()
+                            ->searchable()
+                            ->preload()
+                            ->reactive()
+                            ->options(function (Get $get) {
+                                return match ($get('category')) {
+                                    'Business Operations' => [
+                                        'DataFusion 360' => 'DataFusion 360',
+                                        'AksyonSentral' => 'AksyonSentral',
+                                        'AksyonMap' => 'AksyonMap',
+                                        'AksyonCare' => 'AksyonCare',
+                                        'AksyonERP' => 'AksyonERP',
+                                        'AksyonGov' => 'AksyonGov',
                                     ],
-                                    'Healthcare' => [
-                                        'Hospital' => 'Hospital',
-                                        'Pharmaceutical' => 'Pharmaceutical',
+                                    'Security' => [
+                                        'CWAT' => 'CWAT',
+                                        'AksyonShield' => 'AksyonShield',
+                                        'AksyonCrypt' => 'AksyonCrypt',
+                                        'AksyonChain' => 'AksyonChain',
                                     ],
-                                    'Finance' => [
-                                        'Banking' => 'Banking',
-                                        'Investment' => 'Investment',
+                                    'Smart Projects' => [
+                                        'Smart City' => 'Smart City',
+                                        'Smart Campus' => 'Smart Campus',
                                     ],
-                                    'Education' => [
-                                        'School' => 'School',
-                                        'University' => 'University',
+                                    'Other' => [
+                                        'Others' => 'Others',
                                     ],
                                     default => [],
                                 };
                             })
+                            ->helperText('Select the product this lead is interested in.')
                             ->columnSpan(1),
                     ]),
-                    
+
                 Section::make('Lead Status')
                     ->description('Source and Status')
                     ->columns(2)
@@ -168,7 +158,7 @@ class LeadsForm
                                 'Other' => 'Other',
                             ])
                             ->columnSpan(1),
-                        
+
                         Select::make('status')
                             ->label('Status')
                             ->options([
@@ -184,13 +174,13 @@ class LeadsForm
                     ->description('Upload supporting documents and receipts for this lead.')
                     ->columnSpanFull()
                     ->schema([
-                        FileUpload::make('documents') 
+                        FileUpload::make('documents')
                             ->label('Documents')
                             ->required()
-                            ->multiple() 
-                            ->acceptedFileTypes(['application/pdf', 'image/*']) 
-                            ->disk('public') 
-                            ->directory('deal-documents') 
+                            ->multiple()
+                            ->acceptedFileTypes(['application/pdf', 'image/*'])
+                            ->disk('public')
+                            ->directory('deal-documents')
                             ->visibility('public')
                             ->minFiles(0)
                             ->maxFiles(5)

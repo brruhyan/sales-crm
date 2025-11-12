@@ -13,7 +13,7 @@ class Leads extends Model
     protected $fillable = [
         'lead_title',
         'user_id',
-        'industry',
+        'product',
         'category',
         'contact_id',
         'name',
