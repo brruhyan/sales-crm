@@ -154,7 +154,7 @@ class DealInfolist
                             ->columns(1)
                             ->schema([
                                 TextEntry::make('documents')
-                                    ->label('Uploaded Files')
+                                    ->label('Deal Won Documents')
                                     ->state(function ($record) {
                                         if (empty($record->documents) || !is_array($record->documents)) {
                                             return null;
@@ -173,6 +173,7 @@ class DealInfolist
                                             };
 
                                             $statusBadge = !$fileExists ? '<span class="text-xs text-red-600 dark:text-red-400">(File not found)</span>' : '';
+                                            $typeBadge = '<span class="text-xs bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded-full">Deal Won Document</span>';
 
                                             return "<div class='flex items-center gap-3 p-3 mb-2 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 transition'>
                                                 <div class='flex-shrink-0'>{$icon}</div>
@@ -182,7 +183,10 @@ class DealInfolist
                                                        class=\"text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 font-medium block cursor-pointer no-underline hover:underline\">
                                                         {$filename}
                                                     </a>
-                                                    {$statusBadge}
+                                                    <div class='flex gap-2 mt-1'>
+                                                        {$typeBadge}
+                                                        {$statusBadge}
+                                                    </div>
                                                 </div>
                                             </div>";
                                         })->join('');

@@ -20,7 +20,7 @@ class MarkDealClosedWonAction extends Action
             ->visible(fn (Deal $record) => $record->status !== 'Deal Won')
             ->icon('heroicon-o-check-circle')
             ->form([
-                FileUpload::make('won_documents')
+                FileUpload::make('documents')
                     ->label('Winning Documents')
                     ->helperText('Upload documents that contributed to winning this deal.')
                     ->multiple()
@@ -38,7 +38,7 @@ class MarkDealClosedWonAction extends Action
             ->action(function (Deal $record, array $data) {
                 $record->update([
                     'status' => 'Deal Won',
-                    'won_documents' => $data['won_documents'] ?? null,
+                    'documents' => $data['documents'] ?? null,
                 ]);
 
                 Notification::make()

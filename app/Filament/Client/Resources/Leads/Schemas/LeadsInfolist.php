@@ -99,7 +99,7 @@ class LeadsInfolist
                             ]),
 
                         Section::make('Supporting Documents')
-                            ->description('Uploaded documents related to the deal')
+                            ->description('Uploaded documents related to the lead')
                             ->icon('heroicon-o-paper-clip')
                             ->columns(1)
                             ->schema([
