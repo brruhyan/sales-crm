@@ -8,8 +8,9 @@ use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use App\Filament\Client\Widgets\LeadsWidget;
 use Filament\Actions\ExportAction;
+use Filament\Actions\ImportAction;
 use App\Filament\Exports\LeadsExporter;
- 
+use App\Filament\Imports\LeadsImporter;
 
 class ListLeads extends ListRecords
     {
@@ -22,6 +23,9 @@ class ListLeads extends ListRecords
             ExportAction::make()
                 ->exporter(LeadsExporter::class)
                 ->label('Export Leads'),
+            ImportAction::make()
+                ->importer(LeadsImporter::class)
+                ->label('WIP: Import Leads'),
         ];
     }
 
