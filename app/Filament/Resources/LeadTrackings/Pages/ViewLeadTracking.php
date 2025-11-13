@@ -5,6 +5,8 @@ namespace App\Filament\Resources\LeadTrackings\Pages;
 use App\Filament\Resources\LeadTrackings\LeadTrackingResource;
 use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
+use App\Filament\Resources\Actions\ApproveLeadQualificationAction;
+use App\Filament\Resources\Actions\DisputeLeadAction;
 
 class ViewLeadTracking extends ViewRecord
 {
@@ -13,6 +15,8 @@ class ViewLeadTracking extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
+            ApproveLeadQualificationAction::make(),
+            DisputeLeadAction::make(),
         ];
     }
 }

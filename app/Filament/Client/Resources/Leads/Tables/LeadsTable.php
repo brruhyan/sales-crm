@@ -39,6 +39,7 @@ class LeadsTable
                         'warning' => 'Contacted',
                         'success' => 'Qualified',
                         'danger' => 'Declined',
+                        'danger' => 'Disputed',
                     ]),
                 TextColumn::make('created_at')
                     ->label('Date Created')

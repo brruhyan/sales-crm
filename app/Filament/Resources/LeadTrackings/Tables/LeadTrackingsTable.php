@@ -35,6 +35,7 @@ class LeadTrackingsTable
                             'new' => 'primary',
                             'contacted' => 'secondary',
                             'qualified' => 'success',
+                            'disputed' => 'danger',
                             'lost' => 'danger',
                             default => 'secondary',
                         };

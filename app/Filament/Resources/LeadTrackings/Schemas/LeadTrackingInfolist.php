@@ -39,6 +39,7 @@ class LeadTrackingInfolist
                                         'Declined' => 'danger',
                                         'Lost' => 'danger',
                                         'For Review' => 'danger',
+                                        'Disputed' => 'danger',
                                         default => 'gray',
                                     })
                                     ->columnSpan(1),

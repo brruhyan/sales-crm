@@ -81,6 +81,7 @@ class LeadsInfolist
                                         'Contacted' => 'warning',
                                         'Qualified' => 'success',
                                         'Declined' => 'danger',
+                                        'Disputed' => 'danger',
                                         default => 'gray',
                                     })
                                     ->columnSpan(1),
