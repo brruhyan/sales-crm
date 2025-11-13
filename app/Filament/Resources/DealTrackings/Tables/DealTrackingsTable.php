@@ -35,7 +35,9 @@ class DealTrackingsTable
                             'deal won' => 'success',
                             'lost' => 'danger',      
                             'open' => 'secondary',    
-                            'proposal sent' => 'primary',  
+                            'proposal sent' => 'primary',
+                            'For Review' => 'danger',
+                            'Disputed' => 'danger',  
                             default => 'secondary', 
                         };
                     })

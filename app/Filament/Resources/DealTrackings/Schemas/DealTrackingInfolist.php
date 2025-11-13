@@ -36,6 +36,8 @@ class DealTrackingInfolist
                                         'Deal Won' => 'success',
                                         'Lost' => 'danger',
                                         default => 'gray',
+                                        'For Review' => 'danger',
+                                        'Disputed' => 'danger',
                                     })
                                     ->columnSpan(1),
 

@@ -57,6 +57,8 @@ class DealsTable
                         'Prospecting' => 'gray',
                         'Deal Won' => 'success',
                         'Lost' => 'danger',
+                        'For Review' => 'danger',
+                        'Disputed' => 'danger',
                         default => 'gray',
                     }),
 
