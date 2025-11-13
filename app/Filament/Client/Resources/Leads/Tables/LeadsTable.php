@@ -41,6 +41,9 @@ class LeadsTable
                         'danger' => 'Declined',
                         'danger' => 'Disputed',
                     ]),
+                BadgeColumn::make('lead_type')
+                    ->label('Lead Type')
+                    ->color('primary'),
                 TextColumn::make('created_at')
                     ->label('Date Created')
                     ->date(),
