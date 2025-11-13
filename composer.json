@@ -16,6 +16,7 @@
         "laravel/tinker": "^2.10.1",
         "osamanagi/filament-abyss-theme": "^1.0",
         "resma/filament-awin-theme": "^1.1",
+        "saade/filament-autograph": "^4.0",
         "swisnl/filament-backgrounds": "^2.0"
     },
     "require-dev": {
