@@ -29,8 +29,7 @@ class PartialMatchDuplicate implements ValidationRule
             return;
         }
 
-        $existingLeads = Leads::where('user_id', Auth::id())
-            ->when($this->leadId, function ($query) {
+        $existingLeads = Leads::when($this->leadId, function ($query) {
                 return $query->where('id', '!=', $this->leadId);
             })
             ->with('user')

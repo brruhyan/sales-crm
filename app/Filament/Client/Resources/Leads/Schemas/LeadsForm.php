@@ -85,6 +85,7 @@ class LeadsForm
                         TextInput::make('lead_title')
                             ->label('Lead Title')
                             ->required()
+                            ->unique()
                             ->rules([
                                 new PartialMatchDuplicate(
                                     request()->route('record')?->id ?? null
