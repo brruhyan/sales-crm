@@ -30,11 +30,12 @@ class LeadsForm
                         Select::make('contact_id')
                             ->label('Select Existing Contact')
                             ->relationship('contact', 'name', fn($query) => $query->where('user_id', Auth::id()))
+                            ->getOptionLabelFromRecordUsing(fn(Contact $record) => "{$record->name} - {$record->company}")
                             ->searchable()
                             ->preload()
                             ->required()
                             ->columnSpanFull()
-                            ->helperText('Select a contact to link to this lead. Create a contact first if list is empty.'),
+                            ->helperText('Select a contact to link to this lead.'),
                     ]),
 
                 Section::make('Product Lead Details')
