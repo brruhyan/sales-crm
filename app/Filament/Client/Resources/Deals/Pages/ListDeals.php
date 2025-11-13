@@ -13,6 +13,11 @@ class ListDeals extends ListRecords
 {
     protected static string $resource = DealResource::class;
 
+    public function isTableColumnManagerDisabled(): bool
+    {
+        return true;
+    }
+
     protected function getHeaderActions(): array
     {
         return [

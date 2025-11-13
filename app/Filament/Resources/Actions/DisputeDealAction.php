@@ -18,7 +18,7 @@ class DisputeDealAction extends Action
             ->color('danger')
             ->icon('heroicon-o-x-circle')
             ->requiresConfirmation()
-            ->visible(fn (Deal $record) => $record->status === 'For Review')
+            ->visible(fn (Deal $record) => $record->status === 'For Review' || $record->status === 'Deal Won')
             ->form([
                 Textarea::make('reason')
                     ->label('Reason for Dispute')

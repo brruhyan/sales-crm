@@ -23,13 +23,13 @@ class DealTrackingResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::Square3Stack3d;
 
-    protected static ?string $navigationLabel = 'Deal Tracking';
+    protected static ?string $navigationLabel = 'Deals';
 
-    protected static ?string $modelLabel = 'Deal Tracking';
+    protected static ?string $modelLabel = 'Deals';
 
-    protected static ?string $pluralModelLabel = 'Deal Tracking';
+    protected static ?string $pluralModelLabel = 'Deals';
 
-    public static string|UnitEnum|null $navigationGroup = 'Metrics View';
+    public static string|UnitEnum|null $navigationGroup = 'Approval & Tracking';
 
     protected static ?int $navigationSort = 30;
 

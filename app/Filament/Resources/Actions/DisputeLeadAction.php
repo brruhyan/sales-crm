@@ -18,7 +18,7 @@ class DisputeLeadAction extends Action
             ->color('danger')
             ->icon('heroicon-o-x-circle')
             ->requiresConfirmation()
-            ->visible(fn (Leads $record) => $record->status === 'For Review')
+            ->visible(fn (Leads $record) => $record->status === 'For Review' || $record->status === 'Qualified')
             ->form([
                 Textarea::make('reason')
                     ->label('Reason for Dispute')
