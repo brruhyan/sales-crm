@@ -7,6 +7,7 @@ use Filament\Notifications\Notification;
 use Filament\Forms\Components\FileUpload;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Hash;
+use Filament\Forms\Components\TextInput;
 
 class Register extends BaseRegister
 {
@@ -18,6 +19,16 @@ class Register extends BaseRegister
                 $this->getEmailFormComponent(),
                 $this->getPasswordFormComponent(),
                 $this->getPasswordConfirmationFormComponent(),
+                TextInput::make('tin_number')
+                    ->label('Tax Identification Number (TIN)')
+                    ->required()
+                    ->mask('999-999-999')
+                    ->maxLength(11)
+                    ->columnSpanFull(),
+                TextInput::make('home_address')
+                    ->label('Home Address')
+                    ->required()
+                    ->columnSpanFull(),
                 FileUpload::make('documents')
                     ->label('Required Documents')
                     ->helperText('Please upload valid identification documents.')
@@ -25,7 +36,7 @@ class Register extends BaseRegister
                     ->required()
                     ->maxFiles(10)
                     ->acceptedFileTypes(['application/pdf', 'image/*', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'])
-                    ->maxSize(10240) // 10MB per file
+                    ->maxSize(10240) 
                     ->disk('public')
                     ->directory('user-documents')
                     ->columnSpanFull(),
@@ -35,8 +46,7 @@ class Register extends BaseRegister
 
     protected function mutateFormDataBeforeRegister(array $data): array
     {
-        // Don't encode documents - the model will handle it with the array cast
-        // Just ensure it's an array
+
         if (!isset($data['documents']) || !is_array($data['documents'])) {
             $data['documents'] = [];
         }

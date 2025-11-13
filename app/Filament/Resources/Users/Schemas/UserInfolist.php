@@ -28,6 +28,14 @@ class UserInfolist
                                     ->label('Email Address')
                                     ->icon('heroicon-o-envelope')
                                     ->copyable(),
+                                TextEntry::make('tin_number')
+                                    ->label('Tax Identification Number (TIN)')
+                                    ->icon('heroicon-o-identification')
+                                    ->columnSpan(1),
+                                TextEntry::make('home_address')
+                                    ->label('Home Address')
+                                    ->icon('heroicon-o-home')
+                                    ->columnSpan(1),
                             ]),
                         Section::make('Account Status')
                             ->schema([
