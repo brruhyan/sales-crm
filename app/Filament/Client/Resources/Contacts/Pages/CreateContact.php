@@ -30,7 +30,7 @@ class CreateContact extends CreateRecord
         if ($sameNameAndEmailOtherUser) {
             Notification::make()
                 ->title('Contact Registered by Another User')
-                ->body("Another user has already registered '{$this->record->name}' with email '{$this->record->email}'.")
+                ->body("Another user has already registered '{$this->record->name}' with email '{$this->record->email}'. Please confirm if this is a duplicate.")
                 ->warning()
                 ->send();
             return;
@@ -44,7 +44,7 @@ class CreateContact extends CreateRecord
         if ($sameNameDifferentEmailCurrentUser) {
             Notification::make()
                 ->title('Contact Already Exists with Different Email')
-                ->body("You already have '{$this->record->name}' registered with email '{$sameNameDifferentEmailCurrentUser->email}'. Ignore if contact has multiple emails.")
+                ->body("You already have '{$this->record->name}' registered with a different email. Ignore if contact has multiple emails.")
                 ->warning()
                 ->send();
         }

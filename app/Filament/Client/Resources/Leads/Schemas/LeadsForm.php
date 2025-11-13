@@ -25,56 +25,17 @@ class LeadsForm
             ->components([
                 Section::make('Lead Contact Information')
                     ->description('Contact details for this lead')
-                    ->columns(4)
                     ->columnSpanFull()
                     ->schema([
                         Select::make('contact_id')
-                            ->label('Select Existing Contact (Optional)')
+                            ->label('Select Existing Contact')
                             ->relationship('contact', 'name', fn($query) => $query->where('user_id', Auth::id()))
+                            ->getOptionLabelFromRecordUsing(fn(Contact $record) => "{$record->name} - {$record->company}")
                             ->searchable()
                             ->preload()
-                            ->live()
-                            ->afterStateUpdated(function (?string $state, callable $set) {
-                                if ($state) {
-                                    $contact = Contact::find($state);
-                                    if ($contact) {
-                                        $set('name', $contact->name ?? '');
-                                        $set('email', $contact->email ?? '');
-                                        $set('phone', $contact->phone ?? '');
-                                        $set('company', $contact->company ?? '');
-                                    }
-                                } else {
-                                    $set('name', '');
-                                    $set('email', '');
-                                    $set('phone', '');
-                                    $set('company', '');
-                                }
-                            })
+                            ->required()
                             ->columnSpanFull()
-                            ->helperText('Select a contact to autofill the fields below, or leave empty to create a new lead'),
-
-                        TextInput::make('name')
-                            ->label('Name')
-                            ->required()
-                            ->live(onBlur: true)
-                            ->columnSpan(1),
-
-                        TextInput::make('email')
-                            ->label('Email')
-                            ->email()
-                            ->required()
-                            ->columnSpan(1),
-
-                        TextInput::make('company')
-                            ->label('Company')
-                            ->required()
-                            ->columnSpan(1),
-
-                        TextInput::make('phone')
-                            ->label('Phone')
-                            ->required()
-                            ->tel()
-                            ->columnSpan(1),
+                            ->helperText('Select a contact to link to this lead.'),
                     ]),
 
                 Section::make('Product Lead Details')
@@ -145,6 +106,8 @@ class LeadsForm
                             ->options([
                                 'Website' => 'Website',
                                 'Referral' => 'Referral',
+                                'Warm' => 'Warm',
+                                'Cold' => 'Cold',
                                 'Event' => 'Event',
                                 'Other' => 'Other',
                             ])

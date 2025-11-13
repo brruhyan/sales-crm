@@ -66,6 +66,14 @@ class DealTrackingsTable
                     ->relationship('user', 'name')
                     ->multiple()
                     ->preload(),
+                SelectFilter::make('status')
+                    ->label('Filter by Status')
+                    ->options([
+                        'Open' => 'Open',
+                        'Proposal Sent' => 'Proposal Sent',
+                        'Deal Won' => 'Deal Won',
+                        'Lost' => 'Lost',
+                    ]),
             ])
             ->recordActions([
                 ViewAction::make(),

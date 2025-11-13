@@ -58,6 +58,16 @@ class LeadTrackingsTable
                     ->relationship('user', 'name')
                     ->multiple()
                     ->preload(),
+                SelectFilter::make('status')
+                    ->label('Filter by Status')
+                    ->options([
+                        'New' => 'New',
+                        'Contacted' => 'Contacted',
+                        'Qualified' => 'Qualified',
+                        'For Review' => 'For Review',
+                        'Declined' => 'Declined',
+                        'Disputed' => 'Disputed',
+                    ]),
             ])
             ->recordActions([
                 ViewAction::make(),

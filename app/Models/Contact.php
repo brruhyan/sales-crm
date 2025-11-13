@@ -15,6 +15,7 @@ class Contact extends Model
         'user_id',
         'name',
         'company',
+        'company_address',
         'email',
         'phone',
         'position'

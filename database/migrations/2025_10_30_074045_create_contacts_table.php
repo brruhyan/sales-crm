@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
             $table->string('name');
             $table->string('company')->nullable();
+            $table->string('company_address')->nullable();
             $table->string('position')->nullable();
             $table->string('email');
             $table->string('phone')->nullable();
