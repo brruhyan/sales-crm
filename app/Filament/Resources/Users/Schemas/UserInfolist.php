@@ -33,6 +33,10 @@ class UserInfolist
                             ->label('Accepted Terms and Conditions')
                             ->trueIcon('heroicon-o-check-circle')
                             ->falseIcon('heroicon-o-x-circle'),
+                        IconEntry::make('signature')
+                            ->label('Provided Signature')
+                            ->trueIcon('heroicon-o-check-circle')
+                            ->falseIcon('heroicon-o-x-circle'),
                     ])
                     ->columnSpanFull(),
 
@@ -118,6 +122,48 @@ class UserInfolist
                             })
                             ->html()
                             ->placeholder('No documents uploaded.')
+                            ->columnSpan(1),
+                    ]),
+
+                Section::make('Signature')
+                    ->description('User signature from registration')
+                    ->icon('heroicon-o-pencil')
+                    ->columns(1)
+                    ->columnSpanFull()
+                    ->schema([
+                        TextEntry::make('signature')
+                            ->label('Signature')
+                            ->state(function ($record) {
+                                if (empty($record->signature)) {
+                                    return null;
+                                }
+
+                                $signature = $record->signature;
+                                
+                                if (strpos($signature, 'data:') === 0) {
+                                    return "
+                                        <img src=\"{$signature}\" alt=\"User Signature\" class='max-h-1 w-auto'/>
+                                    ";
+                                }
+                                
+                                if (is_string($signature)) {
+                                    $encodedPath = str_replace(' ', '%20', $signature);
+                                    $url = url('storage/' . $encodedPath);
+                                    $fileExists = Storage::disk('public')->exists($signature);
+                                    
+                                    if ($fileExists) {
+                                        return "
+                                            <a href=\"{$url}\" target=\"_blank\" rel=\"noopener noreferrer\">
+                                                <img src=\"{$url}\" alt=\"User Signature\" class='max-h-5 cursor-pointer hover:opacity-80 transition' />
+                                            </a>
+                                        ";
+                                    }
+                                }
+
+                                return null;
+                            })
+                            ->html()
+                            ->placeholder('No signature provided.')
                             ->columnSpan(1),
                     ]),
             ]);

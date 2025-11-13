@@ -6,9 +6,13 @@ use Filament\Auth\Pages\Register as BaseRegister;
 use Filament\Notifications\Notification;
 use Filament\Forms\Components\FileUpload;
 use Filament\Schemas\Schema;
+use Filament\Actions\Action;
 use Illuminate\Support\Facades\Hash;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Checkbox;
+use Saade\FilamentAutograph\Forms\Components\SignaturePad;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 class Register extends BaseRegister
 {
@@ -33,22 +37,54 @@ class Register extends BaseRegister
                     ->required()
                     ->maxFiles(10)
                     ->acceptedFileTypes(['application/pdf', 'image/*', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'])
-                    ->maxSize(10240) 
+                    ->maxSize(10240)
                     ->disk('public')
                     ->directory('user-documents')
-                    ->columnSpanFull(),
-                Checkbox::make('accept_terms')
-                    ->label('I accept the Terms and Conditions')
-                    ->required()
-                    ->rules(['accepted'])
                     ->columnSpanFull(),
             ])
             ->statePath('data');
     }
 
+    protected function getFormActions(): array
+    {
+        return [
+            Action::make('register')
+                ->label(__('Continue Registration'))
+                ->modalHeading('Finalize Registration')
+                ->modalSubmitActionLabel('Confirm & Sign up')
+                ->modalWidth('sm')
+                ->form([
+                    SignaturePad::make('signature')
+                        ->label('Signature')
+                        ->required()
+                        ->columnSpanFull(),
+                    Checkbox::make('accept_terms')
+                        ->label('I accept the Terms and Conditions')
+                        ->required()
+                        ->rules(['accepted'])
+                        ->columnSpanFull()
+                ])
+
+                ->before(function (Action $action) {
+                })
+                ->action(function (array $data) {
+                    $mainFormData = $this->form->getState();
+
+                    $allData = array_merge($mainFormData, $data);
+
+                    $allData = $this->mutateFormDataBeforeRegister($allData);
+
+                    $user = $this->handleRegistration($allData);
+
+                    $this->afterRegister();
+
+                    redirect(route('filament.client.auth.login'));
+                }),
+        ];
+    }
+
     protected function mutateFormDataBeforeRegister(array $data): array
     {
-
         if (!isset($data['documents']) || !is_array($data['documents'])) {
             $data['documents'] = [];
         }
