@@ -6,6 +6,7 @@ use Filament\Schemas\Schema;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Illuminate\Validation\Rule;
+use Filament\Forms\Components\Select;
 use App\Rules\ContactDuplicateChecker;
 use Filament\Schemas\Components\Utilities\Get;
 
@@ -24,24 +25,12 @@ class ContactForm
                             ->label('Name')
                             ->required()
                             ->maxLength(255)
-                            ->columnSpan(1)
-                            ->rules([
-                                function (Get $get) {
-                                    return new ContactDuplicateChecker(
-                                        $get('company'),
-                                        request()->route('record')?->id ?? null
-                                    );
-                                }
-                            ])
-                            ->validationMessages([
-                                'unique' => 'This contact already exists for the specified company.',
-                            ]),
+                            ->columnSpan(1),
                         TextInput::make('email')
                             ->label('Email')
                             ->email()
                             ->required()
                             ->maxLength(255)
-                            ->unique(ignoreRecord: true)
                             ->columnSpan(2),
 
                         TextInput::make('phone')
@@ -62,10 +51,16 @@ class ContactForm
                             ->required()
                             ->maxLength(255)
                             ->columnSpan(1),
-                        TextInput::make('company')
+                        Select::make('company')
                             ->label('Company')
+                            ->preload()
+                            ->searchable()
+                            ->options([
+                                'TPB' => 'TPB',
+                                'LCCAD' => 'LCCAD',
+                                'Other' => 'Other',
+                            ])
                             ->required()
-                            ->maxLength(255)
                             ->columnSpan(1),
                     ]),
             ]);
