@@ -41,7 +41,6 @@ class Register extends BaseRegister
                     ->label('I accept the Terms and Conditions')
                     ->required()
                     ->rules(['accepted'])
-                    ->helperText('You must accept the terms and conditions to register.')
                     ->columnSpanFull(),
             ])
             ->statePath('data');
