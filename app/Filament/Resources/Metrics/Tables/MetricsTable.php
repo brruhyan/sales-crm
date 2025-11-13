@@ -9,6 +9,7 @@ use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use App\Models\Deal;
+use Filament\Tables\Filters\SelectFilter;
 use App\Models\Leads;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -72,7 +73,7 @@ class MetricsTable
                     ->color('warning')
             ])
             ->filters([
-                
+
             ])
             ->recordActions([
                 ViewAction::make(),
