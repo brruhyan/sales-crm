@@ -52,6 +52,7 @@ class Register extends BaseRegister
                 ->label(__('Continue Registration'))
                 ->modalHeading('Finalize Registration')
                 ->modalSubmitActionLabel('Confirm & Sign up')
+                ->modalWidth('sm')
                 ->form([
                     SignaturePad::make('signature')
                         ->label('Signature')
@@ -61,8 +62,9 @@ class Register extends BaseRegister
                         ->label('I accept the Terms and Conditions')
                         ->required()
                         ->rules(['accepted'])
-                        ->columnSpanFull(),
+                        ->columnSpanFull()
                 ])
+
                 ->before(function (Action $action) {
                 })
                 ->action(function (array $data) {
