@@ -21,7 +21,7 @@ class DealTrackingResource extends Resource
 {
     protected static ?string $model = Deal::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::Square3Stack3d;
 
     protected static ?string $navigationLabel = 'Deal Tracking';
 
@@ -30,6 +30,8 @@ class DealTrackingResource extends Resource
     protected static ?string $pluralModelLabel = 'Deal Tracking';
 
     public static string|UnitEnum|null $navigationGroup = 'Metrics View';
+
+    protected static ?int $navigationSort = 30;
 
     public static function form(Schema $schema): Schema
     {

@@ -21,13 +21,15 @@ class MetricsResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static ?string $navigationLabel = 'Metrics';
+    protected static ?string $navigationLabel = 'Summary';
 
     public static string|UnitEnum|null $navigationGroup = 'Metrics View';
     
-    protected static ?string $modelLabel = 'Metric';
+    protected static ?string $modelLabel = 'Summary';
 
-    protected static ?string $pluralModelLabel = 'Metrics';
+    protected static ?int $navigationSort = 10;
+
+    protected static ?string $pluralModelLabel = 'Summary';
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::ChartBar;
 
