@@ -31,7 +31,7 @@ class LeadTrackingsTable
                     ->badge()
                     ->color(function ($state) {
                         return match (strtolower($state)) {
-                            'for review' => 'warning',
+                            'for review' => 'danger',
                             'new' => 'primary',
                             'contacted' => 'secondary',
                             'qualified' => 'success',

@@ -77,6 +77,7 @@ class LeadsInfolist
                                     ->badge()
                                     ->color(fn (string $state): string => match ($state) {
                                         'New' => 'info',
+                                        'For Review' => 'danger',
                                         'Contacted' => 'warning',
                                         'Qualified' => 'success',
                                         'Declined' => 'danger',

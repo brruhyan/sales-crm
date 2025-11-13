@@ -15,7 +15,7 @@ class MarkLeadQualifiedAction extends Action
         $name ??= 'markQualified';
         
         return parent::make($name)
-            ->label('Mark as Qualified')
+            ->label('Send for Review')
             ->color('success')
             ->visible(fn (Leads $record) => $record->status !== 'Qualified')
             ->icon('heroicon-o-check-circle')
@@ -38,13 +38,13 @@ class MarkLeadQualifiedAction extends Action
             ])
             ->action(function (Leads $record, array $data) {
                 $record->update([
-                    'status' => 'Qualified',
+                    'status' => 'for review',
                     'qualified_documents' => $data['qualified_documents'] ?? null,
                 ]);
 
                 Notification::make()
-                    ->title('Lead marked as Qualified.')
-                    ->body('Congratulations! You can now proceed to converting this lead into a deal.')
+                    ->title('Lead Qualification Submitted.')
+                    ->body('Congratulations! Please wait for the admin to review the qualified lead documents.')
                     ->icon('heroicon-o-check-circle')
                     ->iconColor('success')
                     ->success()

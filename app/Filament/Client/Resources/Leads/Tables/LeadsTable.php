@@ -34,6 +34,7 @@ class LeadsTable
                 BadgeColumn::make('status')
                     ->label('Status')
                     ->colors([
+                        'danger' => 'For Review',
                         'primary' => 'New',
                         'warning' => 'Contacted',
                         'success' => 'Qualified',

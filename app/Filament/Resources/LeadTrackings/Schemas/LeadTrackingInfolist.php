@@ -37,6 +37,8 @@ class LeadTrackingInfolist
                                         'Contacted' => 'warning',
                                         'Qualified' => 'success',
                                         'Declined' => 'danger',
+                                        'Lost' => 'danger',
+                                        'For Review' => 'danger',
                                         default => 'gray',
                                     })
                                     ->columnSpan(1),
