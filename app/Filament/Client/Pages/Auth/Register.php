@@ -8,6 +8,7 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Hash;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Checkbox;
 
 class Register extends BaseRegister
 {
@@ -25,10 +26,6 @@ class Register extends BaseRegister
                     ->mask('999-999-999')
                     ->maxLength(11)
                     ->columnSpanFull(),
-                TextInput::make('home_address')
-                    ->label('Home Address')
-                    ->required()
-                    ->columnSpanFull(),
                 FileUpload::make('documents')
                     ->label('Required Documents')
                     ->helperText('Please upload valid identification documents.')
@@ -39,6 +36,12 @@ class Register extends BaseRegister
                     ->maxSize(10240) 
                     ->disk('public')
                     ->directory('user-documents')
+                    ->columnSpanFull(),
+                Checkbox::make('accept_terms')
+                    ->label('I accept the Terms and Conditions')
+                    ->required()
+                    ->rules(['accepted'])
+                    ->helperText('You must accept the terms and conditions to register.')
                     ->columnSpanFull(),
             ])
             ->statePath('data');
