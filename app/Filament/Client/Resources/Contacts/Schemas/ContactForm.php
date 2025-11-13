@@ -6,6 +6,7 @@ use Filament\Schemas\Schema;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Illuminate\Validation\Rule;
+use Filament\Forms\Components\Select;
 use App\Rules\ContactDuplicateChecker;
 use Filament\Schemas\Components\Utilities\Get;
 
@@ -50,10 +51,16 @@ class ContactForm
                             ->required()
                             ->maxLength(255)
                             ->columnSpan(1),
-                        TextInput::make('company')
+                        Select::make('company')
                             ->label('Company')
+                            ->preload()
+                            ->searchable()
+                            ->options([
+                                'TPB' => 'TPB',
+                                'LCCAD' => 'LCCAD',
+                                'Other' => 'Other',
+                            ])
                             ->required()
-                            ->maxLength(255)
                             ->columnSpan(1),
                     ]),
             ]);
