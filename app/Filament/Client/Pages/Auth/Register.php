@@ -49,7 +49,7 @@ class Register extends BaseRegister
     {
         return [
             Action::make('register')
-                ->label(__('Register'))
+                ->label(__('Continue Registration'))
                 ->modalHeading('Finalize Registration')
                 ->modalSubmitActionLabel('Confirm & Sign up')
                 ->form([
@@ -64,11 +64,6 @@ class Register extends BaseRegister
                         ->columnSpanFull(),
                 ])
                 ->before(function (Action $action) {
-                    try {
-                        $this->authenticate();
-                    } catch (ValidationException $e) {
-                        $action->halt();
-                    }
                 })
                 ->action(function (array $data) {
                     $mainFormData = $this->form->getState();
@@ -81,16 +76,7 @@ class Register extends BaseRegister
 
                     $this->afterRegister();
 
-                    if (! $user instanceof MustVerifyEmail) {
-                        $this->guard()->login($user);
-                    }
-
-                    $redirectUrl = $this->getRedirectUrl();
-                    if (blank($redirectUrl)) {
-                        $redirectUrl = filament()->getHomeUrl();
-                    }
-
-                    redirect($redirectUrl);
+                    redirect(route('filament.client.auth.login'));
                 }),
         ];
     }

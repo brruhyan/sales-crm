@@ -27,6 +27,7 @@ class User extends Authenticatable
         'approved',
         'is_admin',
         'documents',
+        'signature'
     ];
 
     /**
@@ -52,6 +53,7 @@ class User extends Authenticatable
             'approved' => 'boolean',
             'is_admin' => 'boolean',
             'documents' => 'array',
+            'signature' => 'array',
         ];
     }
     
