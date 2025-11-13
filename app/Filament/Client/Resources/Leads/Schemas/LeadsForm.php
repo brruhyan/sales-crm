@@ -25,7 +25,6 @@ class LeadsForm
             ->components([
                 Section::make('Lead Contact Information')
                     ->description('Contact details for this lead')
-                    ->columns(4)
                     ->columnSpanFull()
                     ->schema([
                         Select::make('contact_id')
@@ -33,60 +32,9 @@ class LeadsForm
                             ->relationship('contact', 'name', fn($query) => $query->where('user_id', Auth::id()))
                             ->searchable()
                             ->preload()
-                            ->live()
-                            ->afterStateUpdated(function (?string $state, callable $set) {
-                                if ($state) {
-                                    $contact = Contact::find($state);
-                                    if ($contact) {
-                                        $set('name', $contact->name ?? '');
-                                        $set('email', $contact->email ?? '');
-                                        $set('phone', $contact->phone ?? '');
-                                        $set('company', $contact->company ?? '');
-                                        $set('company_address', $contact->company_address ?? '');
-                                    }
-                                } else {
-                                    $set('name', '');
-                                    $set('email', '');
-                                    $set('phone', '');
-                                    $set('company', '');
-                                    $set('company_address', '');
-                                }
-                            })
+                            ->required()
                             ->columnSpanFull()
-                            ->helperText('Select a contact to autofill the fields below. Create a contact first if list is empty.'),
-
-                        TextInput::make('name')
-                            ->label('Name')
-                            ->required()
-                            ->readOnly()
-                            ->live(onBlur: true)
-                            ->columnSpan(1),
-
-                        TextInput::make('email')
-                            ->label('Email')
-                            ->email()
-                            ->required()
-                            ->readOnly()
-                            ->columnSpan(2),
-
-                        TextInput::make('phone')
-                            ->label('Phone')
-                            ->required()
-                            ->tel()
-                            ->readOnly()
-                            ->columnSpan(1),
-
-                        TextInput::make('company')
-                            ->label('Company')
-                            ->required()
-                            ->readOnly()
-                            ->columnSpan(2),
-
-                        TextInput::make('company_address')
-                            ->label('Company Address')
-                            ->required()
-                            ->readOnly()
-                            ->columnSpan(2),
+                            ->helperText('Select a contact to link to this lead. Create a contact first if list is empty.'),
                     ]),
 
                 Section::make('Product Lead Details')
