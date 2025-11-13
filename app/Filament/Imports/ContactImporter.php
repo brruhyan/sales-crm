@@ -23,6 +23,9 @@ class ContactImporter extends Importer
             ImportColumn::make('company')
                 ->example('Acme Corp')
                 ->label('Company'),
+            ImportColumn::make('company_address')
+                ->example('123 Main St, City, Country')
+                ->label('Company Address'),
             ImportColumn::make('email')
                 ->label('Email')
                 ->example('john.doe@example.com'),

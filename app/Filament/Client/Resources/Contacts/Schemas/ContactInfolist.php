@@ -43,11 +43,16 @@ class ContactInfolist
                         Section::make('Company Info')
                             ->description('Company related to the contact')
                             ->icon('heroicon-o-building-office')
-                            ->columns(2)
+                            ->columns(3)
                             ->schema([
                                 TextEntry::make('company')
                                     ->label('Company Name')
                                     ->icon('heroicon-o-building-office-2')
+                                    ->columnSpan(1),
+
+                                TextEntry::make('company_address')
+                                    ->label('Company Address')
+                                    ->icon('heroicon-o-map-pin')
                                     ->columnSpan(1),
 
                                 TextEntry::make('position')

@@ -29,7 +29,7 @@ class LeadsForm
                     ->columnSpanFull()
                     ->schema([
                         Select::make('contact_id')
-                            ->label('Select Existing Contact (Optional)')
+                            ->label('Select Existing Contact')
                             ->relationship('contact', 'name', fn($query) => $query->where('user_id', Auth::id()))
                             ->searchable()
                             ->preload()
@@ -42,20 +42,23 @@ class LeadsForm
                                         $set('email', $contact->email ?? '');
                                         $set('phone', $contact->phone ?? '');
                                         $set('company', $contact->company ?? '');
+                                        $set('company_address', $contact->company_address ?? '');
                                     }
                                 } else {
                                     $set('name', '');
                                     $set('email', '');
                                     $set('phone', '');
                                     $set('company', '');
+                                    $set('company_address', '');
                                 }
                             })
                             ->columnSpanFull()
-                            ->helperText('Select a contact to autofill the fields below, or leave empty to create a new lead'),
+                            ->helperText('Select a contact to autofill the fields below. Create a contact first if list is empty.'),
 
                         TextInput::make('name')
                             ->label('Name')
                             ->required()
+                            ->readOnly()
                             ->live(onBlur: true)
                             ->columnSpan(1),
 
@@ -63,18 +66,27 @@ class LeadsForm
                             ->label('Email')
                             ->email()
                             ->required()
-                            ->columnSpan(1),
-
-                        TextInput::make('company')
-                            ->label('Company')
-                            ->required()
-                            ->columnSpan(1),
+                            ->readOnly()
+                            ->columnSpan(2),
 
                         TextInput::make('phone')
                             ->label('Phone')
                             ->required()
                             ->tel()
+                            ->readOnly()
                             ->columnSpan(1),
+
+                        TextInput::make('company')
+                            ->label('Company')
+                            ->required()
+                            ->readOnly()
+                            ->columnSpan(2),
+
+                        TextInput::make('company_address')
+                            ->label('Company Address')
+                            ->required()
+                            ->readOnly()
+                            ->columnSpan(2),
                     ]),
 
                 Section::make('Product Lead Details')
@@ -145,6 +157,8 @@ class LeadsForm
                             ->options([
                                 'Website' => 'Website',
                                 'Referral' => 'Referral',
+                                'Warm' => 'Warm',
+                                'Cold' => 'Cold',
                                 'Event' => 'Event',
                                 'Other' => 'Other',
                             ])

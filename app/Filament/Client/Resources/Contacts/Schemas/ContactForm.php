@@ -62,6 +62,11 @@ class ContactForm
                             ])
                             ->required()
                             ->columnSpan(1),
+                        TextInput::make('company_address')
+                            ->label('Company Address')
+                            ->required()
+                            ->maxLength(255)
+                            ->columnSpan(2),
                     ]),
             ]);
     }

@@ -16,19 +16,27 @@ class CreateLeads extends CreateRecord
         // Set the user_id to the authenticated user
         $data['user_id'] = Auth::id();
 
-        // Check if contact_id is not already set (meaning user didn't select an existing contact)
-        if (empty($data['contact_id'])) {
-            // Create a new contact with the lead's information
+        // If contact_id is selected, get the contact data
+        if (!empty($data['contact_id'])) {
+            $contact = Contact::find($data['contact_id']);
+            if ($contact) {
+                $data['name'] = $contact->name;
+                $data['email'] = $contact->email;
+                $data['phone'] = $contact->phone;
+                $data['company'] = $contact->company;
+                $data['company_address'] = $contact->company_address ?? null;
+            }
+        } else {
+            // Create a new contact if one wasn't selected
             $contact = Contact::create([
                 'user_id' => Auth::id(),
-                'name' => $data['name'],
-                'email' => $data['email'],
+                'name' => $data['name'] ?? null,
+                'email' => $data['email'] ?? null,
                 'phone' => $data['phone'] ?? null,
                 'company' => $data['company'] ?? null,
-                'position' => null, // Lead doesn't have position field
+                'position' => null,
             ]);
 
-            // Set the contact_id for the lead
             $data['contact_id'] = $contact->id;
         }
 
