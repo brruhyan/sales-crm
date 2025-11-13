@@ -21,6 +21,7 @@ class MetricsTable
     $userId = Auth::id();
 
         return $table
+            ->query(User::query()->where('approved', true))
             ->columns([
                 TextColumn::make('name')
                     ->label('Name')

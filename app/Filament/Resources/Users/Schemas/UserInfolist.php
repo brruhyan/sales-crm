@@ -124,6 +124,68 @@ class UserInfolist
                             ->placeholder('No documents uploaded.')
                             ->columnSpan(1),
                     ]),
+
+                Section::make('Signature')
+                    ->description('User signature from registration')
+                    ->icon('heroicon-o-pencil')
+                    ->columns(1)
+                    ->columnSpanFull()
+                    ->schema([
+                        TextEntry::make('signature')
+                            ->label('Signature')
+                            ->state(function ($record) {
+                                if (empty($record->signature)) {
+                                    return null;
+                                }
+
+                                $signature = $record->signature;
+                                
+                                // Handle if it's a data URI (from SignaturePad)
+                                if (strpos($signature, 'data:') === 0) {
+                                    return "
+                                        <div class='flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700'>
+                                            <div class='flex-1 min-w-0'>
+                                                <p class='text-sm font-medium text-gray-900 dark:text-white'>User Signature</p>
+                                                <span class='text-xs bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 px-2 py-1 rounded-full inline-block mt-1'>Registration Signature</span>
+                                            </div>
+                                            <a href=\"{$signature}\" target=\"_blank\" rel=\"noopener noreferrer\"
+                                                class=\"inline-flex items-center gap-2 px-3 py-2 bg-primary-600 hover:bg-primary-700 text-white text-sm font-medium rounded-lg transition flex-shrink-0\">
+                                                <svg class=\"w-4 h-4\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14\"></path></svg>
+                                                View
+                                            </a>
+                                        </div>
+                                    ";
+                                }
+                                
+                                // Handle if it's a file path
+                                if (is_string($signature)) {
+                                    $encodedPath = str_replace(' ', '%20', $signature);
+                                    $url = url('storage/' . $encodedPath);
+                                    $fileExists = Storage::disk('public')->exists($signature);
+                                    
+                                    if ($fileExists) {
+                                        return "
+                                            <div class='flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700'>
+                                                <div class='flex-1 min-w-0'>
+                                                    <p class='text-sm font-medium text-gray-900 dark:text-white'>User Signature</p>
+                                                    <span class='text-xs bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 px-2 py-1 rounded-full inline-block mt-1'>Registration Signature</span>
+                                                </div>
+                                                <a href=\"{$url}\" target=\"_blank\" rel=\"noopener noreferrer\"
+                                                    class=\"inline-flex items-center gap-2 px-3 py-2 bg-primary-600 hover:bg-primary-700 text-white text-sm font-medium rounded-lg transition flex-shrink-0\">
+                                                    <svg class=\"w-4 h-4\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14\"></path></svg>
+                                                    View
+                                                </a>
+                                            </div>
+                                        ";
+                                    }
+                                }
+
+                                return null;
+                            })
+                            ->html()
+                            ->placeholder('No signature provided.')
+                            ->columnSpan(1),
+                    ]),
             ]);
     }
 }
