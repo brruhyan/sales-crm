@@ -8,6 +8,7 @@ use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Filament\Tables\Filters\SelectFilter;
 use App\Models\Deal;
 use App\Models\Leads;
 use App\Models\User;
@@ -52,7 +53,11 @@ class LeadTrackingsTable
                     ->sortable(),
             ])
             ->filters([
-                //
+                SelectFilter::make('user')
+                    ->label('Filter by User')
+                    ->relationship('user', 'name')
+                    ->multiple()
+                    ->preload(),
             ])
             ->recordActions([
                 ViewAction::make(),

@@ -23,15 +23,15 @@ class LeadTrackingResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
-    protected static ?string $navigationLabel = 'Lead Tracking';
+    protected static ?string $navigationLabel = 'Leads';
     
     protected static ?int $navigationSort = 20;
 
-    protected static ?string $modelLabel = 'Lead Tracking';
+    protected static ?string $modelLabel = 'Leads';
 
-    protected static ?string $pluralModelLabel =  'Lead Tracking';
+    protected static ?string $pluralModelLabel =  'Leads';
 
-    public static string|UnitEnum|null $navigationGroup = 'Metrics View';
+    public static string|UnitEnum|null $navigationGroup = 'Approval & Tracking';
 
     public static function form(Schema $schema): Schema
     {

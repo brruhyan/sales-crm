@@ -10,6 +10,7 @@ use Filament\Actions\DeleteAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Filament\Tables\Filters\Filter;
 
 class DealsTable
 {
@@ -86,18 +87,15 @@ class DealsTable
                 TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
+                Filter::make('status')
+                    ->toggle(),
                 SelectFilter::make('status')
                     ->options([
-                        'Prospecting' => 'Prospecting',
-                        'Qualification' => 'Qualification',
-                        'Needs Analysis' => 'Needs Analysis',
-                        'Proposal' => 'Proposal',
-                        'Negotiation' => 'Negotiation',
-                        'Closed Won' => 'Closed Won',
-                        'Closed Lost' => 'Closed Lost',
+                        'Open' => 'Open',
+                        'Deal Won' => 'Deal Won',
+                        'Lost' => 'Lost',
                     ])
                     ->multiple(),
 

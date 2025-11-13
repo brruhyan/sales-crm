@@ -59,7 +59,7 @@ class ClientPanelProvider extends PanelProvider
             ->brandLogo(asset('M with border.png'))
             ->brandLogoHeight('3rem')
             ->colors([
-                'primary' => Color::Yellow,
+                'primary' => Color::Amber,
             ])
             ->discoverResources(in: app_path('Filament/Client/Resources'), for: 'App\Filament\Client\Resources')
             ->discoverPages(in: app_path('Filament/Client/Pages'), for: 'App\Filament\Client\Pages')
