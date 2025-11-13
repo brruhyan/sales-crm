@@ -17,7 +17,7 @@ class MarkLeadQualifiedAction extends Action
         return parent::make($name)
             ->label('Send for Review')
             ->color('success')
-            ->visible(fn (Leads $record) => $record->status !== 'Qualified')
+            ->visible(fn (Leads $record) => $record->status !== 'Qualified' && $record->status !== 'For Review')
             ->icon('heroicon-o-check-circle')
             ->form([
                 FileUpload::make('qualified_documents')
@@ -38,7 +38,7 @@ class MarkLeadQualifiedAction extends Action
             ])
             ->action(function (Leads $record, array $data) {
                 $record->update([
-                    'status' => 'for review',
+                    'status' => 'For Review',
                     'qualified_documents' => $data['qualified_documents'] ?? null,
                 ]);
 

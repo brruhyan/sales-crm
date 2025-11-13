@@ -100,6 +100,19 @@ class LeadsInfolist
                                     ->columnSpan(1),
                             ]),
 
+                        Section::make('Dispute Information')
+                            ->description('Details about lead qualification dispute')
+                            ->icon('heroicon-o-exclamation-circle')
+                            ->visible(fn ($record) => $record->status === 'Disputed' && !empty($record->dispute_reason))
+                            ->columns(1)
+                            ->schema([
+                                TextEntry::make('dispute_reason')
+                                    ->label('Reason for Dispute')
+                                    ->icon('heroicon-o-chat-bubble-left')
+                                    ->color('danger')
+                                    ->columnSpan(1),
+                            ]),
+
                         Section::make('Supporting Documents')
                             ->description('Uploaded documents related to the lead')
                             ->icon('heroicon-o-paper-clip')
