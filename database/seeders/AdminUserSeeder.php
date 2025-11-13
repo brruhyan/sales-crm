@@ -21,6 +21,8 @@ class AdminUserSeeder extends Seeder
                 'password' => Hash::make('Stickpage1!'),
                 'is_admin' => true,
                 'approved' => true,
+                'tin_number' => '123-456-789',
+                'home_address' => '123 Admin St, City, Country',
                 'email_verified_at' => now(),
                 'documents' => [], // Let the model cast handle the JSON encoding
             ]

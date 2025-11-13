@@ -22,6 +22,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'tin_number',
+        'home_address',
         'approved',
         'is_admin',
         'documents',
