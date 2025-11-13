@@ -24,6 +24,7 @@ class Deal extends Model
         'user_id',
         'documents',
         'won_documents',
+        'dispute_reason',
     ];
 
     protected $casts = [

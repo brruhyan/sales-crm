@@ -31,10 +31,13 @@ class DealTrackingsTable
                     ->badge()
                     ->color(function ($state) {
                         return match (strtolower($state)) {
+                            'for review' => 'warning',
                             'deal won' => 'success',
                             'lost' => 'danger',      
                             'open' => 'secondary',    
-                            'proposal sent' => 'primary',  
+                            'proposal sent' => 'primary',
+                            'For Review' => 'danger',
+                            'Disputed' => 'danger',  
                             default => 'secondary', 
                         };
                     })

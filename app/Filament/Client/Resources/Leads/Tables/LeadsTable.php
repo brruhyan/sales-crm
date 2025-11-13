@@ -5,6 +5,7 @@ namespace App\Filament\Client\Resources\Leads\Tables;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
@@ -33,10 +34,12 @@ class LeadsTable
                 BadgeColumn::make('status')
                     ->label('Status')
                     ->colors([
+                        'danger' => 'For Review',
                         'primary' => 'New',
                         'warning' => 'Contacted',
                         'success' => 'Qualified',
                         'danger' => 'Declined',
+                        'danger' => 'Disputed',
                     ]),
                 TextColumn::make('created_at')
                     ->label('Date Created')
@@ -66,6 +69,7 @@ class LeadsTable
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),
+                DeleteAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

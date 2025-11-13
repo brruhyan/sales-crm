@@ -24,6 +24,7 @@ class Leads extends Model
         'status',
         'documents',
         'qualified_documents',
+        'dispute_reason',
     ];
 
     protected $casts = [

@@ -12,12 +12,12 @@ class MarkDealClosedWonAction extends Action
 {
     public static function make(?string $name = null): static
     {
-        $name ??= 'markWon';
+        $name ??= 'markDealForReview';
 
         return parent::make($name)
-            ->label('Mark as Won')
+            ->label('Send for Review')
             ->color('success')
-            ->visible(fn (Deal $record) => $record->status !== 'Deal Won')
+            ->visible(fn (Deal $record) => $record->status !== 'Deal Won' && $record->status !== 'For Review')
             ->icon('heroicon-o-check-circle')
             ->form([
                 FileUpload::make('documents')
@@ -38,13 +38,13 @@ class MarkDealClosedWonAction extends Action
             ])
             ->action(function (Deal $record, array $data) {
                 $record->update([
-                    'status' => 'Deal Won',
+                    'status' => 'For Review',
                     'documents' => $data['documents'] ?? null,
                 ]);
 
                 Notification::make()
-                    ->title('Deal marked as Won.')
-                    ->body('Congratulations! You can now keep track of this deal in the Projects section.')
+                    ->title('Sent for Review.')
+                    ->body('Congratulations! Please wait for the review process to complete.')
                     ->icon('heroicon-o-check-circle')
                     ->iconColor('success')
                     ->success()

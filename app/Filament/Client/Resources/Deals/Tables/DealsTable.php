@@ -57,6 +57,8 @@ class DealsTable
                         'Prospecting' => 'gray',
                         'Deal Won' => 'success',
                         'Lost' => 'danger',
+                        'For Review' => 'danger',
+                        'Disputed' => 'danger',
                         default => 'gray',
                     }),
 
@@ -115,6 +117,7 @@ class DealsTable
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),
+                DeleteAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
