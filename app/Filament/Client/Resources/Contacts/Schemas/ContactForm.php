@@ -24,24 +24,12 @@ class ContactForm
                             ->label('Name')
                             ->required()
                             ->maxLength(255)
-                            ->columnSpan(1)
-                            ->rules([
-                                function (Get $get) {
-                                    return new ContactDuplicateChecker(
-                                        $get('company'),
-                                        request()->route('record')?->id ?? null
-                                    );
-                                }
-                            ])
-                            ->validationMessages([
-                                'unique' => 'This contact already exists for the specified company.',
-                            ]),
+                            ->columnSpan(1),
                         TextInput::make('email')
                             ->label('Email')
                             ->email()
                             ->required()
                             ->maxLength(255)
-                            ->unique(ignoreRecord: true)
                             ->columnSpan(2),
 
                         TextInput::make('phone')
