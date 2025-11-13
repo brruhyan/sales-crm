@@ -43,6 +43,12 @@ class ContactsTable
                     ->searchable()
                     ->sortable()
                     ->icon('heroicon-o-building-office'),
+                
+                TextColumn::make('company_address')
+                    ->label('Company Address')
+                    ->searchable()
+                    ->sortable()
+                    ->icon('heroicon-o-map-pin'),
 
                 TextColumn::make('deals_count')
                     ->label('Deals')
