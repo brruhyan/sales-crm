@@ -33,6 +33,10 @@ class UserInfolist
                             ->label('Accepted Terms and Conditions')
                             ->trueIcon('heroicon-o-check-circle')
                             ->falseIcon('heroicon-o-x-circle'),
+                        IconEntry::make('signature')
+                            ->label('Provided Signature')
+                            ->trueIcon('heroicon-o-check-circle')
+                            ->falseIcon('heroicon-o-x-circle'),
                     ])
                     ->columnSpanFull(),
 
