@@ -14,8 +14,10 @@ return new class extends Migration
         Schema::create('leads', function (Blueprint $table) {
             $table->id();
             $table->string('lead_title');
+            $table->string('lead_type')->nullable();
             $table->string('product');
             $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('contact_id')->nullable()->constrained('contacts')->onDelete('set null');
             $table->timestamps();
             $table->string('name'); 
             $table->string('email');
@@ -25,6 +27,8 @@ return new class extends Migration
             $table->string('status')->default('New'); 
             $table->softDeletes();
             $table->json('documents')->nullable(); 
+            $table->json('qualified_documents')->nullable();
+            $table->text('dispute_reason')->nullable();
         });
     }
 
