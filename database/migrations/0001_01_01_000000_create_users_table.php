@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->boolean('approved')->default(false);
             $table->boolean('is_admin')->default(false);
-            $table->string('tin_number');
+            $table->string('tin_number')->nullable();
             $table->boolean('accept_terms')->default(false);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
