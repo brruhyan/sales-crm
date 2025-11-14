@@ -61,7 +61,7 @@ class Register extends BaseRegister
                         
                         $components[] = FileUpload::make('modal_documents')
                             ->label('Required Documents')
-                            ->helperText('Valid govt ID.')
+                            ->helperText('Upload Valid Government ID.')
                             ->multiple()
                             ->required()
                             ->maxFiles(10)
@@ -73,9 +73,10 @@ class Register extends BaseRegister
                     } else {
                         $components[] = FileUpload::make('company_documents')
                             ->label('Company Requirements')
-                            ->helperText('Upload SEC registration cert and BIR 2303 in one PDF file.')
+                            ->helperText('Upload SEC registration Cert and BIR 2303.')
+                            ->multiple()
                             ->required()
-                            ->maxFiles(1)
+                            ->maxFiles(5)
                             ->acceptedFileTypes(['application/pdf'])
                             ->maxSize(10240)
                             ->disk('public')
