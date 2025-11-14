@@ -39,7 +39,8 @@ class UserApprovedNotification extends Notification
             ->greeting('Congratulations!')
             ->line(sprintf('Hello %s, your registration has been approved. You can now log in to your account.', $notifiable->name))
             ->line('We are excited to have you on board!')
-            ->action('Login Now', url('/client'));
+            ->action('Login Now', url('/client'))
+            ->line('Thank you for joining us!');
 
     }
 

@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Actions;
 use Filament\Actions\Action;
 use App\Models\Leads;
 use Filament\Notifications\Notification;
+use App\Notifications\LeadApprovedNotification;
 
 class ApproveLeadQualificationAction extends Action
 {
@@ -20,6 +21,8 @@ class ApproveLeadQualificationAction extends Action
             ->visible(fn (Leads $record) => $record->status === 'For Review')
             ->action(function (Leads $record) {
                 $record->update(['status' => 'Qualified']);
+
+                $record->notify(new LeadApprovedNotification($record->lead_title));
 
                 Notification::make()
                     ->title('Lead qualification approved successfully.')

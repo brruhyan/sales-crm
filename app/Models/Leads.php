@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
 
 class Leads extends Model
 {   
-    use SoftDeletes;
+    use SoftDeletes, Notifiable;
 
     protected $fillable = [
         'lead_title',
