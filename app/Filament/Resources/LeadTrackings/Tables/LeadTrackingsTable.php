@@ -68,6 +68,21 @@ class LeadTrackingsTable
                         'Declined' => 'Declined',
                         'Disputed' => 'Disputed',
                     ]),
+                SelectFilter::make('lead_type')
+                    ->label('Filter by Solution Type')
+                    ->options([
+                        'Procurement' => 'Procurement',
+                        'Implementation' => 'Implementation',
+                        'Support' => 'Support',
+                        'Consultation' => 'Consultation',
+                        'System Integration' => 'System Integration',
+                        'Other' => 'Other',
+                    ]),
+                SelectFilter::make('company')
+                    ->label('Filter by Company')
+                    ->relationship('contact', 'company')
+                    ->multiple()
+                    ->preload(),
             ])
             ->recordActions([
                 ViewAction::make(),

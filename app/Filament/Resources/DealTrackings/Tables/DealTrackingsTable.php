@@ -74,6 +74,11 @@ class DealTrackingsTable
                         'Deal Won' => 'Deal Won',
                         'Lost' => 'Lost',
                     ]),
+                SelectFilter::make('company')
+                    ->label('Filter by Company')
+                    ->relationship('contact', 'company')
+                    ->multiple()
+                    ->preload(),
             ])
             ->recordActions([
                 ViewAction::make(),

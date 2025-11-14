@@ -59,19 +59,22 @@ class LeadsForm
                             ->columnSpanFull(),
 
                         Select::make('lead_type')
-                            ->label('Lead Type')
+                            ->label('Solution Type')
                             ->required()
                             ->options([
                                 'Procurement' => 'Procurement',
                                 'Implementation' => 'Implementation',
                                 'Support' => 'Support',
                                 'Consultation' => 'Consultation',
+                                'System Integration' => 'System Integration',
                                 'Other' => 'Other',
                             ])
                             ->columnSpan(1),
+                        
+                    
 
                         Select::make('product')
-                            ->label('Product')
+                            ->label('Project Inclusions & Services')
                             ->multiple()
                             ->required()
                             ->searchable()
