@@ -37,6 +37,12 @@ class UserInfolist
                             ->label('Provided Signature')
                             ->trueIcon('heroicon-o-check-circle')
                             ->falseIcon('heroicon-o-x-circle'),
+                        TextEntry::make('account_type')
+                            ->label('Account Type')
+                            ->badge()
+                            ->color('Amber')
+                            ->icon('heroicon-o-briefcase')
+                            ->state(fn ($record) => ucfirst($record->account_type)),
                     ])
                     ->columnSpanFull(),
 
