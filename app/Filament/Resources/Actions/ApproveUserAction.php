@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Actions;
 
 use Filament\Actions\Action;
 use App\Models\User;
+use App\Notifications\UserApprovedNotification;
 use Filament\Notifications\Notification;
 
 class ApproveUserAction extends Action
@@ -20,6 +21,8 @@ class ApproveUserAction extends Action
             ->visible(fn (User $record) => ! $record->approved)
             ->action(function (User $record) {
                 $record->update(['approved' => true]);
+
+                $record->notify(new UserApprovedNotification());
 
                 Notification::make()
                     ->title('User approved successfully.')
