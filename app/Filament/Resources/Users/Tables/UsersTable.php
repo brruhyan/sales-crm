@@ -68,15 +68,6 @@ class UsersTable
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),
-                Action::make('approve')
-                    ->icon('heroicon-o-check-circle')
-                    ->color('success')
-                    ->requiresConfirmation()
-                    ->visible(fn ($record) => !$record->approved)
-                    ->action(function ($record) {
-                        $record->update(['approved' => true]);
-                    })
-                    ->successNotificationTitle('User approved successfully'),
                 Action::make('revoke')
                     ->icon('heroicon-o-x-circle')
                     ->color('danger')
