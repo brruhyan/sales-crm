@@ -35,9 +35,9 @@ class LeadApprovedNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->line('Lead Qualification Approved!')
             ->greeting('Congratulations!')
-            ->line(sprintf('Hello %s, your lead <strong>"%s"</strong> has been qualified and approved. You may now proceed to the next steps.', $notifiable->name, $this->leadTitle))
+            ->line('Lead Qualification Approved!')
+            ->line(sprintf('Hello %s, your lead **"%s"** has been qualified and approved. You may now proceed to the next steps.', $notifiable->name, $this->leadTitle))
             ->action('Proceed Now', url('/client/leads'))
             ->line('Thank you for using our application!');
     }

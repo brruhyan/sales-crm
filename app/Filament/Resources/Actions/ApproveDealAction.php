@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Actions;
 use Filament\Actions\Action;
 use App\Models\Deal;
 use Filament\Notifications\Notification;
+use App\Notifications\DealApprovedNotification;
 
 class ApproveDealAction extends Action
 {
@@ -20,6 +21,9 @@ class ApproveDealAction extends Action
             ->visible(fn (Deal $record) => $record->status === 'For Review')
             ->action(function (Deal $record) {
                 $record->update(['status' => 'Deal Won']);
+
+                // Send notification to the user who owns the deal
+                $record->user->notify(new DealApprovedNotification($record->title));
 
                 Notification::make()
                     ->title('Deal approved successfully.')
