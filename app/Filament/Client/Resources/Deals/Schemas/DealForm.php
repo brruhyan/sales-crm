@@ -75,7 +75,7 @@ class DealForm
                                 'Open' => 'Open',
                                 'Proposal Sent' => 'Proposal Sent',
                             ])
-                            ->default('Open')
+                            ->default('Proposal Sent')
                             ->required()
                             ->live()
                             ->columnSpan(1),
