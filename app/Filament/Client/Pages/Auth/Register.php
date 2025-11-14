@@ -134,14 +134,12 @@ class Register extends BaseRegister
 
     protected function mutateFormDataBeforeRegister(array $data): array
     {
-        // Ensure documents is properly set and is an array
         if (!isset($data['documents'])) {
             $data['documents'] = [];
         } elseif (!is_array($data['documents'])) {
             $data['documents'] = [$data['documents']];
         }
         
-        // Remove modal-specific document fields as they've been merged into 'documents'
         unset($data['modal_documents']);
         unset($data['company_documents']);
         
