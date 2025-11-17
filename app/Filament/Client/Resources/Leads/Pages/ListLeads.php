@@ -25,7 +25,7 @@ class ListLeads extends ListRecords
                 ->label('Export Leads'),
             ImportAction::make()
                 ->importer(LeadsImporter::class)
-                ->label('WIP: Import Leads'),
+                ->label('Import Leads'),
         ];
     }
 
