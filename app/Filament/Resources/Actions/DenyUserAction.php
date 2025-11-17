@@ -38,6 +38,9 @@ class DenyUserAction extends Action
                     ->title('User denied successfully.')
                     ->danger()
                     ->send();
+                
+                $record->delete();
+                return redirect('/admin/users');
             });
     }
 }
