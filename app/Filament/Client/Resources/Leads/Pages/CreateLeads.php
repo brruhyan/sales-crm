@@ -13,10 +13,8 @@ class CreateLeads extends CreateRecord
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
-        // Set the user_id to the authenticated user
         $data['user_id'] = Auth::id();
 
-        // Get the contact data to populate lead fields
         if (!empty($data['contact_id'])) {
             $contact = Contact::find($data['contact_id']);
             if ($contact) {
@@ -28,5 +26,20 @@ class CreateLeads extends CreateRecord
         }
 
         return $data;
+    }
+
+    protected function afterCreate(): void
+    {
+        $leadTitle = $this->record->lead_title ?? '';
+        $leadId = $this->record->id ?? null;
+        
+        $partialMatch = app(\App\Rules\PartialMatchDuplicate::class)->checkPartialMatch($leadTitle, $leadId);
+        if ($partialMatch) {
+            \Filament\Notifications\Notification::make()
+                ->title('Warning: Similar lead detected')
+                ->body('Another user has already registered a similar lead. Proceed with caution.')
+                ->warning()
+                ->send();
+        }
     }
 }
