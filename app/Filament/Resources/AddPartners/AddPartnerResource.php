@@ -21,12 +21,12 @@ class AddPartnerResource extends Resource
 {
     protected static ?string $model = Partner::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedUserGroup;
 
     public static string|UnitEnum|null $navigationGroup = 'Record Management';
 
     protected static ?string $navigationLabel = 'Partners';
-    
+
     protected static ?int $navigationSort = 2;
 
     protected static ?string $modelLabel = 'Partner';

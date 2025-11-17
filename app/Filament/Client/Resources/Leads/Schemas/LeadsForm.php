@@ -80,7 +80,7 @@ class LeadsForm
                             ->required()
                             ->searchable()
                             ->preload()
-                            ->options(ProductList::OPTIONS)
+                            ->options(ProductList::getOptions())
                             ->helperText('Select the product(s) this lead is interested in.')
                             ->columnSpan(1),
                     ]),
