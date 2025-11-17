@@ -6,6 +6,7 @@ use App\Filament\Resources\Users\UserResource;
 use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
 use App\Filament\Resources\Actions\ApproveUserAction;
+use App\Filament\Resources\Actions\DenyUserAction;
 
 class ViewUser extends ViewRecord
 {
@@ -15,6 +16,7 @@ class ViewUser extends ViewRecord
     {   
         return [
             ApproveUserAction::make(),
+            DenyUserAction::make(),
         ];
     }
 }

@@ -22,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'deny_reason',
         'account_type',
         'tin_number',
         'accept_terms',
