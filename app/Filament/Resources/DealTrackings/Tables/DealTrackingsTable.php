@@ -79,6 +79,7 @@ class DealTrackingsTable
                     ->relationship('contact', 'company')
                     ->multiple()
                     ->preload(),
+                
             ])
             ->recordActions([
                 ViewAction::make(),
