@@ -72,8 +72,20 @@ class Register extends BaseRegister
                             ->columnSpanFull();
                     } else {
                         $components[] = FileUpload::make('company_documents')
-                            ->label('Company Requirements')
-                            ->helperText('Upload SEC registration Cert and BIR 2303.')
+                            ->label('SEC Registration Certificate')
+                            ->helperText('Upload SEC registration Cert')
+                            ->multiple()
+                            ->required()
+                            ->maxFiles(5)
+                            ->acceptedFileTypes(['application/pdf'])
+                            ->maxSize(10240)
+                            ->disk('public')
+                            ->directory('user-documents')
+                            ->columnSpanFull();
+
+                        $components[] =FileUpload::make('company_documents')
+                            ->label('BIR 2303')
+                            ->helperText('Upload BIR 2303')
                             ->multiple()
                             ->required()
                             ->maxFiles(5)
