@@ -23,8 +23,6 @@ class MetricsResource extends Resource
 
     protected static ?string $navigationLabel = 'Summary';
 
-    public static string|UnitEnum|null $navigationGroup = 'Metrics View';
-    
     protected static ?string $modelLabel = 'Summary';
 
     protected static ?int $navigationSort = 10;
