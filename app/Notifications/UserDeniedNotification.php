@@ -31,6 +31,7 @@ class UserDeniedNotification extends Notification
                 $notifiable->name,
                 $notifiable->deny_reason
             ))
+            ->action('Resubmit Registration', url('/client/register'))
             ->line('You may resubmit your registration after addressing the issues mentioned.')
             ->line('Thank you for your understanding.');
     }
