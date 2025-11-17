@@ -6,6 +6,7 @@ use Filament\Actions\Action;
 use App\Models\Deal;
 use Filament\Notifications\Notification;
 use Filament\Forms\Components\Textarea;
+use App\Notifications\DealDisputeNotification;
 
 class DisputeDealAction extends Action
 {
@@ -31,6 +32,8 @@ class DisputeDealAction extends Action
                     'status' => 'Disputed',
                     'dispute_reason' => $data['reason'],
                 ]);
+
+                $record->user->notify(new DealDisputeNotification($record->title, $data['reason']));
 
                 Notification::make()
                     ->title('Deal disputed successfully.')

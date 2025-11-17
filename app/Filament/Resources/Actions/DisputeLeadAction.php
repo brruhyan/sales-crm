@@ -6,6 +6,7 @@ use Filament\Actions\Action;
 use Filament\Forms\Components\Textarea;
 use App\Models\Leads;
 use Filament\Notifications\Notification;
+use App\Notifications\LeadDisputeNotification;
 
 class DisputeLeadAction extends Action
 {
@@ -30,6 +31,8 @@ class DisputeLeadAction extends Action
                     'status' => 'Disputed',
                     'dispute_reason' => $data['reason'],
                 ]);
+
+                $record->user->notify(new LeadDisputeNotification($record->lead_title, $data['reason']));
 
                 Notification::make()
                     ->title('Lead qualification disputed successfully.')

@@ -47,7 +47,6 @@ class LeadsForm
                         TextInput::make('lead_title')
                             ->label('Lead Title')
                             ->required()
-                            ->unique()
                             ->maxLength(255)
                             ->columnSpanFull(),
 
