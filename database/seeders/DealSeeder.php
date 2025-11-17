@@ -14,15 +14,12 @@ class DealSeeder extends Seeder
      */
     public function run(): void
     {
-        // Get the test user
         $user = \App\Models\User::where('email', 'test@example.com')->first();
 
         if ($user) {
-            // Get leads and contacts for this user
             $leads = Leads::where('user_id', $user->id)->get();
             $contacts = Contact::where('user_id', $user->id)->get();
 
-            // Create 12 deals
             for ($i = 0; $i < 12; $i++) {
                 Deal::factory()->create([
                     'user_id' => $user->id,

@@ -12,7 +12,6 @@ class ContactSeeder extends Seeder
      */
     public function run(): void
     {
-        // Get the test user
         $user = \App\Models\User::where('email', 'test@example.com')->first();
 
         if ($user) {

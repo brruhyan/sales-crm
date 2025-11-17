@@ -16,6 +16,7 @@ use App\Models\Leads;
 use Illuminate\Validation\Rule;
 use App\Rules\PartialMatchDuplicate;
 use Filament\Forms\Components\FileUpload;
+use App\Models\ProductList;
 
 class LeadsForm
 {
@@ -79,21 +80,7 @@ class LeadsForm
                             ->required()
                             ->searchable()
                             ->preload()
-                            ->options([
-                                'DataFusion 360' => 'DataFusion 360',
-                                'AksyonSentral' => 'AksyonSentral',
-                                'AksyonMap' => 'AksyonMap',
-                                'AksyonCare' => 'AksyonCare',
-                                'AksyonERP' => 'AksyonERP',
-                                'AksyonGov' => 'AksyonGov',
-                                'CWAT' => 'CWAT',
-                                'AksyonShield' => 'AksyonShield',
-                                'AksyonCrypt' => 'AksyonCrypt',
-                                'AksyonChain' => 'AksyonChain',
-                                'Smart City' => 'Smart City',
-                                'Smart Campus' => 'Smart Campus',
-                                'Others' => 'Others',
-                            ])
+                            ->options(ProductList::OPTIONS)
                             ->helperText('Select the product(s) this lead is interested in.')
                             ->columnSpan(1),
                     ]),
