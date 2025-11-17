@@ -23,5 +23,12 @@ class DatabaseSeeder extends Seeder
             'password' => '12341234',
             'approved' => true,
         ]);
+
+        // Call other seeders
+        $this->call([
+            ContactSeeder::class,
+            LeadSeeder::class,
+            DealSeeder::class,
+        ]);
     }
 }

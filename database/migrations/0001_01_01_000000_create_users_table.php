@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
-            $table->json('documents');
+            $table->json('documents')->nullable();
             $table->json('signature')->nullable();
         });
 
