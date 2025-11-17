@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
 
         // Call other seeders
         $this->call([
+            PartnerSeeder::class,
             ContactSeeder::class,
             LeadSeeder::class,
             DealSeeder::class,

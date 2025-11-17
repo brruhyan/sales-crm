@@ -56,7 +56,7 @@ class ContactForm
                             ->label('Company/Partner')
                             ->preload()
                             ->searchable()
-                            ->options(Partner::OPTIONS)
+                            ->options(Partner::getOptions())
                             ->required()
                             ->columnSpan(1),
                         TextInput::make('company_address')
