@@ -48,6 +48,30 @@ class PartialMatchDuplicate implements ValidationRule
         }
     }
 
+    /**
+     * Check for a partial match without failing validation
+     */
+    public function checkPartialMatch(string $value, $leadId = null): bool
+    {
+        $inputKeywords = $this->extractKeywords($value);
+        if (empty($inputKeywords)) {
+            return false;
+        }
+        $existingLeads = Leads::when($leadId, function ($query) use ($leadId) {
+                return $query->where('id', '!=', $leadId);
+            })
+            ->get();
+        foreach ($existingLeads as $existingLead) {
+            $existingKeywords = $this->extractKeywords($existingLead->lead_title);
+            $matchedKeywords = array_intersect($inputKeywords, $existingKeywords);
+            $matchPercentage = count($matchedKeywords) / max(count($inputKeywords), count($existingKeywords));
+            if ($matchPercentage >= 0.5) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private function extractKeywords(string $text): array
     {
         $stopWords = [

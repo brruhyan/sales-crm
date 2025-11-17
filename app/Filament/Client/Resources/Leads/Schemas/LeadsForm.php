@@ -48,14 +48,6 @@ class LeadsForm
                             ->label('Lead Title')
                             ->required()
                             ->unique()
-                            ->rules([
-                                new PartialMatchDuplicate(
-                                    request()->route('record')?->id ?? null
-                                ),
-                            ])
-                            ->validationMessages([
-                                'unique' => 'This lead has already been added/taken.',
-                            ])
                             ->maxLength(255)
                             ->columnSpanFull(),
 
