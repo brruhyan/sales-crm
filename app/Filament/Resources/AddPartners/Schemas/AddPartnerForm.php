@@ -16,11 +16,6 @@ class AddPartnerForm
                 TextInput::make('name')
                     ->label('Partner Name')
                     ->required(),
-                Select::make('test')
-                    ->label('Select Partner')
-                    ->searchable(   )
-                    ->options(Partner::getOptions())  
-                    ->required(),
             ]);
     }
 }
