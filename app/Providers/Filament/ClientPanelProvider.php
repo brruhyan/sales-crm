@@ -56,6 +56,7 @@ class ClientPanelProvider extends PanelProvider
                     ),
             ])
             // Header Changes
+            ->brandName('AksyonSales')
             ->brandLogo(asset('M with border.png'))
             ->brandLogoHeight('3rem')
             ->colors([

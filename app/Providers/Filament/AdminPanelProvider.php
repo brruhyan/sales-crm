@@ -43,6 +43,7 @@ class AdminPanelProvider extends PanelProvider
                             ->directory('images/backgrounds/filament-admin')
                     ),
             ])
+            ->brandName('AksyonSales')
             ->brandLogo(asset('M with border.png'))
             ->brandLogoHeight('3rem')
             ->colors([
