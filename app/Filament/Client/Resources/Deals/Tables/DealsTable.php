@@ -40,11 +40,12 @@ class DealsTable
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
-                TextColumn::make('contact.company')
+                TextColumn::make('contact.partner.name')
                     ->label('Company')
                     ->searchable()
                     ->sortable()
-                    ->toggleable(),
+                    ->toggleable()
+                    ->placeholder('No company'),
 
                 TextColumn::make('amount')
                     ->label('Value')

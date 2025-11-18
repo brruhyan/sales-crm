@@ -146,12 +146,14 @@ class UserInfolist
 
                                 $signature = $record->signature;
                                 
-                                if (strpos($signature, 'data:') === 0) {
+                                // Displays Base64 string directly
+                                if (strpos($signature, 'data:image/') === 0) {
                                     return "
-                                        <img src=\"{$signature}\" alt=\"User Signature\" class='max-h-1 w-auto'/>
+                                        <img src=\"{$signature}\" alt=\"User Signature\" class='max-h-24 w-auto'/> 
                                     ";
                                 }
                                 
+                                // Displays file path (if saved as a file)
                                 if (is_string($signature)) {
                                     $encodedPath = str_replace(' ', '%20', $signature);
                                     $url = url('storage/' . $encodedPath);
@@ -160,7 +162,7 @@ class UserInfolist
                                     if ($fileExists) {
                                         return "
                                             <a href=\"{$url}\" target=\"_blank\" rel=\"noopener noreferrer\">
-                                                <img src=\"{$url}\" alt=\"User Signature\" class='max-h-5 cursor-pointer hover:opacity-80 transition' />
+                                                <img src=\"{$url}\" alt=\"User Signature\" class='max-h-24 cursor-pointer hover:opacity-80 transition' />
                                             </a>
                                         ";
                                     }

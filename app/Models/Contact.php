@@ -44,4 +44,12 @@ class Contact extends Model
     {
         return $this->hasMany(Leads::class);
     }
+
+    /**
+     * Get the partner/company for this contact.
+     */
+    public function partner(): BelongsTo
+    {
+        return $this->belongsTo(Partner::class, 'company', 'id');
+    }
 }

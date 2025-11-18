@@ -106,10 +106,6 @@ class DealInfolist
                                     ->copyable()
                                     ->url(fn ($record) => $record->contact ? "tel:{$record->contact->phone}" : null),
 
-                                TextEntry::make('contact.company')
-                                    ->label('Company')
-                                    ->icon('heroicon-o-building-office'),
-
                                 TextEntry::make('user.name')
                                     ->label('Assigned To')
                                     ->icon('heroicon-o-user-circle')

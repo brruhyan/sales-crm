@@ -50,4 +50,12 @@ class Leads extends Model
     {
         return $this->belongsTo(Contact::class);
     }
+
+    /**
+     * Get the partner/company for this lead.
+     */
+    public function partner(): BelongsTo
+    {
+        return $this->belongsTo(Partner::class, 'company', 'id');
+    }
 }

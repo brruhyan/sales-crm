@@ -45,10 +45,11 @@ class ContactInfolist
                             ->icon('heroicon-o-building-office')
                             ->columns(3)
                             ->schema([
-                                TextEntry::make('company')
+                                TextEntry::make('partner.name')
                                     ->label('Company Name')
                                     ->icon('heroicon-o-building-office-2')
-                                    ->columnSpan(1),
+                                    ->columnSpan(1)
+                                    ->placeholder('No company assigned'),
 
                                 TextEntry::make('company_address')
                                     ->label('Company Address')

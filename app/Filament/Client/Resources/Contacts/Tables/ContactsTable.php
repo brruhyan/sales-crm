@@ -38,11 +38,12 @@ class ContactsTable
                     ->icon('heroicon-o-phone')
                     ->copyable(),
 
-                TextColumn::make('company')
+                TextColumn::make('partner.name')
                     ->label('Company')
                     ->searchable()
                     ->sortable()
-                    ->icon('heroicon-o-building-office'),
+                    ->icon('heroicon-o-building-office')
+                    ->placeholder('No company assigned'),
                 
                 TextColumn::make('company_address')
                     ->label('Company Address')
