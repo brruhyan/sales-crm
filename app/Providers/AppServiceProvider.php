@@ -26,5 +26,7 @@ class AppServiceProvider extends ServiceProvider
             Registered::class,
             SendUserRegistrationNotification::class,
         );
+        if ($this->app->environment('production')) {
+            URL::forceScheme('https');
     }
 }
