@@ -31,7 +31,7 @@ class LeadsForm
                         Select::make('contact_id')
                             ->label('Select Existing Contact')
                             ->relationship('contact', 'name', fn($query) => $query->where('user_id', Auth::id()))
-                            ->getOptionLabelFromRecordUsing(fn(Contact $record) => "{$record->name} - {$record->company}")
+                            ->getOptionLabelFromRecordUsing(fn(Contact $record) => "{$record->name} - " . ($record->partner?->name ?? 'No company'))
                             ->searchable()
                             ->preload()
                             ->required()

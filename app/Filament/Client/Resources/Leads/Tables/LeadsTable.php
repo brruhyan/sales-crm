@@ -28,8 +28,24 @@ class LeadsTable
                 TextColumn::make('name')
                     ->label('Customer')
                     ->searchable(),
-                TextColumn::make('company')
+                TextColumn::make('partner.name')
                     ->label('Company')
+                    ->searchable()
+                    ->placeholder('No company'),
+                TextColumn::make('product')
+                    ->label('Product')
+                    ->state(function ($record) {
+                        $state = $record->product;
+                        if (empty($state)) {
+                            return '-';
+                        }
+                        $ids = is_array($state) ? $state : json_decode($state, true);
+                        if (!is_array($ids) || empty($ids)) {
+                            return '-';
+                        }
+                        return \App\Models\ProductList::whereIn('id', $ids)->pluck('name')->implode(', ');
+                    })
+                    ->wrap()
                     ->searchable(),
                 BadgeColumn::make('status')
                     ->label('Status')
