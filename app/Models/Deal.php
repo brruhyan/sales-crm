@@ -58,6 +58,14 @@ class Deal extends Model
     }
 
     /**
+     * Get the partner/company through contact relationship.
+     */
+    public function partner(): BelongsTo
+    {
+        return $this->belongsTo(Partner::class, 'company', 'id');
+    }
+
+    /**
      * Scope to get only closed deals.
      */
     public function scopeClosed($query)
