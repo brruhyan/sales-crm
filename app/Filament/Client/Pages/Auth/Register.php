@@ -86,7 +86,7 @@ class Register extends BaseRegister
                         $components[] =FileUpload::make('company_documents')
                             ->label('BIR 2303')
                             ->helperText('Upload BIR 2303')
-                            ->multiple()
+                            ->multiple() 
                             ->required()
                             ->maxFiles(5)
                             ->acceptedFileTypes(['application/pdf'])

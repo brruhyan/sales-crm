@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Event;
 use Filament\Events\Auth\Registered;
 use App\Listeners\SendUserRegistrationNotification;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,5 +27,8 @@ class AppServiceProvider extends ServiceProvider
             Registered::class,
             SendUserRegistrationNotification::class,
         );
+	if ($this->app->environment('production')) {
+            URL::forceScheme('https');
+        }
     }
 }
