@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: maralabs-sales-app
+    restart: unless-stopped
+    env_file: ./.env
+    ports:
+      - "127.0.0.1:8080:80"
+    volumes:
+      - .:/var/www/html
+      - storage_data:/var/www/html/storage
+    networks:
+      - maralabs-net
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    container_name: maralabs-sales-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - maralabs-net
+
+volumes:
+  db_data:
+    driver: local
+  storage_data:
+    driver: local
+
+networks:
+  maralabs-net:
+    driver: bridge

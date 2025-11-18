@@ -57,7 +57,7 @@ class User extends Authenticatable implements FilamentUser
             'approved' => 'boolean',
             'is_admin' => 'boolean',
             'documents' => 'array',
-            'signature' => 'array',
+            'signature' => 'string',
         ];
     }
     
@@ -73,7 +73,7 @@ class User extends Authenticatable implements FilamentUser
     {
         return $this->hasMany(Deal::class, 'user_id');
     }
-    
+
     public function canAccessPanel(Panel $panel): bool
     {
         return $this->is_admin;
