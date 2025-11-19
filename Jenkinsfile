@@ -20,16 +20,9 @@ pipeline {
         stage('App Update & Cleanup') {
             steps {
                 echo "2. Running container commands (npm, composer, cache clear)..."
-
-                sh "docker exec ${CONTAINER_NAME} npm install"
-                sh "docker exec ${CONTAINER_NAME} npm run build" 
-
-                sh "docker exec ${CONTAINER_NAME} composer install --no-dev --prefer-dist"
-                
-                sh "docker exec ${CONTAINER_NAME} php artisan migrate --force"
-                
-                sh "docker exec ${CONTAINER_NAME} php artisan optimize:clear"
-                
+                sh "docker exec maralabs-sales-app npm install"
+                sh "docker exec maralabs-sales-app npm run build"
+                sh "docker exec -it maralabs-sales-app php artisan optimize:clear"
                 echo "✅ Application update process complete."
             }
         }
