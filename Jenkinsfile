@@ -2,7 +2,7 @@ pipeline {
     agent any
     
     environment {
-        CONTAINER_NAME = 'maralabs-sales-app' 
+        CONTAINER_NAME = 'maralabs-sales-app'
     }
 
     stages {
@@ -15,5 +15,6 @@ pipeline {
                     git pull origin master
                 """
             }
-        }    
+        }
+    }
 }
