@@ -5,7 +5,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 sh 'git fetch origin'
-                sh 'git reset --hard origin/master'
+                sh 'git pull origin master'
                 echo "Successfully checked out the code from ${env.BRANCH_NAME}"
             }
         }
