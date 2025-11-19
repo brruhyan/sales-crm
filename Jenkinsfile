@@ -1,20 +1,29 @@
 pipeline {
-    agent any
-    
-    environment {
-        CONTAINER_NAME = 'maralabs-sales-app'
-    }
+    agent any 
 
     stages {
-        stage('Checkout & Sync') {
+        stage('Checkout') {
             steps {
-                echo "Pulling latest code to server filesystem"
-                sh """
-                    cd /root/maralabs-sales
-                    git reset --hard
-                    git pull origin master
-                """
+                checkout scm
+                echo "Successfully checked out the code from ${env.BRANCH_NAME}"
             }
+        }
+
+        stage('Build') {
+            steps {
+                echo 'Starting the build process...'
+                sh 'ls -l'
+                echo 'Build finished.'
+            }
+        }
+    }
+
+    post {
+        always {
+            echo "Pipeline finished. Status: ${currentBuild.result}"
+        }
+        failure {
+            echo 'Build failed. Sending notification...'
         }
     }
 }
