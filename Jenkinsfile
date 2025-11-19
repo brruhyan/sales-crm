@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                checkout scm
+                sh "git pull origin master"
                 echo "Successfully checked out the code from ${env.BRANCH_NAME}"
             }
         }
