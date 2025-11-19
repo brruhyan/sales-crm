@@ -7,7 +7,7 @@ pipeline {
     }
     
     environment {
-        CONTAINER_NAME = 'maralabs-sales-app' 
+        CONTAINER_NAME = 'maralabs-sales_app' 
     }
 
     stages {
