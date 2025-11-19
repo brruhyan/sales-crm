@@ -8,9 +8,12 @@ pipeline {
     stages {
         stage('Checkout & Sync') {
             steps {
-                echo "1. Pulling latest code to the Jenkins workspace..."
-                checkout scm 
-                echo "Code synchronized on host volume."
+                echo "Pulling latest code to server filesystem"
+                sh """
+                    cd /root/maralabs-sales
+                    git reset --hard
+                    git pull origin master
+                """
             }
         }
         
