@@ -1,6 +1,10 @@
 // Test
 pipeline {
     agent any
+
+    triggers {
+        githubPush() 
+    }
     
     environment {
         CONTAINER_NAME = 'maralabs-sales-app' 
@@ -16,13 +20,13 @@ pipeline {
             }
         }
         
-
         stage('App Update & Cleanup') {
             steps {
                 echo "2. Running container commands (npm, composer, cache clear)..."
-                sh "docker exec maralabs-sales-app npm install"
-                sh "docker exec maralabs-sales-app npm run build"
-                sh "docker exec -it maralabs-sales-app php artisan optimize:clear"
+                // Using sh commands to execute inside the running Docker container
+                sh "docker exec ${CONTAINER_NAME} npm install"
+                sh "docker exec ${CONTAINER_NAME} npm run build"
+                sh "docker exec -it ${CONTAINER_NAME} php artisan optimize:clear"
                 echo "✅ Application update process complete."
             }
         }
@@ -30,6 +34,7 @@ pipeline {
     
     post {
         always {
+            // Cleans up the workspace after every build
             cleanWs() 
         }
         success {
