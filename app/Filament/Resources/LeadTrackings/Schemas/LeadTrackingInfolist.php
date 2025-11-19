@@ -76,7 +76,7 @@ class LeadTrackingInfolist
                                     ->url(fn ($record) => "tel:{$record->phone}")
                                     ->columnSpan(1),
 
-                                TextEntry::make('company')
+                                TextEntry::make('partner.name')
                                     ->label('Company')
                                     ->icon('heroicon-o-building-office')
                                     ->placeholder('No company')
@@ -91,7 +91,17 @@ class LeadTrackingInfolist
                                 TextEntry::make('product')
                                     ->label('Product(s)')
                                     ->icon('heroicon-o-cube-transparent')
-                                    ->formatStateUsing(fn ($state) => is_array($state) ? implode(', ', $state) : $state)
+                                    ->state(function ($record) {
+                                        $state = $record->product;
+                                        if (empty($state)) {
+                                            return 'No products selected';
+                                        }
+                                        $ids = is_array($state) ? $state : json_decode($state, true);
+                                        if (!is_array($ids) || empty($ids)) {
+                                            return 'No products selected';
+                                        }
+                                        return \App\Models\ProductList::whereIn('id', $ids)->pluck('name')->implode(', ');
+                                    })
                                     ->columnSpan(1),
 
                                 TextEntry::make('source')
