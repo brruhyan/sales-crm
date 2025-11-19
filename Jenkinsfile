@@ -1,9 +1,14 @@
-// Tes
 pipeline {
-    agent any
-
+    
     triggers {
         githubPush() 
+    }
+    
+    agent {
+        docker {
+            image 'node:20-alpine' 
+            args '-v /var/run/docker.sock:/var/run/docker.sock'
+        }
     }
     
     environment {
@@ -12,10 +17,17 @@ pipeline {
 
     stages {
         
-        stage('Checkout & Sync') {
+        stage('Initialize & Sync') {
             steps {
-                echo "1. Pulling latest code into Jenkins workspace (and host directory)..."
-                checkout scm
+                echo "1. Installing Docker client in agent and pulling latest code..."
+                
+                sh 'apk add --no-cache curl'
+                sh 'curl -L https://download.docker.com/linux/static/stable/x86_64/docker-26.1.1.tgz | tar -xz'
+                sh 'mv docker/docker /usr/local/bin/'
+                sh 'rm -r docker'
+                echo "Docker client installed successfully."
+                
+                checkout scm 
                 echo "Code synchronized on host."
             }
         }
@@ -23,10 +35,10 @@ pipeline {
         stage('App Update & Cleanup') {
             steps {
                 echo "2. Running container commands (npm, composer, cache clear)..."
-                // Using sh commands to execute inside the running Docker container
+                
                 sh "docker exec ${CONTAINER_NAME} npm install"
                 sh "docker exec ${CONTAINER_NAME} npm run build"
-                sh "docker exec -it ${CONTAINER_NAME} php artisan optimize:clear"
+                sh "docker exec ${CONTAINER_NAME} php artisan optimize:clear"
                 echo "✅ Application update process complete."
             }
         }
@@ -34,7 +46,6 @@ pipeline {
     
     post {
         always {
-            // Cleans up the workspace after every build
             cleanWs() 
         }
         success {
