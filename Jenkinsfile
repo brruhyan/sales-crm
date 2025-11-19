@@ -26,6 +26,10 @@ pipeline {
                 sh "docker exec ${CONTAINER_NAME} php artisan migrate --force"
                 sh "docker exec ${CONTAINER_NAME} php artisan optimize:clear"
                 
+                // 🚀 ADDED: Restart the container to force a code and memory refresh
+                echo "3. Restarting container to force application code reload..."
+                sh "docker restart ${CONTAINER_NAME}"
+                
                 echo "✅ Deployment successful. Application updated."
             }
         }
