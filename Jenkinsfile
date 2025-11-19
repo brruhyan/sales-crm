@@ -25,7 +25,7 @@ pipeline {
 
                 sh "docker exec ${CONTAINER_NAME} composer install --no-dev --prefer-dist"
                 
-                sh "docker exec ${CONTAINER_NAME} php artisan migrate"
+                sh "docker exec ${CONTAINER_NAME} php artisan migrate --force"
                 sh "docker exec ${CONTAINER_NAME} php artisan optimize:clear"
                 
                 echo "✅ Deployment successful. Application updated."
