@@ -74,6 +74,14 @@ class User extends Authenticatable implements FilamentUser
         return $this->hasMany(Deal::class, 'user_id');
     }
 
+    /**
+     * Get all partners owned by this user.
+     */
+    public function partners()
+    {
+        return $this->hasMany(Partner::class);
+    }
+
     public function canAccessPanel(Panel $panel): bool
     {
     if ($panel->getId() === 'client') {

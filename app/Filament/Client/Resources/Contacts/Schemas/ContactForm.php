@@ -10,6 +10,7 @@ use Filament\Forms\Components\Select;
 use App\Rules\ContactDuplicateChecker;
 use Filament\Schemas\Components\Utilities\Get;
 use App\Models\Partner;
+use Illuminate\Support\Facades\Auth;
 
 class ContactForm
 {
@@ -54,9 +55,29 @@ class ContactForm
                             ->columnSpan(1),
                         Select::make('company')
                             ->label('Company/Partner')
-                            ->preload()
+                            ->options(function () {
+                                if (Auth::check()) {
+                                    return Auth::user()->partners()->pluck('name', 'id')->toArray();
+                                }
+                                return [];
+                            })
                             ->searchable()
-                            ->options(Partner::getOptions())
+                            ->createOptionForm([
+                                TextInput::make('name')
+                                    ->label('Partner Name')
+                                    ->required()
+                                    ->maxLength(255),
+                            ])
+                            ->createOptionUsing(function (array $data) {
+                                if (Auth::check()) {
+                                    $partner = Partner::create([
+                                        'name' => $data['name'],
+                                        'user_id' => Auth::id(),
+                                    ]);
+                                    return $partner->id;
+                                }
+                                return null;
+                            })
                             ->required()
                             ->columnSpan(1),
                         TextInput::make('company_address')
