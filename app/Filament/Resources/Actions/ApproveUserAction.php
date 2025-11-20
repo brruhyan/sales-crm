@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Actions;
 use Filament\Actions\Action;
 use App\Models\User;
 use App\Notifications\UserApprovedNotification;
+use App\Services\CertificateService;
 use Filament\Notifications\Notification;
 
 class ApproveUserAction extends Action
@@ -22,10 +23,16 @@ class ApproveUserAction extends Action
             ->action(function (User $record) {
                 $record->update(['approved' => true]);
 
-                $record->notify(new UserApprovedNotification());
+                // Generate certificate
+                $certificateService = new CertificateService();
+                $certificatePath = $certificateService->generateCertificate($record);
+
+                // Send notification with certificate attachment
+                $record->notify(new UserApprovedNotification($certificatePath));
 
                 Notification::make()
                     ->title('User approved successfully.')
+                    ->body('Registration certificate generated and sent via email.')
                     ->success()
                     ->send();
             });
