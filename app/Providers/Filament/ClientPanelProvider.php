@@ -35,6 +35,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Filafly\Themes\Brisk\BriskTheme;
 use Swis\Filament\Backgrounds\FilamentBackgroundsPlugin;
 use Swis\Filament\Backgrounds\ImageProviders\MyImages;
+use Guava\FilamentKnowledgeBase\Plugins\KnowledgeBaseCompanionPlugin;
 
 class ClientPanelProvider extends PanelProvider
 {
@@ -48,6 +49,8 @@ class ClientPanelProvider extends PanelProvider
             ->passwordReset()
             ->viteTheme('resources/css/filament/client/theme.css')
             ->plugins([
+                KnowledgeBaseCompanionPlugin::make()
+                ->knowledgeBasePanelId('knowledge-base'),
                 BriskTheme::make(),
                 FilamentBackgroundsPlugin::make()
                     ->imageProvider(
