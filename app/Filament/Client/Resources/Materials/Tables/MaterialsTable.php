@@ -30,13 +30,17 @@ class MaterialsTable
                     ->limit(50)
                     ->searchable(),
                 TextColumn::make('learn_more')
+                    ->label('Learn More')
+                    ->url(fn ($record) => $record->learn_more)
+                    ->openUrlInNewTab()
+                    ->limit(30)
+                    ->tooltip(fn ($record) => $record->learn_more)
                     ->searchable(),
             ])
             ->filters([
                 //
             ])
             ->recordActions([
-                ViewAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
@@ -45,3 +49,5 @@ class MaterialsTable
             ]);
     }
 }
+    
+
