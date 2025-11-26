@@ -18,10 +18,6 @@ class ProductsTable
                     ->label('Service Name')
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('category')
-                    ->label('Category')
-                    ->searchable()
-                    ->sortable(),
                 TextColumn::make('description')
                     ->label('Description')
                     ->limit(50)
