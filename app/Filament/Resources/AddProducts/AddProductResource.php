@@ -9,7 +9,7 @@ use App\Filament\Resources\AddProducts\Pages\ViewAddProduct;
 use App\Filament\Resources\AddProducts\Schemas\AddProductForm;
 use App\Filament\Resources\AddProducts\Schemas\AddProductInfolist;
 use App\Filament\Resources\AddProducts\Tables\AddProductsTable;
-use App\Models\ProductList;
+use App\Models\Product;
 use BackedEnum;
 use UnitEnum;
 use Filament\Resources\Resource;
@@ -19,7 +19,7 @@ use Filament\Tables\Table;
 
 class AddProductResource extends Resource
 {
-    protected static ?string $model = ProductList::class;
+    protected static ?string $model = Product::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCube;
     

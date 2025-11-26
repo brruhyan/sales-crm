@@ -7,6 +7,7 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Table;
+use Filament\Tables\Columns\TextColumn;
 
 class AddProductsTable
 {
@@ -14,9 +15,20 @@ class AddProductsTable
     {
         return $table
             ->columns([
-                \Filament\Tables\Columns\TextColumn::make('name')
+                TextColumn::make('product_name')
                     ->label('Product Name')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('description')
+                    ->label('Description')
+                    ->limit(50)
+                    ->tooltip(fn ($record) => $record->description),
+                TextColumn::make('link')
+                    ->label('Link')
+                    ->url(fn ($record) => $record->link)
+                    ->openUrlInNewTab()
+                    ->limit(30)
+                    ->tooltip(fn ($record) => $record->link),
             ])
             ->filters([
                 //
