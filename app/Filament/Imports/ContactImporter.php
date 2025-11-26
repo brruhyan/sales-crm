@@ -3,6 +3,7 @@
 namespace App\Filament\Imports;
 
 use App\Models\Contact;
+use App\Models\Partner;
 use Filament\Actions\Imports\ImportColumn;
 use Filament\Actions\Imports\Importer;
 use Filament\Actions\Imports\Models\Import;
@@ -50,6 +51,27 @@ class ContactImporter extends Importer
     {
         // Ensure the user_id is set to the current authenticated user
         $this->record->user_id = Auth::id();
+
+        // Handle company/partner auto-creation
+        if (!empty($this->data['company'])) {
+            $companyName = $this->data['company'];
+            
+            // Check if partner already exists for this user with the same name
+            $partner = Partner::where('name', $companyName)
+                ->where('user_id', Auth::id())
+                ->first();
+            
+            // If it doesn't exist, create it
+            if (!$partner) {
+                $partner = Partner::create([
+                    'name' => $companyName,
+                    'user_id' => Auth::id(),
+                ]);
+            }
+            
+            // Assign the partner ID to the contact's company field
+            $this->record->company = $partner->id;
+        }
     }
 
     public static function getCompletedNotificationBody(Import $import): string
@@ -63,3 +85,4 @@ class ContactImporter extends Importer
         return $body;
     }
 }
+
