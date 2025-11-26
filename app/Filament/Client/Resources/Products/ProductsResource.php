@@ -24,6 +24,10 @@ class ProductsResource extends Resource
 
     public static string|UnitEnum|null $navigationGroup = 'Knowledge Base';
 
+    protected static ?string $navigationLabel = 'Product Guide';
+
+    protected static ?string $pluralModelLabel = 'Product Guide';
+
     protected static ?int $navigationSort = 30;
 
     public static function form(Schema $schema): Schema
