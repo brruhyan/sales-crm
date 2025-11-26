@@ -88,6 +88,10 @@ class User extends Authenticatable implements FilamentUser
         return $this->approved;
     }
 
+    if ($panel->getId() === 'knowledge-base') {
+        return $this->approved;
+    }
+
     if ($panel->getId() === 'admin') {
         return $this->is_admin;
     }

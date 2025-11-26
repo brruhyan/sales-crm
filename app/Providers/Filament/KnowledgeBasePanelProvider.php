@@ -20,6 +20,7 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Guava\FilamentKnowledgeBase\Plugins\KnowledgeBasePlugin;
 use App\Http\Middleware\CheckUserApproved;
+use App\Http\Middleware\CheckCanAccessKnowledgeBase;
 
 class KnowledgeBasePanelProvider extends PanelProvider
 {
@@ -41,8 +42,6 @@ class KnowledgeBasePanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/KnowledgeBase/Widgets'), for: 'App\Filament\KnowledgeBase\Widgets')
             ->widgets([
-                AccountWidget::class,
-                FilamentInfoWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -57,23 +56,7 @@ class KnowledgeBasePanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+                CheckCanAccessKnowledgeBase::class,
             ]);
-    }
-    // Only Allow Certain Users
-    public function canAccessPanel(Panel $panel): bool
-    {
-        if ($panel->getId() === 'admin') {
-            return $this->isAdmin; 
-        }
-
-        if ($panel->getId() === 'client') {
-            return true; 
-        }
-
-        if ($panel->getId() === 'knowledge-base') {
-            return true;
-        }
-
-        return false;
     }
 }
