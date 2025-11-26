@@ -7,6 +7,7 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Table;
+use Filament\Tables\Columns\TextColumn;
 
 class AddPartnersTable
 {
@@ -14,7 +15,10 @@ class AddPartnersTable
     {
         return $table
             ->columns([
-                \Filament\Tables\Columns\TextColumn::make('name')
+                TextColumn::make('user.name')
+                    ->label('Partner by')
+                    ->sortable(),
+                TextColumn::make('name')
                     ->label('Partner Name')
                     ->searchable(),
             ])
