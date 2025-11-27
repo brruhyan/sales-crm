@@ -52,6 +52,7 @@ class AddProductForm
                     ->schema([
                         FileUpload::make('media')
                             ->label('Upload Media')
+                            ->required()
                             ->helperText('Upload product materials, demos, PDFs, or other media files.')
                             ->acceptedFileTypes(['video/*', 'audio/*', 'application/pdf', 'image/*'])
                             ->maxSize(102400)

@@ -36,11 +36,6 @@ class MaterialResource extends Resource
         return MaterialForm::configure($schema);
     }
 
-    public static function infolist(Schema $schema): Schema
-    {
-        return MaterialInfolist::configure($schema);
-    }
-
     public static function table(Table $table): Table
     {
         return MaterialsTable::configure($table);
@@ -57,9 +52,6 @@ class MaterialResource extends Resource
     {
         return [
             'index' => ListMaterials::route('/'),
-            'create' => CreateMaterial::route('/create'),
-            'view' => ViewMaterial::route('/{record}'),
-            'edit' => EditMaterial::route('/{record}/edit'),
         ];
     }
 }

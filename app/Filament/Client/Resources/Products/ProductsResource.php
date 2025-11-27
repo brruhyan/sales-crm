@@ -35,11 +35,6 @@ class ProductsResource extends Resource
         return ProductsForm::configure($schema);
     }
 
-    public static function infolist(Schema $schema): Schema
-    {
-        return ProductsInfolist::configure($schema);
-    }
-
     public static function table(Table $table): Table
     {
         return ProductsTable::configure($table);
@@ -56,7 +51,6 @@ class ProductsResource extends Resource
     {
         return [
             'index' => ListProducts::route('/'),
-            'view' => ViewProducts::route('/{record}'),
         ];
     }
 

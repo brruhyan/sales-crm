@@ -37,14 +37,6 @@ class MaterialsTable
                     ->openUrlInNewTab()
                     ->limit(30)
                     ->tooltip(fn ($record) => $record->learn_more),
-                IconColumn::make('media')
-                    ->label('Media')
-                    ->boolean()
-                    ->trueIcon('heroicon-o-document-arrow-down')
-                    ->falseIcon('heroicon-o-x-mark')
-                    ->trueColor('success')
-                    ->falseColor('gray')
-                    ->getStateUsing(fn ($record) => !empty($record->media)),
             ])
             ->filters([
                 //
@@ -53,7 +45,7 @@ class MaterialsTable
                 Action::make('download-media')
                     ->label('View Media')
                     ->icon('heroicon-o-arrow-down-tray')
-                    ->url(fn($record) => $record->media ? asset('storage/' . $record->media) : null)
+                    ->url(fn($record) => $record->media ? '/storage/' . $record->media : null)
                     ->openUrlInNewTab()
                     ->visible(fn($record) => !empty($record->media)),
             ])
