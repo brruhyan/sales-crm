@@ -10,5 +10,6 @@ class Material extends Model
         'title',
         'description',
         'learn_more',
+        'media',
     ];
 }

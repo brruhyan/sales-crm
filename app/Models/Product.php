@@ -18,6 +18,7 @@ class Product extends Model
         'benefits',
         'use_cases',
         'link',
+        'media',
         'sellable',
         'user_id',
     ];

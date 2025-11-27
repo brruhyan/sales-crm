@@ -23,7 +23,7 @@ class AddProductResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCube;
     
-    public static string|UnitEnum|null $navigationGroup = 'Record Management';
+    public static string|UnitEnum|null $navigationGroup = 'Learning Management';
 
     protected static ?string $navigationLabel = 'Products';
 
