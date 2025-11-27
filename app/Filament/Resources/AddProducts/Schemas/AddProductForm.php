@@ -5,6 +5,7 @@ namespace App\Filament\Resources\AddProducts\Schemas;
 use Filament\Schemas\Schema;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\FileUpload;
 use Filament\Schemas\Components\Section;
 
 class AddProductForm
@@ -41,6 +42,21 @@ class AddProductForm
                             ->required()
                             ->maxLength(255)
                             ->helperText('Provide a URL for more information about this product.')
+                            ->columnSpanFull(),
+                    ]),
+
+                Section::make('Media')
+                    ->description('Attach media files (PDF, video, images, etc.)')
+                    ->columns(1)
+                    ->columnSpanFull()
+                    ->schema([
+                        FileUpload::make('media')
+                            ->label('Upload Media')
+                            ->helperText('Upload product materials, demos, PDFs, or other media files.')
+                            ->acceptedFileTypes(['video/*', 'audio/*', 'application/pdf', 'image/*'])
+                            ->maxSize(102400)
+                            ->disk('public')
+                            ->directory('products')
                             ->columnSpanFull(),
                     ]),
             ]);

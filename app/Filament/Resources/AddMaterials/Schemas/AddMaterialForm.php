@@ -5,6 +5,7 @@ namespace App\Filament\Resources\AddMaterials\Schemas;
 use Filament\Schemas\Schema;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\FileUpload;
 use Filament\Schemas\Components\Section;
 
 class AddMaterialForm
@@ -34,6 +35,22 @@ class AddMaterialForm
                             ->label('Description')
                             ->maxLength(1000)
                             ->columnSpanFull(),
+                    ]),
+
+                Section::make('Media')
+                    ->description('Attach media files (PDF, video, images, etc.)')
+                    ->columns(1)
+                    ->columnSpanFull()
+                    ->schema([
+                        FileUpload::make('media')
+                            ->label('Upload Media')
+                            ->helperText('Upload presentation materials, videos, PDFs, or other media files.')
+                            ->acceptedFileTypes(['video/*', 'audio/*', 'application/pdf', 'image/*'])
+                            ->maxSize(102400)
+                            ->disk('public')
+                            ->directory('materials')
+                            ->columnSpanFull(),
+
                         TextInput::make('learn_more')
                             ->label('Learn More Link')
                             ->url()
@@ -42,6 +59,8 @@ class AddMaterialForm
                             ->helperText('Provide a URL for more information about this material.')
                             ->columnSpanFull(),
                     ]),
+
+
             ]);
     }
 }
