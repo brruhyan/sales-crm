@@ -100,6 +100,7 @@ class Register extends BaseRegister
                     $components[] = SignaturePad::make('signature')
                         ->label('Signature')
                         ->required()
+                        ->live()
                         ->columnSpanFull();
 
                     $components[] = Checkbox::make('accept_terms')
