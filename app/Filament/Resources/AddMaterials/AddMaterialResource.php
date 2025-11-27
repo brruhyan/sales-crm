@@ -7,6 +7,7 @@ use App\Filament\Resources\AddMaterials\Pages\EditAddMaterial;
 use App\Filament\Resources\AddMaterials\Pages\ListAddMaterials;
 use App\Filament\Resources\AddMaterials\Pages\ViewAddMaterial;
 use App\Filament\Resources\AddMaterials\Schemas\AddMaterialForm;
+use App\Filament\Resources\AddMaterials\Schemas\AddMaterialInfolist;
 use App\Filament\Resources\AddMaterials\Tables\AddMaterialsTable;
 use App\Models\Material;
 use BackedEnum;
@@ -19,7 +20,7 @@ use Filament\Tables\Table;
 class AddMaterialResource extends Resource
 {
     protected static ?string $model = Material::class;
-
+    
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentText;
     
     public static string|UnitEnum|null $navigationGroup = 'Record Management';
@@ -33,6 +34,11 @@ class AddMaterialResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return AddMaterialForm::configure($schema);
+    }
+
+    public static function infolist(Schema $schema): Schema
+    {
+        return AddMaterialInfolist::configure($schema);
     }
 
     public static function table(Table $table): Table
