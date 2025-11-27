@@ -42,7 +42,7 @@ class UserInfolist
                             ->badge()
                             ->color('Amber')
                             ->icon('heroicon-o-briefcase')
-                            ->state(fn ($record) => ucfirst($record->account_type)),
+                            ->state(fn ($record) => ucwords(str_replace('_', ' ', $record->account_type))),
                     ])
                     ->columnSpanFull(),
 

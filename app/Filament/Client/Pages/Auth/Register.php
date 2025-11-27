@@ -29,6 +29,7 @@ class Register extends BaseRegister
                     ->label('Account Type')
                     ->options([
                         'individual' => 'Individual',
+                        'authorized_representative' => 'Authorized Representative',
                         'company' => 'Company',
                     ])
                     ->required()
@@ -51,7 +52,7 @@ class Register extends BaseRegister
                     
                     $components = [];
 
-                    if ($accountType === 'individual') {
+                    if ($accountType === 'individual' || $accountType === 'authorized_representative') {
                         $components[] = TextInput::make('tin_number')
                             ->label('Tax Identification Number (TIN)')
                             ->required()
@@ -118,7 +119,7 @@ class Register extends BaseRegister
 
                     $allData = array_merge($mainFormData, $data);
 
-                    if ($accountType === 'individual') {
+                    if ($accountType === 'individual' || $accountType === 'authorized_representative') {
                         if (isset($data['modal_documents']) && !empty($data['modal_documents'])) {
                             $allData['documents'] = $data['modal_documents'];
                         } else {

@@ -42,6 +42,12 @@ class UsersTable
                     ->falseIcon('heroicon-o-x-circle')
                     ->trueColor('success')
                     ->falseColor('danger'),
+                TextColumn::make('account_type')
+                    ->label('Account Type')
+                    ->badge()
+                    ->color('Amber')
+                    ->sortable()
+                    ->formatStateUsing(fn ($state) => ucwords(str_replace('_', ' ', $state))),
                 TextColumn::make('email_verified_at')
                     ->dateTime()
                     ->sortable()

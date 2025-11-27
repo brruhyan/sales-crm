@@ -43,6 +43,7 @@ class ClientPanelProvider extends PanelProvider
         return $panel
             ->id('client')
             ->path('client')
+            ->sidebarCollapsibleOnDesktop()
             ->login()
             ->registration(Register::class)
             ->passwordReset()
