@@ -49,10 +49,7 @@ pipeline {
                     
                     // Optional: Clear Filament cache
                     sh "${docker_exec} php artisan filament:clear-cache"
-                    
-                    // Optional: Discover Livewire components
-                    sh "${docker_exec} php artisan livewire:discover"
-
+                
                     // --- Permissions ---
                     
                     // Ensure permissions are correct after file sync
