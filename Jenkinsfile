@@ -19,7 +19,7 @@ pipeline {
                     sh 'git fetch origin'
                     
                     // Force reset the working directory to the latest commit
-                    sh 'git reset --hard origin/master'
+                    sh 'git pull origin master'
                 }
             }
         }
