@@ -1,8 +1,8 @@
 pipeline {
     agent any
-    // Test Push 2
+
     environment {
-        PHP_SERVICE = 'app' 
+        PHP_SERVICE = 'maralabs-sales-app' 
         COMPOSE_FILE = 'docker-compose.yml'
         APP_USER = 'www-data:www-data'
     }
@@ -14,54 +14,29 @@ pipeline {
                     echo "--- [Step 1] Synchronizing Host Code ---"
 
                     sh 'git fetch origin'
+                    
                     sh 'git reset --hard origin/master'
                 }
             }
         }
         
-        stage('2. Restart Container (Flush RAM)') {
+        // This stage replaces the original stages 2, 3, and 4
+        stage('2. Update Dependencies & Clear Cache') {
             steps {
                 script {
-                    echo "--- [Step 2] Restarting PHP Container ---"
+                    echo "--- [Step 2] Updating Dependencies and Caches ---"
+                    def docker_exec = "docker exec -T ${PHP_SERVICE}"
+                    sh "${docker_exec} php artisan optimize:clear"
+                    sh "${docker_exec} composer install --no-dev --optimize-autoloader"
+                    sh "${docker_exec} php artisan migrate --force"
+                    sh "${docker_exec} php artisan config:cache"
+                    sh "${docker_exec} php artisan filament:clear-cache"
+                    sh "${docker_exec} php artisan livewire:discover"
 
-                    sh "docker-compose -f ${COMPOSE_FILE} stop ${PHP_SERVICE}"
-                    sh "docker-compose -f ${COMPOSE_FILE} rm -f ${PHP_SERVICE}"
-                    sh "docker-compose -f ${COMPOSE_FILE} up -d ${PHP_SERVICE}"
-                }
-            }
-        }
+                    
+                    sh "${docker_exec} chown -R ${APP_USER} /var/www/html/storage"
+                    sh "${docker_exec} chown -R ${APP_USER} /var/www/html/bootstrap/cache"
 
-        stage('3. Dependencies & Database') {
-            steps {
-                script {
-                    echo "--- [Step 3] Composer & Migrations ---"
-                    // NOTE: We use '-T' here to disable TTY allocation.
-                    // This prevents the "the input device is not a TTY" error in Jenkins.
-                    
-                    // Install PHP dependencies
-                    sh "docker-compose -f ${COMPOSE_FILE} exec -T ${PHP_SERVICE} composer install --no-dev --optimize-autoloader"
-                    
-                    // Run Database Migrations (Fixes 500 errors on new tables)
-                    sh "docker-compose -f ${COMPOSE_FILE} exec -T ${PHP_SERVICE} php artisan migrate --force"
-                }
-            }
-        }
-
-        stage('4. Permissions & Caches') {
-            steps {
-                script {
-                    echo "--- [Step 4] Permissions & Caching ---"
-                    
-                    sh "docker-compose -f ${COMPOSE_FILE} exec -T ${PHP_SERVICE} chown -R ${APP_USER} /var/www/html/storage"
-                    sh "docker-compose -f ${COMPOSE_FILE} exec -T ${PHP_SERVICE} chown -R ${APP_USER} /var/www/html/bootstrap/cache"
-
-                    def artisan = "docker-compose -f ${COMPOSE_FILE} exec -T ${PHP_SERVICE} php artisan"
-
-                    sh "${artisan} optimize:clear"
-                    
-                    sh "${artisan} filament:clear-cache"
-                    sh "${artisan} livewire:discover"
-                    
                     echo "--- Deployment Complete! ---"
                 }
             }
