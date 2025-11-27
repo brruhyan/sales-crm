@@ -33,10 +33,12 @@ class MaterialsTable
                     ->searchable(),
                 TextColumn::make('learn_more')
                     ->label('Learn More')
+                    ->badge()
                     ->url(fn ($record) => $record->learn_more)
                     ->openUrlInNewTab()
                     ->limit(30)
                     ->tooltip(fn ($record) => $record->learn_more),
+                
             ])
             ->filters([
                 //
