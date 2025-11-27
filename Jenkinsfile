@@ -1,6 +1,5 @@
 pipeline {
     agent any
-    // Test
 
     environment {
         // Use the actual running container name for docker exec
@@ -10,16 +9,15 @@ pipeline {
     }
 
     stages {
-        stage('1. Sync Code (Hard Reset)') {
+        stage('1. Sync Code to Container') {
             steps {
                 script {
-                    echo "--- [Step 1] Synchronizing Host Code ---"
+                    echo "--- [Step 1] Synchronizing Code and Copying to Container ---"
 
-                    // Pull the latest changes
-                    sh 'git fetch origin'
-                    
-                    // Force reset the working directory to the latest commit
-                    sh 'git pull origin master'
+                    sh "docker cp . ${PHP_SERVICE}:/var/www/html"
+
+                    echo "--- Setting Initial File Permissions inside Container ---"
+                    sh "docker exec ${PHP_SERVICE} chown -R ${APP_USER} /var/www/html"
                 }
             }
         }
@@ -29,7 +27,6 @@ pipeline {
                 script {
                     echo "--- [Step 2] Updating Dependencies and Caches ---"
                     
-                    // Define the docker exec command template (removed the invalid -T flag)
                     def docker_exec = "docker exec ${PHP_SERVICE}"
                     
                     // --- Laravel Commands ---
@@ -51,9 +48,9 @@ pipeline {
                     // Optional: Clear Filament cache
                     sh "${docker_exec} php artisan filament:clear-cache"
                 
-                    // --- Permissions ---
+                    // --- Permissions (final cleanup for runtime folders) ---
                     
-                    // Ensure permissions are correct after file sync
+                    // Ensure storage and cache folders have write permissions after Composer/Artisan commands
                     sh "${docker_exec} chown -R ${APP_USER} /var/www/html/storage"
                     sh "${docker_exec} chown -R ${APP_USER} /var/www/html/bootstrap/cache"
 
