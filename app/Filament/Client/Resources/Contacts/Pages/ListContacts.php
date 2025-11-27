@@ -15,7 +15,8 @@ class ListContacts extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make(),
+            CreateAction::make()
+                ->label('Add Contact'),
             ImportAction::make()
                 ->importer(ContactImporter::class)
                 ->label('Import Contacts'),

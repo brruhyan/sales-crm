@@ -18,8 +18,9 @@ class ListLeads extends ListRecords
 
     protected function getHeaderActions(): array
     {
-        return [
-            CreateAction::make(),
+        return [    
+            CreateAction::make()
+                ->label('Add Lead'),
             ExportAction::make()
                 ->exporter(LeadsExporter::class)
                 ->label('Export Leads'),

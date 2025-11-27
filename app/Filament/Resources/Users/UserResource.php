@@ -24,6 +24,10 @@ class UserResource extends Resource
     
     public static string|UnitEnum|null $navigationGroup = 'Record Management';
 
+    protected static ?string $navigationLabel = 'User';
+
+    protected static ?string $pluralModelLabel = 'User';
+
     protected static ?int $navigationSort = 1;
     
     protected static ?string $recordTitleAttribute = 'name';
