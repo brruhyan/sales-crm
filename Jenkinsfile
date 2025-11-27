@@ -42,6 +42,7 @@ pipeline {
                     
                     // Optimize/Rebuild configuration cache
                     sh "${docker_exec} php artisan config:cache"
+                    sh "${docker_exec} php artisan optimize"
                     
                     // --- Laravel/Filament Specific Caches ---
                     
