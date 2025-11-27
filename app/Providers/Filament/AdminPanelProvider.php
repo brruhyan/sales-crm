@@ -24,6 +24,7 @@ use App\Http\Middleware\CheckIsAdmin;
 use Swis\Filament\Backgrounds\FilamentBackgroundsPlugin;
 use Swis\Filament\Backgrounds\ImageProviders\MyImages;
 use Filafly\Themes\Brisk\BriskTheme;
+use BezhanSalleh\PanelSwitch\PanelSwitch;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -74,5 +75,8 @@ class AdminPanelProvider extends PanelProvider
                 Authenticate::class,
                 CheckIsAdmin::class,
             ]);
+    PanelSwitch::configureUsing(function (PanelSwitch $panelSwitch) {
+        
+    });
     }
 }

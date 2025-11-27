@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Event;
 use Filament\Events\Auth\Registered;
 use App\Listeners\SendUserRegistrationNotification;
 use Illuminate\Support\Facades\URL;
+use BezhanSalleh\PanelSwitch\PanelSwitch;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -30,7 +31,14 @@ class AppServiceProvider extends ServiceProvider
 	  if ($this->app->environment('production')) {
             URL::forceScheme('https');
         }
+
+        PanelSwitch::configureUsing(function (PanelSwitch $panelSwitch) {
+            $panelSwitch
+                ->modalWidth('sm')  
+                ->visible(fn (): bool => auth()->user()?->is_admin === true);
+        });
     }
+
 }
 
 
