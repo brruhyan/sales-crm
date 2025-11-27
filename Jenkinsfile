@@ -30,7 +30,7 @@ pipeline {
                     def docker_exec = "docker exec ${PHP_SERVICE}"
                     
                     // --- Laravel Commands ---
-                    
+                    sh "${docker_exec} npm run build"
                     // Clear all caches (config, route, view, etc.)
                     sh "${docker_exec} php artisan optimize:clear"
                     
