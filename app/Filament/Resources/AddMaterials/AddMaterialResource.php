@@ -23,7 +23,7 @@ class AddMaterialResource extends Resource
     
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentText;
     
-    public static string|UnitEnum|null $navigationGroup = 'Record Management';
+    public static string|UnitEnum|null $navigationGroup = 'Learning Management';
 
     protected static ?string $navigationLabel = 'Materials';
 
