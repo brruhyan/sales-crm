@@ -9,7 +9,7 @@ use Filament\Resources\Pages\ViewRecord;
 use App\Filament\Client\Actions\MarkLeadQualifiedAction;
 use App\Filament\Client\Actions\MarkLeadLostAction;
 use App\Filament\Client\Widgets\LeadsWidget;
-
+use App\Filament\Resources\Actions\LeadTaggingAction;
 class ViewLeads extends ViewRecord
 {
     protected static string $resource = LeadsResource::class;
@@ -18,7 +18,7 @@ class ViewLeads extends ViewRecord
     {
         return [
             MarkLeadQualifiedAction::make(),
-            MarkLeadLostAction::make(),
+            MarkLeadLostAction::make(),            
             Actions\DeleteAction::make(),
         ];
     }

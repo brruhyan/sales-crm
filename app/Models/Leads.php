@@ -14,6 +14,7 @@ class Leads extends Model
 
     protected $fillable = [
         'lead_title',
+        'tag',
         'lead_type',
         'user_id',
         'product',

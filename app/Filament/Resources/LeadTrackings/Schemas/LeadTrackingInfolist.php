@@ -49,6 +49,17 @@ class LeadTrackingInfolist
                                     ->badge()
                                     ->color('primary')
                                     ->columnSpan(1),
+
+                                TextEntry::make('tag')
+                                    ->label('Tag')
+                                    ->badge()
+                                    ->color(fn (string $state = null): string => match ($state) {
+                                        'First' => 'info',
+                                        'Second' => 'warning',
+                                        'Third' => 'success',
+                                        default => 'gray',
+                                    })
+                                    ->columnSpan(1),
                             ]),
 
                         Section::make('Contact Information')

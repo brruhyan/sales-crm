@@ -69,6 +69,18 @@ class DealsTable
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
+                TextColumn::make('lead.tag')
+                    ->label('Lead Tag')
+                    ->badge()
+                    ->color(fn (string $state = null): string => match ($state) {
+                        'First' => 'info',
+                        'Second' => 'warning',
+                        'Third' => 'success',
+                        default => 'gray',
+                    })
+                    ->sortable()
+                    ->toggleable(),
+
                 TextColumn::make('expected_close_date')
                     ->label('Expected Close')
                     ->date()

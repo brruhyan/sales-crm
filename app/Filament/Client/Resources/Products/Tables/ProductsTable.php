@@ -25,7 +25,7 @@ class ProductsTable
                     ->tooltip(fn ($record) => $record->description),
                 TextColumn::make('link')
                     ->label('Learn More')
-                    ->badge()
+                    ->color('info')
                     ->url(fn ($record) => $record->link)
                     ->openUrlInNewTab()
                     ->limit(30)

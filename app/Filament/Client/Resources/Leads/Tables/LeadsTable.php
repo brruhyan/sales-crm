@@ -15,6 +15,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TabsFilter;
+use App\Filament\Resources\Actions\LeadTaggingAction;
 
 class LeadsTable
 {
@@ -59,7 +60,24 @@ class LeadsTable
                     ]),
                 BadgeColumn::make('lead_type')
                     ->label('Lead Type')
-                    ->color('primary'),
+                    ->color(fn (string $state): string => match ($state) {
+                        'Procurement' => 'primary',
+                        'Implementation' => 'warning',
+                        'Support' => 'info',
+                        'Consultation' => 'success',
+                        'System Integration' => 'secondary',
+                        'Other' => 'gray',
+                        default => 'gray',
+                    }),
+                BadgeColumn::make('tag')
+                    ->label('Tag')
+                    ->color(fn (string $state = null): string => match ($state) {
+                        'First' => 'info',
+                        'Second' => 'warning',
+                        'Third' => 'success',
+                        default => 'gray',
+                    })
+                    ->placeholder('-'),
                 TextColumn::make('created_at')
                     ->label('Date Created')
                     ->date(),

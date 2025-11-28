@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreignId('contact_id')->nullable()->constrained('contacts')->onDelete('set null');
             $table->timestamps();
             $table->string('name'); 
+            $table->string('tag')->nullable();
             $table->string('email');
             $table->string('phone'); 
             $table->string('company')->nullable();

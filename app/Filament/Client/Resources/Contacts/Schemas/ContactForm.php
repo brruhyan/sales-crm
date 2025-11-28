@@ -55,6 +55,7 @@ class ContactForm
                             ->columnSpan(1),
                         Select::make('company')
                             ->label('Company/Partner')
+                            ->helperText('Select existing or create new partner')
                             ->options(function () {
                                 if (Auth::check()) {
                                     return Auth::user()->partners()->pluck('name', 'id')->toArray();
