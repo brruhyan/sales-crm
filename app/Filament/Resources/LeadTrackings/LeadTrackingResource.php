@@ -33,6 +33,16 @@ class LeadTrackingResource extends Resource
 
     public static string|UnitEnum|null $navigationGroup = 'Approval & Tracking';
 
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::where('status', 'For Review')->count() ?: null;
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'danger';
+    }
+
     public static function form(Schema $schema): Schema
     {
         return LeadTrackingForm::configure($schema);
