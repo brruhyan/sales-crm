@@ -34,6 +34,7 @@ class LeadsTable
                     ->placeholder('No company'),
                 TextColumn::make('product')
                     ->label('Product')
+                    ->badge()
                     ->state(function ($record) {
                         $state = $record->product;
                         if (empty($state)) {

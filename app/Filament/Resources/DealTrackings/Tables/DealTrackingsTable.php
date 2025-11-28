@@ -55,6 +55,16 @@ class DealTrackingsTable
                     ->label('Created At')
                     ->dateTime('M d, Y H:i A')
                     ->sortable(),
+                TextColumn::make('lead.tag')
+                    ->label('Lead Tag')
+                    ->badge()
+                    ->color(fn (string $state = null): string => match ($state) {
+                        'First' => 'info',
+                        'Second' => 'warning',
+                        'Third' => 'success',
+                        default => 'gray',
+                    })
+                    ->sortable(),
                 TextColumn::make('updated_at')
                     ->label('Last Updated')
                     ->dateTime('M d, Y H:i A')

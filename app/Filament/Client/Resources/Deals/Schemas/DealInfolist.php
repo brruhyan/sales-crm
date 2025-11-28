@@ -117,6 +117,17 @@ class DealInfolist
                                     ->badge()
                                     ->icon('heroicon-o-link')
                                     ->color('gray'),
+
+                                TextEntry::make('lead.tag')
+                                    ->label('Lead Tag')
+                                    ->badge()
+                                    ->icon('heroicon-o-tag')
+                                    ->color(fn (string $state = null): string => match ($state) {
+                                        'First' => 'info',
+                                        'Second' => 'warning',
+                                        'Third' => 'success',
+                                        default => 'gray',
+                                    }),
                             ]),
                             
                         Section::make('Dispute Information')
