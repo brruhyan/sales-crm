@@ -7,6 +7,7 @@ use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
 use App\Filament\Resources\Actions\ApproveLeadQualificationAction;
 use App\Filament\Resources\Actions\DisputeLeadAction;
+use App\Filament\Resources\Actions\LeadTaggingAction;
 
 class ViewLeadTracking extends ViewRecord
 {
@@ -15,8 +16,10 @@ class ViewLeadTracking extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
+            LeadTaggingAction::make(),
             ApproveLeadQualificationAction::make(),
             DisputeLeadAction::make(),
+
         ];
     }
 }

@@ -75,6 +75,14 @@ class LeadsInfolist
                                     ->icon('heroicon-o-tag')
                                     ->copyable()
                                     ->columnSpan(1),
+                                TextEntry::make('tag')
+                                    ->label('Tag')
+                                    ->placeholder('-')
+                                    ->badge()
+                                    ->color('success')
+                                    ->icon('heroicon-o-flag')
+                                    ->copyable()
+                                    ->columnSpan(1),
                             ]),
 
                         Section::make('Lead Status')

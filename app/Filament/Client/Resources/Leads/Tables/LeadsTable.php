@@ -60,6 +60,10 @@ class LeadsTable
                 BadgeColumn::make('lead_type')
                     ->label('Lead Type')
                     ->color('primary'),
+                BadgeColumn::make('tag')
+                    ->label('Tag')
+                    ->color('success')
+                    ->placeholder('-'),
                 TextColumn::make('created_at')
                     ->label('Date Created')
                     ->date(),
