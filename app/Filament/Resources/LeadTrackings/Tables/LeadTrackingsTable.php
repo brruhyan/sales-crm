@@ -12,6 +12,7 @@ use Filament\Tables\Filters\SelectFilter;
 use App\Models\Deal;
 use App\Models\Leads;
 use App\Models\User;
+use App\Filament\Resources\Actions\LeadTaggingAction;
 
 class LeadTrackingsTable
 {
@@ -43,10 +44,6 @@ class LeadTrackingsTable
                     })
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('created_at')
-                    ->label('Created At')
-                    ->dateTime('M d, Y H:i A')
-                    ->sortable(),
                 TextColumn::make('tag')
                     ->label('Tag')
                     ->badge()
@@ -56,6 +53,10 @@ class LeadTrackingsTable
                         'Third' => 'success',
                         default => 'gray',
                     })
+                    ->sortable(),
+                TextColumn::make('created_at')
+                    ->label('Created At')
+                    ->dateTime('M d, Y H:i A')
                     ->sortable(),
                 TextColumn::make('updated_at')
                     ->label('Last Updated')
@@ -96,6 +97,7 @@ class LeadTrackingsTable
             ])
             ->recordActions([
                 ViewAction::make(),
+                LeadTaggingAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

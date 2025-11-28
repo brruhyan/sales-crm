@@ -15,6 +15,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TabsFilter;
+use App\Filament\Resources\Actions\LeadTaggingAction;
 
 class LeadsTable
 {
