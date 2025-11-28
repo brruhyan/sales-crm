@@ -34,13 +34,14 @@ class AddProductInfolist
                     ->schema([
                         TextEntry::make('description')
                             ->placeholder('-')
-                            ->columnSpanFull(),
+                            ->columnSpan(1),
                         TextEntry::make('link')
                             ->label('Learn More')
+                            ->color('info')
                             ->url(fn($record) => $record->link)
                             ->openUrlInNewTab()
                             ->placeholder('-')
-                            ->columnSpanFull(),
+                            ->columnSpan(1),
                     ]),
                 Section::make('Media')
                     ->description('Attach media files (PDF, video, images, etc.)')
@@ -49,6 +50,7 @@ class AddProductInfolist
                     ->schema([
                         TextEntry::make('media')
                             ->label('Upload Media')
+                            ->color('info')
                             ->url(fn($record) => $record->media ? '/storage/' . $record->media : null)
                             ->openUrlInNewTab()
                             ->placeholder('-')

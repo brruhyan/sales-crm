@@ -34,7 +34,6 @@ class LeadsTable
                     ->placeholder('No company'),
                 TextColumn::make('product')
                     ->label('Product')
-                    ->badge()
                     ->state(function ($record) {
                         $state = $record->product;
                         if (empty($state)) {
@@ -60,10 +59,23 @@ class LeadsTable
                     ]),
                 BadgeColumn::make('lead_type')
                     ->label('Lead Type')
-                    ->color('primary'),
+                    ->color(fn (string $state): string => match ($state) {
+                        'Procurement' => 'primary',
+                        'Implementation' => 'warning',
+                        'Support' => 'info',
+                        'Consultation' => 'success',
+                        'System Integration' => 'secondary',
+                        'Other' => 'gray',
+                        default => 'gray',
+                    }),
                 BadgeColumn::make('tag')
                     ->label('Tag')
-                    ->color('success')
+                    ->color(fn (string $state = null): string => match ($state) {
+                        'First' => 'info',
+                        'Second' => 'warning',
+                        'Third' => 'success',
+                        default => 'gray',
+                    })
                     ->placeholder('-'),
                 TextColumn::make('created_at')
                     ->label('Date Created')
