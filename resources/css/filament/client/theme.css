@@ -6,4 +6,14 @@
 @source '../../../../vendor/saade/filament-autograph/resources/views/**/*.blade.php';
 @source '../../../../vendor/bezhansalleh/filament-panel-switch/resources/views/**/*.blade.php';
 
+/* Hide theme switcher */
+[data-theme-switcher] {
+    display: none !important;
+}
+
+/* Force dark mode */
+:root {
+    color-scheme: dark;
+}
+
 

@@ -26,15 +26,19 @@ use App\Filament\Widgets\ProjectsWidget;
 use App\Http\Middleware\CheckUserApproved;
 use App\Filament\Client\Pages\Auth\Register;
 use App\Filament\Client\Widgets\LeadsWidget;
+use Filament\Enums\ThemeMode;
 
 // Login Verification
 use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Filament\View\PanelsRenderHook;
+use Illuminate\Support\HtmlString;
 
 // Plugins
 use Filafly\Themes\Brisk\BriskTheme;
 use Swis\Filament\Backgrounds\FilamentBackgroundsPlugin;
 use Swis\Filament\Backgrounds\ImageProviders\MyImages;
+use Caresome\FilamentNeobrutalism\NeobrutalismeTheme;
 
 class ClientPanelProvider extends PanelProvider
 {
@@ -49,12 +53,13 @@ class ClientPanelProvider extends PanelProvider
             ->passwordReset()
             ->viteTheme('resources/css/filament/client/theme.css')
             ->plugins([
-                BriskTheme::make(),
-                FilamentBackgroundsPlugin::make()
-                    ->imageProvider(
-                        MyImages::make()
-                            ->directory('images/backgrounds/filament-client')
-                    ),
+                NeobrutalismeTheme::make()
+                    ->customize([
+                        'border-width' => 'px',
+                        'shadow-offset-md' => '0.5px',
+                        'radius-md' => '0.5rem',
+                    ]),
+
             ])
             // Header Changes
             ->brandName('AksyonSales')
@@ -63,6 +68,7 @@ class ClientPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Amber,
             ])
+            ->defaultThemeMode(ThemeMode::Dark)
             ->discoverResources(in: app_path('Filament/Client/Resources'), for: 'App\Filament\Client\Resources')
             ->discoverPages(in: app_path('Filament/Client/Pages'), for: 'App\Filament\Client\Pages')
             ->pages([
@@ -90,7 +96,11 @@ class ClientPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
                 CheckUserApproved::class,
-            ]);
+            ])
+            ->renderHook(
+                PanelsRenderHook::SCRIPTS_AFTER,
+                fn (): HtmlString => new HtmlString('<script>localStorage.setItem("theme", "dark"); document.documentElement.classList.add("dark");</script>'),
+            );
     }
     protected function getWidgets(): array
     {
