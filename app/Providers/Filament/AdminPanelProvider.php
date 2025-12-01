@@ -44,8 +44,8 @@ class AdminPanelProvider extends PanelProvider
             ->plugins([
                 NeobrutalismeTheme::make()
                     ->customize([
-                        'border-width' => '0.1px',
-                        'shadow-offset-md' => '0.5px',
+                        'border-width' => '0.1px',    
+                        'shadow-offset-md' => '0.1px',
                         'radius-md' => '0.5rem',
                     ]),
             ])

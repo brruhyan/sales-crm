@@ -57,7 +57,7 @@ class ClientPanelProvider extends PanelProvider
                     ->customize([
                         'border-width' => '0.1px',
                         'shadow-offset-md' => '0.1px',
-                        'radius-md' => '0.1rem',
+                        'radius-md' => '0.5rem',
                     ]),
 
             ])
