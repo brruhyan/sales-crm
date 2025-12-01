@@ -98,7 +98,7 @@ class ClientPanelProvider extends PanelProvider
                 CheckUserApproved::class,
             ])
             ->renderHook(
-                PanelsRenderHook::SCRIPTS_AFTER,
+                PanelsRenderHook::STYLES_BEFORE,
                 fn (): HtmlString => new HtmlString('<script>localStorage.setItem("theme", "dark"); document.documentElement.classList.add("dark");</script>'),
             );
     }
