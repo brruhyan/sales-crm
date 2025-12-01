@@ -105,7 +105,8 @@ class DealTrackingInfolist
 
                                 TextEntry::make('contact.company')
                                     ->label('Company')
-                                    ->icon('heroicon-o-building-office'),
+                                    ->icon('heroicon-o-building-office')
+                                    ->state(fn ($record) => $record->contact?->partner?->name ?? 'N/A'),
 
                                 TextEntry::make('user.name')
                                     ->label('Assigned To')

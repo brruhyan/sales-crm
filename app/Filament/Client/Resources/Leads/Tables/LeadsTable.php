@@ -50,14 +50,13 @@ class LeadsTable
                     ->searchable(),
                 BadgeColumn::make('status')
                     ->label('Status')
-                    ->colors([
-                        'danger' => 'For Review',
-                        'primary' => 'New',
-                        'warning' => 'Contacted',
-                        'success' => 'Qualified',
-                        'danger' => 'Declined',
-                        'danger' => 'Disputed',
-                    ]),
+                    ->color(fn (string $state): string => match ($state) {
+                        'New' => 'info',
+                        'Contacted' => 'warning',
+                        'Qualified' => 'success',
+                        'Lost' => 'danger',
+                        default => 'Amber',
+                    }),
                 BadgeColumn::make('lead_type')
                     ->label('Lead Type')
                     ->color(fn (string $state): string => match ($state) {

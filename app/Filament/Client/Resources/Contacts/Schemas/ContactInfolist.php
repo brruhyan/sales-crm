@@ -76,7 +76,7 @@ class ContactInfolist
                                     ->label('Total Deals')
                                     ->state(fn ($record) => $record->deals()->count())
                                     ->badge()
-                                    ->color('success'),
+                                    ->color('Amber'),
 
                                 TextEntry::make('total_deal_value')
                                     ->label('Total Deal Value')

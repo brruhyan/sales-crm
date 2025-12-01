@@ -32,7 +32,8 @@ class LeadTaggingAction extends Action
                 $record->update(['tag' => $data['tag']]);
 
                 Notification::make()
-                    ->title('Qualified lead tagged successfully as ' . $data['tag'] . '.')
+                    ->title('Lead Tagged')
+                    ->body("The lead has been successfully tagged as {$data['tag']}.")
                     ->success()
                     ->send();
             });

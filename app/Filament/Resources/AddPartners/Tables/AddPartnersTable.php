@@ -21,6 +21,12 @@ class AddPartnersTable
                 TextColumn::make('name')
                     ->label('Partner Name')
                     ->searchable(),
+                TextColumn::make('company_address')
+                    ->label('Address')
+                    ->icon('heroicon-o-map-pin')
+                    ->state(fn ($record) => $record->contacts()->first()?->company_address ?? 'N/A')
+                    ->copyable()
+                    ->default('N/A')
             ])
             ->filters([
                 //

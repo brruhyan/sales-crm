@@ -25,6 +25,10 @@ use Swis\Filament\Backgrounds\FilamentBackgroundsPlugin;
 use Swis\Filament\Backgrounds\ImageProviders\MyImages;
 use Filafly\Themes\Brisk\BriskTheme;
 use BezhanSalleh\PanelSwitch\PanelSwitch;
+use Caresome\FilamentNeobrutalism\NeobrutalismeTheme;
+use Filament\Enums\ThemeMode;
+use Filament\View\PanelsRenderHook;
+use Illuminate\Support\HtmlString;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -38,19 +42,20 @@ class AdminPanelProvider extends PanelProvider
             ->login()
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->plugins([
-                BriskTheme::make(),
-                FilamentBackgroundsPlugin::make()
-                    ->imageProvider(
-                        MyImages::make()
-                            ->directory('images/backgrounds/filament-admin')
-                    ),
+                NeobrutalismeTheme::make()
+                    ->customize([
+                        'border-width' => '0.1px',    
+                        'shadow-offset-md' => '0.5px',
+                        'radius-md' => '0.5rem',
+                    ]),
             ])
             ->brandName('AksyonSales')
             ->brandLogo(asset('M with border.png'))
             ->brandLogoHeight('3rem')
             ->colors([
-                'primary' => Color::Red,
+                'primary' => Color::Gray,
             ])
+            ->defaultThemeMode(ThemeMode::Dark)
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->pages([
@@ -74,7 +79,11 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
                 CheckIsAdmin::class,
-            ]);
+            ])
+            ->renderHook(
+                PanelsRenderHook::SCRIPTS_AFTER,
+                fn (): HtmlString => new HtmlString('<script>localStorage.setItem("theme", "dark"); document.documentElement.classList.add("dark");</script>'),
+            );
     PanelSwitch::configureUsing(function (PanelSwitch $panelSwitch) {
         
     });
