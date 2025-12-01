@@ -54,6 +54,11 @@ class ClientPanelProvider extends PanelProvider
             ->viteTheme('resources/css/filament/client/theme.css')
             ->plugins([
                 BriskTheme::make(),
+                FilamentBackgroundsPlugin::make()
+                    ->imageProvider(
+                        MyImages::make()
+                            ->directory('images/backgrounds/filament-client')
+                    ),
             ])
             // Header Changes
             ->brandName('AksyonSales')

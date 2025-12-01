@@ -43,6 +43,11 @@ class AdminPanelProvider extends PanelProvider
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->plugins([
                 BriskTheme::make(),
+                FilamentBackgroundsPlugin::make()
+                    ->imageProvider(
+                        MyImages::make()
+                            ->directory('images/backgrounds/filament-admin')
+                    ),
             ])
             ->brandName('AksyonSales')
             ->brandLogo(asset('M with border.png'))
