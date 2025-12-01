@@ -51,10 +51,6 @@ class DealTrackingsTable
                     ->badge()
                     ->color('primary')
                     ->sortable(),
-                TextColumn::make('created_at')
-                    ->label('Created At')
-                    ->dateTime('M d, Y H:i A')
-                    ->sortable(),
                 TextColumn::make('lead.tag')
                     ->label('Lead Tag')
                     ->badge()
@@ -64,6 +60,10 @@ class DealTrackingsTable
                         'Third' => 'success',
                         default => 'gray',
                     })
+                    ->sortable(),
+                TextColumn::make('created_at')
+                    ->label('Created At')
+                    ->dateTime('M d, Y H:i A')
                     ->sortable(),
                 TextColumn::make('updated_at')
                     ->label('Last Updated')
