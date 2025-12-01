@@ -47,7 +47,7 @@ class LeadTrackingInfolist
                                 TextEntry::make('lead_type')
                                     ->label('Lead Type')
                                     ->badge()
-                                    ->color('primary')
+                                    ->color('Amber')
                                     ->columnSpan(1),
 
                                 TextEntry::make('tag')

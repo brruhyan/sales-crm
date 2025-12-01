@@ -34,12 +34,11 @@ class DealInfolist
                                     ->label('Status')
                                     ->badge()
                                     ->color(fn (string $state): string => match ($state) {
-                                        'Open' => 'gray',
+                                        'For Review' => 'warning',
+                                        'Disputed' => 'danger',
                                         'Deal Won' => 'success',
                                         'Lost' => 'danger',
-                                        'For Review' => 'danger',
-                                        'Disputed' => 'danger',
-                                        default => 'gray',
+                                        default => 'Amber',
                                     })
                                     ->columnSpan(1),
 
@@ -76,6 +75,7 @@ class DealInfolist
                                 TextEntry::make('currency')
                                     ->label('Currency')
                                     ->badge()
+                                    ->color('Amber')
                                     ->columnSpan(1),
                             ]),
                     ])
@@ -110,23 +110,20 @@ class DealInfolist
                                     ->label('Assigned To')
                                     ->icon('heroicon-o-user-circle')
                                     ->badge()
-                                    ->color('info'),
+                                    ->color('Amber'),
 
                                 TextEntry::make('lead.lead_title')
                                     ->label('Associated Lead')
                                     ->badge()
                                     ->icon('heroicon-o-link')
-                                    ->color('gray'),
+                                    ->color('Amber'),
 
                                 TextEntry::make('lead.tag')
                                     ->label('Lead Tag')
                                     ->badge()
                                     ->icon('heroicon-o-tag')
                                     ->color(fn (string $state = null): string => match ($state) {
-                                        'First' => 'info',
-                                        'Second' => 'warning',
-                                        'Third' => 'success',
-                                        default => 'gray',
+                                        default => 'Amber',
                                     }),
                             ]),
                             

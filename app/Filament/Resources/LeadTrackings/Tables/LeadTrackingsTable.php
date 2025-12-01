@@ -48,10 +48,7 @@ class LeadTrackingsTable
                     ->label('Tag')
                     ->badge()
                     ->color(fn (string $state = null): string => match ($state) {
-                        'First' => 'info',
-                        'Second' => 'warning',
-                        'Third' => 'success',
-                        default => 'gray',
+                        default => 'Amber',
                     })
                     ->sortable(),
                 TextColumn::make('created_at')

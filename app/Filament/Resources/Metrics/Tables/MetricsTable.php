@@ -38,7 +38,7 @@ class MetricsTable
                         ->count();
                 })
                     ->badge()
-                    ->color('primary')
+                    ->color('Amber')
                     ->sortable(),
                 TextColumn::make('Total Deals')
                     ->label('Deals Won')
@@ -48,7 +48,7 @@ class MetricsTable
                             ->count();
                     })
                     ->badge()
-                    ->color('success')
+                    ->color('Amber')
                     ->sortable(),
                 TextColumn::make('Total Deal Value')
                     ->label('Total Deal Value')
@@ -59,7 +59,7 @@ class MetricsTable
                             ->sum('amount');
                         return '₱' . number_format($totalValue);
                     })
-                    ->color('warning')
+                    ->color('Amber')
                     ->sortable(),
                 TextColumn::make('Pending Deal Value')
                     ->label('Pending Deal Value')
@@ -70,7 +70,7 @@ class MetricsTable
                             ->sum('amount');
                         return '₱' . number_format($totalValue);
                     })
-                    ->color('warning')
+                    ->color('Amber')
             ])
             ->filters([
 
