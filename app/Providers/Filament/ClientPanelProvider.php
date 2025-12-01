@@ -53,22 +53,15 @@ class ClientPanelProvider extends PanelProvider
             ->passwordReset()
             ->viteTheme('resources/css/filament/client/theme.css')
             ->plugins([
-                NeobrutalismeTheme::make()
-                    ->customize([
-                        'border-width' => '0.1px',
-                        'shadow-offset-md' => '0.5px',
-                        'radius-md' => '0.5rem',
-                    ]),
-
+                BriskTheme::make(),
             ])
             // Header Changes
             ->brandName('AksyonSales')
             ->brandLogo(asset('M with border.png'))
             ->brandLogoHeight('3rem')
             ->colors([
-                'primary' => Color::Gray,
+                'primary' => Color::Amber,
             ])
-            ->defaultThemeMode(ThemeMode::Dark)
             ->discoverResources(in: app_path('Filament/Client/Resources'), for: 'App\Filament\Client\Resources')
             ->discoverPages(in: app_path('Filament/Client/Pages'), for: 'App\Filament\Client\Pages')
             ->pages([
@@ -96,11 +89,7 @@ class ClientPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
                 CheckUserApproved::class,
-            ])
-            ->renderHook(
-                PanelsRenderHook::STYLES_BEFORE,
-                fn (): HtmlString => new HtmlString('<script>localStorage.setItem("theme", "dark"); document.documentElement.classList.add("dark");</script>'),
-            );
+            ]);
     }
     protected function getWidgets(): array
     {
