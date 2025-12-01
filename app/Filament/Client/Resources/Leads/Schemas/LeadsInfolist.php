@@ -117,7 +117,10 @@ class LeadsInfolist
                                     })
                                     ->columnSpan(1),
                             ]),
-
+                    ])
+                    ->columnSpanFull(),
+                Section::make()
+                    ->schema([
                         Section::make('Dispute Information')
                             ->description('Details about lead qualification dispute')
                             ->icon('heroicon-o-exclamation-circle')
@@ -181,8 +184,8 @@ class LeadsInfolist
                                                 <div class='flex-shrink-0'>{$icon}</div>
                                                 <div class='flex-1 min-w-0'>
                                                     <a href=\"{$url}\" target=\"_blank\" rel=\"noopener noreferrer\" 
-                                                       onclick=\"window.open('{$url}', '_blank'); return false;\"
-                                                       class=\"text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 font-medium block cursor-pointer no-underline hover:underline\">
+                                                        onclick=\"window.open('{$url}', '_blank'); return false;\"
+                                                        class=\"text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 font-medium block cursor-pointer no-underline hover:underline\">
                                                         {$filename}
                                                     </a>
                                                     <div class='flex gap-2 mt-1'>
@@ -198,7 +201,7 @@ class LeadsInfolist
                                     ->columnSpan(1),
                             ]), 
 
-                        Section::make('Timestamps')      
+                        Section::make('Timestamps')    
                             ->description('Record creation and update times')
                             ->icon('heroicon-o-clock')
                             ->columns(2)

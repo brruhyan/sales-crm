@@ -55,9 +55,9 @@ class ClientPanelProvider extends PanelProvider
             ->plugins([
                 NeobrutalismeTheme::make()
                     ->customize([
-                        'border-width' => 'px',
-                        'shadow-offset-md' => '0.5px',
-                        'radius-md' => '0.5rem',
+                        'border-width' => '0.1px',
+                        'shadow-offset-md' => '0.1px',
+                        'radius-md' => '0.1rem',
                     ]),
 
             ])
@@ -66,7 +66,7 @@ class ClientPanelProvider extends PanelProvider
             ->brandLogo(asset('M with border.png'))
             ->brandLogoHeight('3rem')
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::Gray,
             ])
             ->defaultThemeMode(ThemeMode::Dark)
             ->discoverResources(in: app_path('Filament/Client/Resources'), for: 'App\Filament\Client\Resources')

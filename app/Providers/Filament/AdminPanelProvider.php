@@ -44,7 +44,7 @@ class AdminPanelProvider extends PanelProvider
             ->plugins([
                 NeobrutalismeTheme::make()
                     ->customize([
-                        'border-width' => 'px',
+                        'border-width' => '0.1px',
                         'shadow-offset-md' => '0.5px',
                         'radius-md' => '0.5rem',
                     ]),
@@ -53,7 +53,7 @@ class AdminPanelProvider extends PanelProvider
             ->brandLogo(asset('M with border.png'))
             ->brandLogoHeight('3rem')
             ->colors([
-                'primary' => Color::Red,
+                'primary' => Color::Gray,
             ])
             ->defaultThemeMode(ThemeMode::Dark)
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
