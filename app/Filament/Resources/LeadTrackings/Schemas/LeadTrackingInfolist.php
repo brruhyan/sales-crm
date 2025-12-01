@@ -53,12 +53,7 @@ class LeadTrackingInfolist
                                 TextEntry::make('tag')
                                     ->label('Tag')
                                     ->badge()
-                                    ->color(fn (string $state = null): string => match ($state) {
-                                        'First' => 'info',
-                                        'Second' => 'warning',
-                                        'Third' => 'success',
-                                        default => 'gray',
-                                    })
+                                    ->color('Amber')
                                     ->columnSpan(1),
                             ]),
 
@@ -118,15 +113,7 @@ class LeadTrackingInfolist
                                 TextEntry::make('source')
                                     ->label('Source')
                                     ->badge()
-                                    ->color(fn (string $state): string => match ($state) {
-                                        'Website' => 'primary',
-                                        'Referral' => 'info',
-                                        'Social Media' => 'success',
-                                        'Event' => 'warning',
-                                        'Cold Call' => 'gray',
-                                        'Other' => 'gray',
-                                        default => 'gray',
-                                    })
+                                    ->color('Amber')
                                     ->columnSpan(1),
                             ]),
                     ])
@@ -144,7 +131,7 @@ class LeadTrackingInfolist
                                     ->label('Assigned To')
                                     ->icon('heroicon-o-user-circle')
                                     ->badge()
-                                    ->color('info'),
+                                    ->color('Amber'),
                             ]),
 
                         Section::make('Timeline')

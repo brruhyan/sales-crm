@@ -55,7 +55,7 @@ class ContactsTable
                     ->label('Deals')
                     ->counts('deals')
                     ->badge()
-                    ->color('success')
+                    ->color('Amber')
                     ->sortable(),
 
                 TextColumn::make('created_at')

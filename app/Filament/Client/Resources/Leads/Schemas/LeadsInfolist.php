@@ -71,7 +71,7 @@ class LeadsInfolist
                                 TextEntry::make('lead_type')
                                     ->label('Type')
                                     ->badge()
-                                    ->color('primary')
+                                    ->color(color: 'Amber')
                                     ->icon('heroicon-o-tag')
                                     ->copyable()
                                     ->columnSpan(1),
@@ -79,7 +79,7 @@ class LeadsInfolist
                                     ->label('Tag')
                                     ->placeholder('-')
                                     ->badge()
-                                    ->color('success')
+                                    ->color(color: 'Amber')
                                     ->icon('heroicon-o-flag')
                                     ->copyable()
                                     ->columnSpan(1),
@@ -93,28 +93,18 @@ class LeadsInfolist
                                 TextEntry::make('status')
                                     ->label('Current Status')
                                     ->badge()
+                                    ->columnSpan(1)
                                     ->color(fn (string $state): string => match ($state) {
                                         'New' => 'info',
-                                        'For Review' => 'danger',
                                         'Contacted' => 'warning',
                                         'Qualified' => 'success',
-                                        'Declined' => 'danger',
-                                        'Disputed' => 'danger',
-                                        default => 'gray',
-                                    })
-                                    ->columnSpan(1),
+                                        'Lost' => 'danger',
+                                        default => 'Amber',
+                                    }),
                                 TextEntry::make('source')
                                     ->label('Source')
                                     ->badge()
-                                    ->color(fn (string $state): string => match ($state) {
-                                        'Website' => 'primary',
-                                        'Referral' => 'info',
-                                        'Social Media' => 'success',
-                                        'Event' => 'warning',
-                                        'Cold Call' => 'gray',
-                                        'Other' => 'gray',
-                                        default => 'gray',
-                                    })
+                                    ->color(color: 'Amber')
                                     ->columnSpan(1),
                             ]),
                     ])
