@@ -18,8 +18,20 @@ class AddPartnersTable
                 TextColumn::make('user.name')
                     ->label('Partner by')
                     ->sortable(),
+                TextColumn::make('contact.name')
+                    ->label('Contact Person')
+                    ->state(fn ($record) => $record->contacts()->first()?->name ?? 'N/A')
+                    ->sortable()
+                    ->searchable()
+                    ->default('N/A'),
+                TextColumn::make('contact.position')
+                    ->label('Position')
+                    ->state(fn ($record) => $record->contacts()->first()?->position ?? 'N/A')
+                    ->sortable()
+                    ->searchable()
+                    ->default('N/A'),
                 TextColumn::make('name')
-                    ->label('Partner Name')
+                    ->label('Company Name')
                     ->searchable(),
                 TextColumn::make('company_address')
                     ->label('Address')
