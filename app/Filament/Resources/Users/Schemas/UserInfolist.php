@@ -106,7 +106,7 @@ class UserInfolist
                                         ? '<span class="text-xs text-red-600 dark:text-red-400">(File not found)</span>'
                                         : '';
 
-                                    $typeBadge = '<span class="text-xs bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 px-2 py-1 rounded-full">Registration Document</span>';
+                                    $typeBadge = '<span class="text-xs bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 px-2 py-1 rounded-full">Registration Document</span>';
 
                                     return "
                                         <div class='flex items-center gap-3 p-3 mb-2 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 transition'>
@@ -146,14 +146,12 @@ class UserInfolist
 
                                 $signature = $record->signature;
                                 
-                                // Displays Base64 string directly
                                 if (strpos($signature, 'data:image/') === 0) {
                                     return "
                                         <img src=\"{$signature}\" alt=\"User Signature\" class='max-h-24 w-auto'/> 
                                     ";
                                 }
                                 
-                                // Displays file path (if saved as a file)
                                 if (is_string($signature)) {
                                     $encodedPath = str_replace(' ', '%20', $signature);
                                     $url = url('storage/' . $encodedPath);
@@ -162,7 +160,7 @@ class UserInfolist
                                     if ($fileExists) {
                                         return "
                                             <a href=\"{$url}\" target=\"_blank\" rel=\"noopener noreferrer\">
-                                                <img src=\"{$url}\" alt=\"User Signature\" class='max-h-24 cursor-pointer hover:opacity-80 transition' />
+                                                <img src=\"{$url}\" alt=\"User Signature\" class='max-h-48 w-auto cursor-pointer hover:opacity-80 transition' />
                                             </a>
                                         ";
                                     }
