@@ -6,110 +6,117 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration Certificate</title>
     <style>
+        @page {
+            size: A4 landscape;
+            margin: 0;
+        }
+
         body {
             font-family: 'Times New Roman', serif;
             margin: 0;
-            padding: 40px;
+            padding: 0;
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 297mm;
         }
 
         .certificate {
             background: white;
-            border: 8px solid #2c3e50;
-            border-radius: 15px;
-            padding: 60px;
+            border-radius: 12px;
+            padding: 40px 60px;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            margin: 0 auto;
-            max-width: 800px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            margin: 0;
+            width: 95%;
+            max-width: 1000px;
             position: relative;
+            box-sizing: border-box;
         }
 
         .certificate::before {
             content: '';
             position: absolute;
-            top: 20px;
-            left: 20px;
-            right: 20px;
-            bottom: 20px;
+            top: 12px;
+            left: 12px;
+            right: 12px;
+            bottom: 12px;
             border: 2px solid #3498db;
             border-radius: 8px;
         }
 
         .header {
-            margin-bottom: 40px;
+            margin-bottom: 100px;
             position: relative;
             z-index: 1;
         }
 
         .logo {
-            font-size: 48px;
+            font-size: 36px;
             font-weight: bold;
             color: #2c3e50;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
             text-transform: uppercase;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
         }
 
         .company-name {
-            font-size: 24px;
+            font-size: 18px;
             color: #3498db;
-            margin-bottom: 30px;
+            margin-bottom: 15px;
             font-weight: 600;
         }
 
         .certificate-title {
-            font-size: 42px;
+            font-size: 32px;
             font-weight: bold;
             color: #2c3e50;
-            margin: 30px 0;
+            margin: 25px 0 15px 0;
             text-transform: uppercase;
             letter-spacing: 2px;
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
         }
 
         .certificate-subtitle {
-            font-size: 18px;
+            font-size: 14px;
             color: #7f8c8d;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             font-style: italic;
         }
 
         .recipient-section {
-            margin: 50px 0;
+            margin: 35px 0;
             position: relative;
             z-index: 1;
         }
 
         .presented-to {
-            font-size: 18px;
+            font-size: 14px;
             color: #2c3e50;
-            margin-bottom: 20px;
+            margin-bottom: 12px;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
         .recipient-name {
-            font-size: 36px;
+            font-size: 28px;
             font-weight: bold;
             color: #e74c3c;
-            margin: 20px 0;
+            margin: 12px 0;
             text-transform: uppercase;
             letter-spacing: 1px;
             border-bottom: 3px solid #3498db;
-            padding-bottom: 10px;
+            padding-bottom: 8px;
             display: inline-block;
         }
 
         .certificate-text {
-            font-size: 16px;
-            line-height: 1.8;
+            font-size: 14px;
+            line-height: 1.6;
             color: #2c3e50;
-            margin: 30px 0;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
+            margin: 30px auto;
+            max-width: 650px;
         }
 
         .account-type {
@@ -119,12 +126,13 @@
         }
 
         .footer {
-            margin-top: 50px;
+            margin-top: 40px;
             display: flex;
             justify-content: space-between;
             align-items: end;
             position: relative;
             z-index: 1;
+            padding: 0 20px;
         }
 
         .date-section,
@@ -138,37 +146,37 @@
 
         .date,
         .cert-id {
-            font-size: 14px;
+            font-size: 11px;
             color: #7f8c8d;
-            margin-bottom: 5px;
+            margin-bottom: 3px;
         }
 
         .date-value,
         .cert-id-value {
-            font-size: 16px;
+            font-size: 13px;
             font-weight: bold;
             color: #2c3e50;
         }
 
         .signature-line {
             border-bottom: 2px solid #2c3e50;
-            width: 200px;
-            margin: 20px 0 10px 0;
+            width: 180px;
+            margin: 15px 0 5px 0;
             margin-left: auto;
         }
 
         .signature-title {
-            font-size: 14px;
+            font-size: 11px;
             color: #7f8c8d;
-            margin-top: 5px;
+            margin-top: 3px;
         }
 
         .decorative-border {
             position: absolute;
-            top: 40px;
-            left: 40px;
-            right: 40px;
-            bottom: 40px;
+            top: 25px;
+            left: 25px;
+            right: 25px;
+            bottom: 25px;
             background-image:
                 repeating-linear-gradient(0deg,
                     transparent,
