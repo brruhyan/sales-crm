@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use App\Models\Deal;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
+use App\Notifications\CustomVerifyEmailNotification;
 
 
 class User extends Authenticatable implements FilamentUser, MustVerifyEmail
@@ -94,6 +95,16 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
     }
 
     return false;
+    }
+
+    /**
+     * Send the email verification notification.
+     *
+     * @return void
+     */
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new CustomVerifyEmailNotification());
     }
 }
 
