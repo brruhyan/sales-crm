@@ -37,7 +37,7 @@ class MetricsInfolist
                                             ->count();
                                     })
                                     ->badge()
-                                    ->color('primary')
+                                    ->color('success')
                                     ->columnSpan(1),
 
                                 TextEntry::make('Total Deal Value')
@@ -49,7 +49,7 @@ class MetricsInfolist
                                             ->sum('amount');
                                         return '₱' . number_format($totalValue);
                                     })
-                                    ->color('warning'),
+                                    ->color('Amber'),
                                 TextEntry::make('Pending Deal Value')
                                     ->label('Pending Deal Value')
                                     ->badge()
@@ -59,7 +59,7 @@ class MetricsInfolist
                                             ->sum('amount');
                                         return '₱' . number_format($totalValue);
                                     })
-                                    ->color('warning'),
+                                    ->color('Amber'),
                             ]),
                     ]),
 
@@ -112,6 +112,7 @@ class MetricsInfolist
                                         })->join("<br>");
                                     })
                                     ->html()
+                                    ->color('Amber')
                                     ->columnSpanFull(),
                             ]),
                     ]),
