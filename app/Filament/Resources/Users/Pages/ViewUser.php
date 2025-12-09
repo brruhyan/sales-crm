@@ -7,6 +7,7 @@ use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
 use App\Filament\Resources\Actions\ApproveUserAction;
 use App\Filament\Resources\Actions\DenyUserAction;
+use Filament\Actions\Action;
 
 class ViewUser extends ViewRecord
 {
@@ -17,6 +18,15 @@ class ViewUser extends ViewRecord
         return [
             ApproveUserAction::make(),
             DenyUserAction::make(),
+            Action::make('revoke')
+                    ->icon('heroicon-o-x-circle')
+                    ->color('danger')
+                    ->requiresConfirmation()
+                    ->visible(fn ($record) => $record->approved)
+                    ->action(function ($record) {
+                        $record->update(['approved' => false]);
+                    })
+                    ->successNotificationTitle('User approval revoked'),
         ];
     }
 }
