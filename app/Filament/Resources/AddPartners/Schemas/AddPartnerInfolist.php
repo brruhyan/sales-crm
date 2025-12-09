@@ -54,6 +54,29 @@ class AddPartnerInfolist
                                             ->columnSpan(1),
                                     ]),
                     ]), 
+                Section::make()
+                    ->columnSpanFull()
+                    ->schema([
+                        Section::make('Timeline')
+                            ->description('Record creation and update timestamps')
+                            ->icon('heroicon-o-clock')
+                            ->columns(2)
+                            ->columnSpanFull()
+                            ->schema([
+                                TextEntry::make('created_at')
+                                    ->label('Date Created')
+                                    ->dateTime('M j, Y H:i:s')
+                                    ->icon('heroicon-o-calendar')
+                                    ->copyable()
+                                    ->columnSpan(1),
+                                TextEntry::make('updated_at')
+                                    ->label('Date Updated')
+                                    ->dateTime('M j, Y H:i:s')
+                                    ->icon('heroicon-o-calendar')
+                                    ->copyable()
+                                    ->columnSpan(1),
+                            ]),
+                    ])
   
             ]); 
     }
