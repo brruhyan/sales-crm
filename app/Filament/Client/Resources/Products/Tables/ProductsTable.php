@@ -7,6 +7,7 @@ use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\IconColumn;
+use Hugomyb\FilamentMediaAction\Actions\MediaAction;
 
 class ProductsTable
 {
@@ -35,10 +36,10 @@ class ProductsTable
                 TrashedFilter::make(),
             ])
             ->recordActions([
-                Action::make('download-media')
+                MediaAction::make('download-media')
                     ->label('View Media')
                     ->icon('heroicon-o-arrow-down-tray')
-                    ->url(fn($record) => $record->media ? '/storage/' . $record->media : null)
+                    ->media(fn($record) => $record->media ? '/storage/' . $record->media : null)
                     ->openUrlInNewTab()
                     ->visible(fn($record) => !empty($record->media)),
             ]);
