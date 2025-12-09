@@ -17,6 +17,7 @@ use Illuminate\Validation\Rule;
 use App\Rules\PartialMatchDuplicate;
 use Filament\Forms\Components\FileUpload;
 use App\Models\ProductList;
+use App\Models\Partner;
 
 class LeadsForm
 {
@@ -36,7 +37,73 @@ class LeadsForm
                             ->preload()
                             ->required()
                             ->columnSpanFull()
-                            ->helperText('Select a contact to link to this lead.'),
+                            ->helperText('Select a contact to link to this lead.')
+                            ->createOptionForm([
+                                TextInput::make('name')
+                                    ->label('Name')
+                                    ->required()
+                                    ->maxLength(255),
+                                TextInput::make('email')
+                                    ->label('Email')
+                                    ->email()
+                                    ->required()
+                                    ->maxLength(255),
+                                TextInput::make('phone')
+                                    ->label('Phone')
+                                    ->tel()
+                                    ->required()
+                                    ->maxLength(255),
+                                TextInput::make('position')
+                                    ->label('Position')
+                                    ->required()
+                                    ->maxLength(255),
+                                Select::make('company')
+                                    ->label('Company/Partner')
+                                    ->helperText('Select existing or create new partner')
+                                    ->options(function () {
+                                        if (Auth::check()) {
+                                            return Auth::user()->partners()->pluck('name', 'id')->toArray();
+                                        }
+                                        return [];
+                                    })
+                                    ->searchable()
+                                    ->createOptionForm([
+                                        TextInput::make('name')
+                                            ->label('Partner Name')
+                                            ->required()
+                                            ->maxLength(255),
+                                    ])
+                                    ->createOptionUsing(function (array $data) {
+                                        if (Auth::check()) {
+                                            $partner = Partner::create([
+                                                'name' => $data['name'],
+                                                'user_id' => Auth::id(),
+                                            ]);
+                                            return $partner->id;
+                                        }
+                                        return null;
+                                    })
+                                    ->required(),
+                                TextInput::make('company_address')
+                                    ->label('Company Address')
+                                    ->required()
+                                    ->maxLength(255),
+                            ])
+                            ->createOptionUsing(function (array $data) {
+                                if (Auth::check()) {
+                                    $contact = Contact::create([
+                                        'name' => $data['name'],
+                                        'email' => $data['email'],
+                                        'phone' => $data['phone'],
+                                        'position' => $data['position'],
+                                        'company' => $data['company'],
+                                        'company_address' => $data['company_address'],
+                                        'user_id' => Auth::id(),
+                                    ]);
+                                    return $contact->id;
+                                }
+                                return null;
+                            }),
                     ]),
 
                 Section::make('Product Lead Details')
