@@ -146,14 +146,12 @@ class UserInfolist
 
                                 $signature = $record->signature;
                                 
-                                // Displays Base64 string directly
                                 if (strpos($signature, 'data:image/') === 0) {
                                     return "
                                         <img src=\"{$signature}\" alt=\"User Signature\" class='max-h-24 w-auto'/> 
                                     ";
                                 }
                                 
-                                // Displays file path (if saved as a file)
                                 if (is_string($signature)) {
                                     $encodedPath = str_replace(' ', '%20', $signature);
                                     $url = url('storage/' . $encodedPath);
