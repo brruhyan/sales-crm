@@ -10,7 +10,7 @@ class UserDeniedNotification extends Notification
 {
     use Queueable;
 
-    public function __construct()
+    public function __construct(public string $deny_reason)
     {
         //
     }
@@ -27,7 +27,7 @@ class UserDeniedNotification extends Notification
             ->greeting('We\'re Sorry!')
             ->line('User Registration Denied!.')
             ->line(sprintf(
-                'Hello %s, your registration has been denied. Reason: **%s**',
+                'Hello %s, your registration has been denied. Reason: **"%s"**',
                 $notifiable->name,
                 $notifiable->deny_reason
             ))

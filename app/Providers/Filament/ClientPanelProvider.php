@@ -25,6 +25,7 @@ use App\Filament\Widgets\DealsValuePerMonth;
 use App\Filament\Widgets\ProjectsWidget;
 use App\Http\Middleware\CheckUserApproved;
 use App\Filament\Client\Pages\Auth\Register;
+use App\Http\Middleware\SendVerificationEmailOnFirstAttempt;
 use App\Filament\Client\Widgets\LeadsWidget;
 use Filament\Enums\ThemeMode;
 
@@ -49,6 +50,7 @@ class ClientPanelProvider extends PanelProvider
             ->path('client')
             ->sidebarCollapsibleOnDesktop()
             ->login()
+            ->emailVerification()
             ->registration(Register::class)
             ->passwordReset()
             ->viteTheme('resources/css/filament/client/theme.css')
@@ -94,6 +96,7 @@ class ClientPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
                 CheckUserApproved::class,
+                SendVerificationEmailOnFirstAttempt::class,
             ]);
     }
     protected function getWidgets(): array
