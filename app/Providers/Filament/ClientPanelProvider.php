@@ -49,6 +49,7 @@ class ClientPanelProvider extends PanelProvider
             ->path('client')
             ->sidebarCollapsibleOnDesktop()
             ->login()
+            ->emailVerification()
             ->registration(Register::class)
             ->passwordReset()
             ->viteTheme('resources/css/filament/client/theme.css')
