@@ -34,7 +34,11 @@ pipeline {
                     
                     def docker_exec = "docker exec ${PHP_SERVICE}"
                     
-                    sh "${docker_exec} composer update --no-dev --optimize-autoloader"
+                    // FIX: Use --no-scripts to prevent the Class Not Found error during Composer hooks
+                    sh "${docker_exec} composer update --no-dev --optimize-autoloader --no-scripts"
+                    
+                    // Manually dump the autoloader since scripts were disabled
+                    sh "${docker_exec} composer dump-autoload --optimize"
 
                     sh "${docker_exec} npm run build"
 
