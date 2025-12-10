@@ -12,13 +12,14 @@ return [
     |
     */
     'resource' => [
-        'class' => \AlizHarb\ActivityLog\Resources\ActivityLogs\ActivityLogResource::class,
+        'class' => \App\Filament\Resources\ActivityLogResource::class,
         'group' => null,
         'sort' => null,
         'default_sort_column' => 'created_at',
         'default_sort_direction' => 'desc',
         'navigation_count_badge' => false,
         'navigation_icon' => 'heroicon-o-rectangle-stack',
+        'should_register_navigation' => false,
         'global_search' => [
             'enabled' => true,
             'attributes' => ['log_name', 'description', 'subject_type', 'event'],
