@@ -154,6 +154,9 @@
     line-height: 1.5;
     color: var(--c-text-primary);
     margin-bottom: 0.75rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
 }
 
 .activity-log-footer {
@@ -601,6 +604,9 @@
     line-height: 1.5;
     color: var(--c-text-primary);
     margin-bottom: 0.75rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
 }
 
 .activity-log-footer {
@@ -921,3 +927,62 @@
 .activity-log-text-danger { color: #ef4444; }
 .activity-log-text-info { color: #3b82f6; }
 .activity-log-text-gray { color: #6b7280; }
+
+/* Description column fix for tables */
+.fi-table [data-column="description"],
+.fi-table td[data-column="description"],
+[data-table-cell-description] {
+    white-space: normal !important;         
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+    max-width: 100% !important;
+    text-overflow: unset !important;
+    overflow: visible !important;
+}
+
+.fi-table [data-column="description"] > *,
+.fi-table td[data-column="description"] > * {
+    white-space: normal !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+    text-overflow: unset !important;
+    overflow: visible !important;
+}
+
+/* Override Filament truncation for activity log descriptions */
+[class*="activity"] [class*="description"],
+.fi-ta-cell-content:has([class*="description"]) {
+    text-overflow: unset !important;
+    overflow: visible !important;
+    white-space: normal !important;
+    word-break: break-word !important;
+}
+
+
+
+
+
+/* Force description column to display full text in tables */
+.fi-ta-cell [class*="description"],
+.fi-ta-cell-content [class*="description"] {
+    display: block !important;
+    white-space: normal !important;
+    word-break: break-word !important;
+    text-overflow: unset !important;
+    overflow: visible !important;
+}
+
+.fi-table tbody td:has([class*="description"]),
+.fi-table tbody td[data-column="description"] {
+    overflow: visible !important;
+    white-space: normal !important;
+}
+
+/* Target the actual description text specifically */
+.activity-log-table-description,
+[data-table-column="description"] {
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: unset !important;
+    max-width: 100% !important;
+}

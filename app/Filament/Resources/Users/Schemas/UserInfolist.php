@@ -91,7 +91,7 @@ class UserInfolist
                                     $encodedPath = str_replace(' ', '%20', $doc);
                                     $url = url('storage/' . $encodedPath);
                                     $fileExtension = strtolower(pathinfo($doc, PATHINFO_EXTENSION));
-                                    $fileExists = Storage::disk('public')->exists($doc);
+                                    $fileExists = Storage::disk(name: 'public')->exists($doc);
 
                                     $icon = match (true) {
                                         in_array($fileExtension, ['pdf']) =>
@@ -175,3 +175,4 @@ class UserInfolist
             ]);
     }
 }
+

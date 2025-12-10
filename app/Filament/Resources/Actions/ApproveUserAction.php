@@ -23,11 +23,9 @@ class ApproveUserAction extends Action
             ->action(function (User $record) {
                 $record->update(['approved' => true]);
 
-                // Generate certificate
                 $certificateService = new CertificateService();
                 $certificatePath = $certificateService->generateCertificate($record);
 
-                // Send notification with certificate attachment
                 $record->notify(new UserApprovedNotification($certificatePath));
 
                 Notification::make()

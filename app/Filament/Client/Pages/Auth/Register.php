@@ -102,7 +102,7 @@ class Register extends BaseRegister
                         ->required()
                         ->live()
                         ->columnSpanFull();
-
+                        
                     $components[] = Checkbox::make('accept_terms')
                         ->label('I accept the Terms and Conditions')
                         ->required()
