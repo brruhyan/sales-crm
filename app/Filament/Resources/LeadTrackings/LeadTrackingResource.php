@@ -16,6 +16,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use AlizHarb\ActivityLog\RelationManagers\ActivitiesRelationManager;
 
 class LeadTrackingResource extends Resource
 {
@@ -61,7 +62,7 @@ class LeadTrackingResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            ActivitiesRelationManager::class,
         ];
     }
 

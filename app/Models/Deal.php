@@ -5,13 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\Leads;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Models\Activity;
 
 class Deal extends Model
 {   
-    use Notifiable, HasFactory;
+    use Notifiable, HasFactory, LogsActivity;
     
     protected $fillable = [
         'title',
@@ -100,5 +104,18 @@ class Deal extends Model
     public function lead(): BelongsTo
     {
         return $this->belongsTo(Leads::class, 'lead_id');
+    }
+
+    public function activities(): MorphMany
+    {
+        return $this->morphMany(Activity::class, 'subject');
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->useLogName('deals')
+            ->logAll()
+            ->setDescriptionForEvent(fn(string $eventName) => "Deal has been {$eventName}");
     }
 }
