@@ -33,6 +33,7 @@ class MaterialForm
                         Textarea::make('description')
                             ->label('Description')
                             ->maxLength(1000)
+                            ->required()
                             ->columnSpanFull(),
                         TextInput::make('learn_more')
                             ->label('Learn More Link')

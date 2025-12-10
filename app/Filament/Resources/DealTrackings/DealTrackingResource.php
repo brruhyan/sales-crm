@@ -16,7 +16,8 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
-
+use AlizHarb\ActivityLog\RelationManagers\ActivitiesRelationManager;
+    
 class DealTrackingResource extends Resource
 {
     protected static ?string $model = Deal::class;
@@ -61,7 +62,7 @@ class DealTrackingResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            ActivitiesRelationManager::class,
         ];
     }
 

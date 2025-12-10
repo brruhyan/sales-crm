@@ -4,13 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
-
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Models\Activity;
 class Leads extends Model
 {   
     use SoftDeletes, Notifiable, HasFactory;
+
+    use LogsActivity;
 
     protected $fillable = [
         'lead_title',
@@ -58,5 +63,18 @@ class Leads extends Model
     public function partner(): BelongsTo
     {
         return $this->belongsTo(Partner::class, 'company', 'id');
+    }
+
+    public function activities(): MorphMany
+    {
+        return $this->morphMany(Activity::class, 'subject');
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->useLogName('leads')
+            ->logAll()
+            ->setDescriptionForEvent(fn(string $eventName) => "Lead has been {$eventName}");
     }
 }

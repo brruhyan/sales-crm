@@ -129,7 +129,7 @@ class MetricsInfolist
                                     ->label('Most Recent Deal Won')
                                     ->icon('heroicon-o-folder')
                                     ->badge()
-                                    ->color('success')
+                                    ->color('Amber')
                                     ->columnSpan(2)
                                     ->state(function ($record) {
                                         return Deal::where('user_id', $record->id)
@@ -142,7 +142,8 @@ class MetricsInfolist
                                 TextEntry::make('recent_deal_value')
                                     ->label('Most Recent Deal Value')
                                     ->badge()
-                                    ->color('primary')
+                                    ->icon('heroicon-o-currency-dollar')
+                                    ->color('success')
                                     ->state(function ($record) {
                                         $totalValue = Deal::where('user_id', $record->id)
                                             ->where('status', 'Deal Won')
@@ -155,6 +156,7 @@ class MetricsInfolist
                                 TextEntry::make('recent_deal_closing_date')
                                     ->label('Closing Date')
                                     ->badge()
+                                    ->icon('heroicon-o-calendar')
                                     ->color('warning')
                                     ->state(function ($record) {
                                         $date = Deal::where('user_id', $record->id)

@@ -25,16 +25,14 @@ use Swis\Filament\Backgrounds\FilamentBackgroundsPlugin;
 use Swis\Filament\Backgrounds\ImageProviders\MyImages;
 use Filafly\Themes\Brisk\BriskTheme;
 use BezhanSalleh\PanelSwitch\PanelSwitch;
-use Caresome\FilamentNeobrutalism\NeobrutalismeTheme;
-use Filament\Enums\ThemeMode;
-use Filament\View\PanelsRenderHook;
-use Illuminate\Support\HtmlString;
+use AlizHarb\ActivityLog\ActivityLogPlugin;
+
 
 class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
-        return $panel
+        $panel
             ->default()
             ->id('admin')
             ->sidebarCollapsibleOnDesktop()
@@ -48,6 +46,9 @@ class AdminPanelProvider extends PanelProvider
                         MyImages::make()
                             ->directory('images/backgrounds/filament-admin')
                     ),
+                ActivityLogPlugin::make()
+                    ->label('Log Activity')
+               
             ])
             ->brandName('AksyonSales')
             ->brandLogo(asset('M with border.png'))
@@ -79,8 +80,11 @@ class AdminPanelProvider extends PanelProvider
                 Authenticate::class,
                 CheckIsAdmin::class,
             ]);
-    PanelSwitch::configureUsing(function (PanelSwitch $panelSwitch) {
-        
-    });
+
+        PanelSwitch::configureUsing(function (PanelSwitch $panelSwitch) {
+            
+        });
+
+        return $panel;
     }
 }

@@ -8,6 +8,7 @@ use Filament\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Table;
+use Hugomyb\FilamentMediaAction\Actions\MediaAction;
 
 class MaterialsTable
 {
@@ -44,10 +45,10 @@ class MaterialsTable
                 //
             ])
             ->recordActions([
-                Action::make('download-media')
+                MediaAction::make('download-media')
                     ->label('View Media')
                     ->icon('heroicon-o-arrow-down-tray')
-                    ->url(fn($record) => $record->media ? '/storage/' . $record->media : null)
+                    ->media(fn($record) => $record->media ? '/storage/' . $record->media : null)
                     ->openUrlInNewTab()
                     ->visible(fn($record) => !empty($record->media)),
             ])

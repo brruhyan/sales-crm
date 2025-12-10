@@ -34,7 +34,8 @@ class AddMaterialForm
                         Textarea::make('description')
                             ->label('Description')
                             ->maxLength(1000)
-                            ->columnSpanFull(),
+                            ->columnSpanFull()
+                            ->required(),
                     ]),
 
                 Section::make('Media')
@@ -47,6 +48,7 @@ class AddMaterialForm
                             ->helperText('Upload presentation materials, videos, PDFs, or other media files.')
                             ->acceptedFileTypes(['video/*', 'audio/*', 'application/pdf', 'image/*'])
                             ->maxSize(102400)
+                            ->required()
                             ->disk('public')
                             ->directory('materials')
                             ->columnSpanFull(),
