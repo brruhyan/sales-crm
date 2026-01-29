@@ -23,6 +23,7 @@ pipeline {
                     sh "docker cp . ${CONTAINER_NAME}:/var/www/html"
                     
                     echo "--- Setting Initial File Permissions ---"
+                    // Ensure the web server user owns the files
                     sh "docker exec ${CONTAINER_NAME} chown -R www-data:www-data /var/www/html"
                 }
             }
@@ -33,23 +34,24 @@ pipeline {
                 script {
                     echo "--- [Step 2] Updating Dependencies ---"
                     
-                    // FIX: Solve the "dubious ownership" error by trusting the directory
-                    sh "docker exec ${CONTAINER_NAME} git config --global --add safe.directory /var/www/html"
+                    // FIX: The wildcard '*' tells Git to trust ALL directories. 
+                    // This prevents the 'dubious ownership' error in vendor subfolders.
+                    sh "docker exec ${CONTAINER_NAME} git config --global --add safe.directory '*'"
                     
                     // Run Composer Update
                     sh "docker exec ${CONTAINER_NAME} composer update --no-dev --optimize-autoloader --no-scripts"
                     
                     echo "--- Running Laravel Maintenance Commands ---"
-                    // Clear all caches
+                    // Clear all caches to avoid stale config/routes
                     sh "docker exec ${CONTAINER_NAME} php artisan optimize:clear"
                     
-                    // Run migrations (force for production/automated env)
+                    // Run database migrations
                     sh "docker exec ${CONTAINER_NAME} php artisan migrate --force"
                     
-                    // IMPORTANT: Required when upgrading Filament versions
+                    // IMPORTANT: Re-publishes Filament assets (essential for v4.3 -> v4.6 update)
                     sh "docker exec ${CONTAINER_NAME} php artisan filament:upgrade"
                     
-                    // Re-optimize for performance
+                    // Re-optimize for production performance
                     sh "docker exec ${CONTAINER_NAME} php artisan optimize"
                 }
             }
@@ -58,10 +60,10 @@ pipeline {
 
     post {
         success {
-            echo "Deployment updated successfully for maralabs-sales!"
+            echo "--- Deployment updated successfully for maralabs-sales! ---"
         }
         failure {
-            echo "Deployment failed. Check Jenkins logs for details."
+            echo "--- Deployment failed. Check Jenkins console output for details. ---"
         }
     }
 }
