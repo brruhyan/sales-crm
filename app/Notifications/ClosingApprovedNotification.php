@@ -38,7 +38,7 @@ class ClosingApprovedNotification extends Notification
             ->line('Closing Approved!')
             ->line(sprintf('Hello %s, your closing **"%s"** has been approved.', $notifiable->name, $this->closingTitle))
             ->line('The closing status has been updated to Closed Won.')
-            ->action('View Closing', url('/filament/client/closings'))
+            ->action('View Closing', url('/client/closings'))
             ->line('Thank you for your submission!');
     }
 
