@@ -154,7 +154,7 @@ class DealForm
                         DatePicker::make('expected_close_date')
                             ->label('Expected Close Date')
                             ->required()
-                            ->native(false)
+                            ->native(condition: false)
                             ->columnSpan(1),
                     ]),
             ]);

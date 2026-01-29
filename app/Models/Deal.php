@@ -61,6 +61,11 @@ class Deal extends Model
         return $this->hasMany(Project::class);
     }
 
+    public function closings(): HasMany
+    {
+        return $this->hasMany(Closing::class);
+    }
+
     /**
      * Get the partner/company through contact relationship.
      */
