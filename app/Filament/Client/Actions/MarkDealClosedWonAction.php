@@ -21,7 +21,7 @@ class MarkDealClosedWonAction extends Action
             ->icon('heroicon-o-check-circle')
             ->form([
                 FileUpload::make('documents')
-                    ->label('Winning Documents')
+                    ->label('Proposal Documents')
                     ->required()
                     ->helperText('Upload documents that contributed to winning this deal.')
                     ->multiple()

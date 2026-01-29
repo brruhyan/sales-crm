@@ -156,12 +156,6 @@ class DealForm
                             ->required()
                             ->native(false)
                             ->columnSpan(1),
-
-                        DatePicker::make('actual_close_date')
-                            ->label('Actual Close Date')
-                            ->required()
-                            ->native(false)
-                            ->columnSpan(1),
                     ]),
             ]);
     }

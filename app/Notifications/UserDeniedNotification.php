@@ -12,7 +12,7 @@ class UserDeniedNotification extends Notification
 
     public function __construct(public string $deny_reason)
     {
-        //
+        
     }
 
     public function via(object $notifiable): array

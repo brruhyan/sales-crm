@@ -13,7 +13,8 @@ class ListUsers extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()->label('Add User'),
+            CreateAction    ::make()
+                ->label('Add User'),
         ];
     }
 }
