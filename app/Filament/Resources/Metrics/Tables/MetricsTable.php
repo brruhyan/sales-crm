@@ -38,8 +38,7 @@ class MetricsTable
                         ->count();
                 })
                     ->badge()
-                    ->color('Amber')
-                    ->sortable(),
+                    ->color('Amber'),
                 TextColumn::make('Total Deals')
                     ->label('Deals Won')
                     ->state(function (User $record): string {
@@ -48,8 +47,7 @@ class MetricsTable
                             ->count();
                     })
                     ->badge()
-                    ->color('Amber')
-                    ->sortable(),
+                    ->color('Amber'),
                 TextColumn::make('Total Closings')
                     ->label('Closings Won')
                     ->state(function (User $record): string {
@@ -58,8 +56,7 @@ class MetricsTable
                             ->count();
                     })
                     ->badge()
-                    ->color('success')
-                    ->sortable(),
+                    ->color('success'),
                 TextColumn::make('Total Deal Value')
                     ->label('Total Deal Value')
                     ->badge()
@@ -69,8 +66,7 @@ class MetricsTable
                             ->sum('amount');
                         return '₱' . number_format($totalValue);
                     })
-                    ->color('Amber')
-                    ->sortable(),
+                    ->color('Amber'),
                 TextColumn::make('Pending Deal Value')
                     ->label('Pending Deal Value')
                     ->badge()
