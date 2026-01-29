@@ -19,11 +19,9 @@ pipeline {
             steps {
                 script {
                     echo "--- [Step 1] Synchronizing Code and Copying to Container ---"
-                    // Copy fresh code from Jenkins workspace to container
                     sh "docker cp . ${CONTAINER_NAME}:/var/www/html"
                     
                     echo "--- Setting Initial File Permissions ---"
-                    // Ensure the web server user owns the files
                     sh "docker exec ${CONTAINER_NAME} chown -R www-data:www-data /var/www/html"
                 }
             }
@@ -34,24 +32,26 @@ pipeline {
                 script {
                     echo "--- [Step 2] Updating Dependencies ---"
                     
-                    // FIX: The wildcard '*' tells Git to trust ALL directories. 
-                    // This prevents the 'dubious ownership' error in vendor subfolders.
+                    // Trust all directories to prevent 'dubious ownership' errors
                     sh "docker exec ${CONTAINER_NAME} git config --global --add safe.directory '*'"
                     
-                    // Run Composer Update
+                    // Update packages
                     sh "docker exec ${CONTAINER_NAME} composer update --no-dev --optimize-autoloader --no-scripts"
                     
-                    echo "--- Running Laravel Maintenance Commands ---"
-                    // Clear all caches to avoid stale config/routes
+                    echo "--- [Step 2.1] Emergency Cache Cleanup ---"
+                    // Manually remove cache files because 'php artisan' is currently 
+                    // crashing due to the missing PailServiceProvider.
+                    sh "docker exec ${CONTAINER_NAME} rm -f bootstrap/cache/services.php bootstrap/cache/packages.php bootstrap/cache/config.php"
+                    
+                    echo "--- [Step 2.2] Running Laravel Maintenance ---"
+                    // This should now work without the 'Class not found' error
                     sh "docker exec ${CONTAINER_NAME} php artisan optimize:clear"
                     
-                    // Run database migrations
+                    // Database and Assets
                     sh "docker exec ${CONTAINER_NAME} php artisan migrate --force"
-                    
-                    // IMPORTANT: Re-publishes Filament assets (essential for v4.3 -> v4.6 update)
                     sh "docker exec ${CONTAINER_NAME} php artisan filament:upgrade"
                     
-                    // Re-optimize for production performance
+                    // Final optimization for production
                     sh "docker exec ${CONTAINER_NAME} php artisan optimize"
                 }
             }
