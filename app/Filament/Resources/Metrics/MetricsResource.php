@@ -16,6 +16,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class MetricsResource extends Resource
 {
@@ -44,6 +45,11 @@ class MetricsResource extends Resource
     public static function table(Table $table): Table
     {
         return MetricsTable::configure($table);
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return User::query();
     }
 
     public static function getRelations(): array

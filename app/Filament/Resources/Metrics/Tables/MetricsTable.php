@@ -9,6 +9,7 @@ use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use App\Models\Deal;
+use App\Models\Closing;
 use Filament\Tables\Filters\SelectFilter;
 use App\Models\Leads;
 use App\Models\User;
@@ -22,7 +23,6 @@ class MetricsTable
     $userId = Auth::id();
 
         return $table
-            ->query(User::query()->where('is_admin', true )->where('is_admin', false))
             ->columns([
                 TextColumn::make('name')
                     ->label('Name')
@@ -49,6 +49,16 @@ class MetricsTable
                     })
                     ->badge()
                     ->color('Amber')
+                    ->sortable(),
+                TextColumn::make('Total Closings')
+                    ->label('Closings Won')
+                    ->state(function (User $record): string {
+                        return (string) Closing::where('user_id', $record->id)
+                            ->where('status', 'Closed Won')
+                            ->count();
+                    })
+                    ->badge()
+                    ->color('success')
                     ->sortable(),
                 TextColumn::make('Total Deal Value')
                     ->label('Total Deal Value')
