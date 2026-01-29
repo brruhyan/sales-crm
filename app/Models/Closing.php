@@ -31,12 +31,29 @@ class Closing extends Model
         'notes',
     ];
 
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            if (!$model->user_id) {
+                $model->user_id = auth()->id();
+            }
+        });
+    }
+
     protected $casts = [
         'amount' => 'decimal:2',
         'probability' => 'integer',
         'expected_close_date' => 'date',
         'actual_close_date' => 'date',
         'documents' => 'array',
+        'currency' => 'string',
+    ];
+
+    protected $attributes = [
+        'currency' => 'USD',
+        'probability' => 0,
     ];
 
     public function deal(): BelongsTo

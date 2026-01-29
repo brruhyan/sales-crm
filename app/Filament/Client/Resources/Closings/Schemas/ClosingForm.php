@@ -112,9 +112,17 @@ class ClosingForm
                     ->columns(2)
                     ->columnSpanFull()
                     ->schema([
-                        DatePicker::make('actual_close_date')
-                            ->required()
+                        DatePicker::make('expected_close_date')
+                            ->label('Expected Close Date')
+                            ->disabled()
+                            ->dehydrated(true)
+                            ->helperText('Auto-populated from the selected deal.')
+                            ->columnSpan(1),
+
+                       DatePicker::make('actual_close_date')
                             ->label('Actual Close Date')
+                            ->required()
+                            ->native(condition: false)
                             ->columnSpan(1),
                     ]),
 
