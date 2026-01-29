@@ -16,7 +16,7 @@ class SendClosingForReviewAction extends Action
         return parent::make($name)
             ->label('Send for Review')
             ->color('success')
-            ->visible(fn (Closing $record) => $record->status !== 'Closed Won' && $record->status !== 'Closed Lost')
+            ->visible(fn (Closing $record) => $record->status !== 'Closed Won' && $record->status !== 'Closed Lost' && $record->status !== 'Pending Review')
             ->icon('heroicon-o-check-circle')
             ->form([
                 FileUpload::make('documents')

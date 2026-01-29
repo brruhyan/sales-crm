@@ -29,6 +29,7 @@ class Closing extends Model
         'user_id',
         'documents',
         'notes',
+        'dispute_reason',
     ];
 
     protected static function boot(): void

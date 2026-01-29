@@ -119,6 +119,19 @@ class ClosingTrackingInfolist
                                     ->placeholder('Not closed yet'),
                             ]),
 
+                        Section::make('Dispute Information')
+                            ->description('Details about closing dispute')
+                            ->icon('heroicon-o-exclamation-circle')
+                            ->visible(fn ($record) => $record->status === 'Disputed' && !empty($record->dispute_reason))
+                            ->columns(1)
+                            ->schema([
+                                TextEntry::make('dispute_reason')
+                                    ->label('Reason for Dispute')
+                                    ->icon('heroicon-o-chat-bubble-left')
+                                    ->color('danger')
+                                    ->columnSpan(1),
+                            ]),
+
                         Section::make('Audit Information')
                             ->description('Creation and update tracking')
                             ->icon('heroicon-o-clock')

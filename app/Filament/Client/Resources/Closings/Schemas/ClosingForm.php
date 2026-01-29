@@ -33,9 +33,9 @@ class ClosingForm
                                 'title',
                                 fn($query) => $query
                                     ->where('user_id', Auth::id())
-                                    ->whereIn('status', ['Proposal Sent', 'Negotiation', 'Closed Won'])
+                                    ->where('status', 'Deal Won')
                             )
-                            ->helperText('Select a deal to auto-populate closing details.')
+                            ->helperText('Select a deal that has been approved by admin.')
                             ->live()
                             ->afterStateUpdated(function (?string $state, callable $set) {
                                 if ($state) {
