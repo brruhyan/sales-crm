@@ -75,6 +75,35 @@ class Leads extends Model
         return LogOptions::defaults()
             ->useLogName('leads')
             ->logAll()
-            ->setDescriptionForEvent(fn(string $eventName) => "Lead has been {$eventName}");
+            ->setDescriptionForEvent(fn(string $eventName) => match($eventName) {
+                'created' => "Lead '{$this->lead_title}' created",
+                'updated' => $this->getUpdatedDescription(),
+                'deleted' => "Lead '{$this->lead_title}' deleted",
+                default => "Lead has been {$eventName}"
+            });
+    }
+
+    private function getUpdatedDescription(): string
+    {
+        // Get the current state (after changes)
+        $status = $this->getAttribute('status');
+        $title = $this->getAttribute('lead_title');
+        
+        // Check if status changed by looking at original values
+        $original = $this->getOriginal();
+        $changes = $this->getChanges();
+        
+        if (isset($changes['status']) && isset($original['status'])) {
+            $oldStatus = $original['status'];
+            $newStatus = $status ?? $changes['status'];
+            return "Lead '{$title}' status changed from {$oldStatus} to {$newStatus}";
+        }
+        
+        if (isset($changes['lead_title'])) {
+            $newTitle = $title ?? $changes['lead_title'];
+            return "Lead title changed to '{$newTitle}'";
+        }
+        
+        return "Lead '{$title}' updated";
     }
 }

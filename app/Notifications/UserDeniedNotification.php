@@ -12,7 +12,7 @@ class UserDeniedNotification extends Notification
 
     public function __construct(public string $deny_reason)
     {
-        //
+        
     }
 
     public function via(object $notifiable): array
@@ -35,7 +35,7 @@ class UserDeniedNotification extends Notification
             ->line('You may resubmit your registration after addressing the issues mentioned.')
             ->line('Thank you for your understanding.');
     }
-
+    
     public function toArray(object $notifiable): array
     {
         return [];

@@ -245,7 +245,7 @@ return [
                 'subject_type' => true,
                 'subject_type_limit' => 30,
                 'description' => true,
-                'description_limit' => 50,
+                'description_limit' => null,
                 'created_at' => true,
             ],
         ],

@@ -116,6 +116,33 @@ class Deal extends Model
         return LogOptions::defaults()
             ->useLogName('deals')
             ->logAll()
-            ->setDescriptionForEvent(fn(string $eventName) => "Deal has been {$eventName}");
+            ->setDescriptionForEvent(fn(string $eventName) => match($eventName) {
+                'created' => "Deal '{$this->title}' created",
+                'updated' => $this->getUpdatedDescription(),
+                'deleted' => "Deal '{$this->title}' deleted",
+                default => "Deal has been {$eventName}"
+            });
+    }
+
+    private function getUpdatedDescription(): string
+    {
+        $status = $this->getAttribute('status');
+        $title = $this->getAttribute('title');
+        
+        $original = $this->getOriginal();
+        $changes = $this->getChanges();
+        
+        if (isset($changes['status']) && isset($original['status'])) {
+            $oldStatus = $original['status'];
+            $newStatus = $status ?? $changes['status'];
+            return "Deal '{$title}' status changed from {$oldStatus} to {$newStatus}";
+        }
+        
+        if (isset($changes['title'])) {
+            $newTitle = $title ?? $changes['title'];
+            return "Deal title changed to '{$newTitle}'";
+        }
+        
+        return "Deal '{$title}' updated";
     }
 }

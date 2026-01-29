@@ -173,7 +173,7 @@ class DealInfolist
                             ->columns(1)
                             ->schema([
                                 TextEntry::make('documents')
-                                    ->label('Deal Won Documents')
+                                    ->label('Proposal Documents')
                                     ->state(function ($record) {
                                         if (empty($record->documents) || !is_array($record->documents)) {
                                             return null;
@@ -192,7 +192,7 @@ class DealInfolist
                                             };
 
                                             $statusBadge = !$fileExists ? '<span class="text-xs text-red-600 dark:text-red-400">(File not found)</span>' : '';
-                                            $typeBadge = '<span class="text-xs bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded-full">Deal Won Document</span>';
+                                            $typeBadge = '<span class="text-xs bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded-full">Proposal Document</span>';
 
                                             return "<div class='flex items-center gap-3 p-3 mb-2 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 transition'>
                                                 <div class='flex-shrink-0'>{$icon}</div>
