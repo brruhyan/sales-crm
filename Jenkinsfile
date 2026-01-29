@@ -1,9 +1,8 @@
 pipeline {
     agent any
+
     environment {
-        PHP_SERVICE = 'maralabs-sales-app' 
-        COMPOSE_FILE = 'docker-compose.yml'
-        APP_USER = 'www-data:www-data'
+        CONTAINER_NAME = "maralabs-sales-app"
     }
 
     stages {
@@ -11,52 +10,58 @@ pipeline {
             steps {
                 script {
                     echo "--- [Step 0] Checking PHP Version in Container ---"
-                    sh "docker exec ${PHP_SERVICE} php -v"
+                    sh "docker exec ${CONTAINER_NAME} php -v"
                 }
             }
         }
-        
+
         stage('1. Sync Code to Container') {
             steps {
                 script {
                     echo "--- [Step 1] Synchronizing Code and Copying to Container ---"
-                    sh "docker cp . ${PHP_SERVICE}:/var/www/html"
-                    echo "--- Setting Initial File Permissions inside Container ---"
-                    sh "docker exec ${PHP_SERVICE} chown -R ${APP_USER} /var/www/html"
+                    // Copy fresh code from Jenkins workspace to container
+                    sh "docker cp . ${CONTAINER_NAME}:/var/www/html"
+                    
+                    echo "--- Setting Initial File Permissions ---"
+                    sh "docker exec ${CONTAINER_NAME} chown -R www-data:www-data /var/www/html"
                 }
             }
         }
-        
+
         stage('2. Update Dependencies & Clear Cache') {
             steps {
                 script {
-                    echo "--- [Step 2] Updating Dependencies and Caches ---"
+                    echo "--- [Step 2] Updating Dependencies ---"
                     
-                    def docker_exec = "docker exec ${PHP_SERVICE}"
+                    // FIX: Solve the "dubious ownership" error by trusting the directory
+                    sh "docker exec ${CONTAINER_NAME} git config --global --add safe.directory /var/www/html"
                     
-                    // FIX: Use --no-scripts to prevent the Class Not Found error during Composer hooks
-                    sh "${docker_exec} composer update --no-dev --optimize-autoloader --no-scripts"
+                    // Run Composer Update
+                    sh "docker exec ${CONTAINER_NAME} composer update --no-dev --optimize-autoloader --no-scripts"
                     
-                    // Manually dump the autoloader since scripts were disabled
-                    sh "${docker_exec} composer dump-autoload --optimize"
-
-                    sh "${docker_exec} npm run build"
-
-                    sh "${docker_exec} php artisan optimize:clear"
-
-                    sh "${docker_exec} php artisan migrate --force"
+                    echo "--- Running Laravel Maintenance Commands ---"
+                    // Clear all caches
+                    sh "docker exec ${CONTAINER_NAME} php artisan optimize:clear"
                     
-                    sh "${docker_exec} php artisan config:cache"
-                    sh "${docker_exec} php artisan optimize"
+                    // Run migrations (force for production/automated env)
+                    sh "docker exec ${CONTAINER_NAME} php artisan migrate --force"
                     
-                    sh "${docker_exec} php artisan filament:clear-cache"
-                
-                    sh "${docker_exec} chown -R ${APP_USER} /var/www/html/storage"
-                    sh "${docker_exec} chown -R ${APP_USER} /var/www/html/bootstrap/cache"
-
-                    echo "--- Deployment Complete! ---"
+                    // IMPORTANT: Required when upgrading Filament versions
+                    sh "docker exec ${CONTAINER_NAME} php artisan filament:upgrade"
+                    
+                    // Re-optimize for performance
+                    sh "docker exec ${CONTAINER_NAME} php artisan optimize"
                 }
             }
+        }
+    }
+
+    post {
+        success {
+            echo "Deployment updated successfully for maralabs-sales!"
+        }
+        failure {
+            echo "Deployment failed. Check Jenkins logs for details."
         }
     }
 }
