@@ -20,6 +20,7 @@ class ViewLeads extends ViewRecord
             MarkLeadQualifiedAction::make(),
             MarkLeadLostAction::make(),            
             Actions\DeleteAction::make(),
+            Actions\EditAction::make(),
         ];
     }
 }

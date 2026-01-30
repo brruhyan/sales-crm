@@ -20,9 +20,8 @@ class ApproveDealAction extends Action
             ->requiresConfirmation()
             ->visible(fn (Deal $record) => $record->status === 'For Review')
             ->action(function (Deal $record) {
-                $record->update(['status' => 'Deal Won']);
+                $record->update(['status' => 'Closed Won']);
 
-                // Send notification to the user who owns the deal
                 $record->user->notify(new DealApprovedNotification($record->title));
 
                 Notification::make()
