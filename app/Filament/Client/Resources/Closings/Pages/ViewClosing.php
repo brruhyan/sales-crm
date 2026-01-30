@@ -15,7 +15,8 @@ class ViewClosing extends ViewRecord
     {
         return [
             SendClosingForReviewAction::make(),
-            Actions\DeleteAction::make()
+            Actions\DeleteAction::make(),
+            Actions\EditAction::make(),
         ];
     }
 }

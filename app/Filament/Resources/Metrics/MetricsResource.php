@@ -18,6 +18,7 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 
+
 class MetricsResource extends Resource
 {
     protected static ?string $model = User::class;

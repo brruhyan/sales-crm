@@ -19,12 +19,6 @@ class DealsWidget extends StatsOverviewWidget
             Stat::make('New Deals', Deal::where('user_id', $userId)->whereIn('status', ['New', 'For Review'])->count()),
             Stat::make('Deals Won', Deal::where('user_id', $userId)->where('status', 'Deal Won')->count()),
             Stat::make(
-                'Total Deal Value',
-                Str::limit(
-                    '₱' . number_format(Deal::where('user_id', $userId)->where('status', 'Deal Won' )->sum('amount')),
-                    50
-                )), 
-            Stat::make(
                 'Pending Deal Value',
                 Str::limit(
                     '₱' . number_format(Deal::where('user_id', $userId)->where('status', '!=', 'Deal Won')->sum('amount')),
