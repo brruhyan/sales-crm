@@ -62,17 +62,6 @@ class ClosingTrackingInfolist
                                     ->color('success')
                                     ->columnSpan(1),
 
-                                TextEntry::make('probability')
-                                    ->label('Probability')
-                                    ->formatStateUsing(fn ($state) => $state . '%')
-                                    ->badge()
-                                    ->color(fn ($state): string => match (true) {
-                                        $state >= 75 => 'success',
-                                        $state >= 50 => 'warning',
-                                        $state >= 25 => 'info',
-                                        default => 'gray',
-                                    })
-                                    ->columnSpan(1),
                             ]),
                     ])
                     ->columnSpanFull(),
