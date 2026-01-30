@@ -8,7 +8,7 @@ use Filament\Actions;
 use Filament\Actions\CreateAction;
 use App\Filament\Client\Widgets\ClosingWidget;
     class ListClosings extends ListRecords
-{
+    {
     protected static string $resource = ClosingResource::class;
 
     protected function getHeaderActions(): array

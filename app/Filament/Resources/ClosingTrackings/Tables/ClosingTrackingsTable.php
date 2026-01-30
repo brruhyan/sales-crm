@@ -75,7 +75,6 @@ class ClosingTrackingsTable
             ->defaultSort('created_at', 'desc')
             ->actions([
                 ViewAction::make(),
-                EditAction::make(),
             ]);
     }
 }

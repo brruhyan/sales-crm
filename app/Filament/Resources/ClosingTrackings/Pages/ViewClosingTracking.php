@@ -17,7 +17,6 @@ class ViewClosingTracking extends ViewRecord
         return [
             ApproveClosingAction::make(),
             DisputeClosingAction::make(),
-            Actions\EditAction::make(),
         ];
     }
 }
