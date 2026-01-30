@@ -8,6 +8,10 @@ use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
+use Filament\Actions\ViewAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\BulkActionGroup;
 
 class ClosingsTable
 {
@@ -46,11 +50,6 @@ class ClosingsTable
                     ->money('USD')
                     ->sortable(),
 
-                TextColumn::make('probability')
-                    ->label('Probability')
-                    ->suffix('%')
-                    ->sortable(),
-
                 TextColumn::make('expected_close_date')
                     ->label('Expected Close')
                     ->date()
@@ -77,10 +76,11 @@ class ClosingsTable
                     ->relationship('deal', 'title'),
             ])
             ->actions([
-                // Actions will be added by the Resource
+                ViewAction::make(),
+                DeleteAction::make(),
             ])
             ->bulkActions([
-                // Bulk actions will be added by the Resource
+                DeleteBulkAction::make(),
             ]);
     }
 }
