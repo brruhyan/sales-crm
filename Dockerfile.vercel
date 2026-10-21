@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y \
     libwebp-dev \
     libzip-dev \
     libicu-dev \
+    libpq-dev \
     curl \
     && pecl install redis \
     && docker-php-ext-enable redis \
