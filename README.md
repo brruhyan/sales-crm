@@ -19,6 +19,129 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 - [Robust background job processing](https://laravel.com/docs/queues).
 - [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
+## Deploy with Docker
+
+This application is a Laravel/Filament application and should be deployed as a
+PHP container, not as a Vercel Node.js project.
+
+### Local or single-server deployment
+
+1. Install Docker and Docker Compose.
+2. Create the environment file:
+
+   ```bash
+   cp .env.example .env
+   ```
+
+   On Windows PowerShell, use `Copy-Item .env.example .env`.
+3. Edit `.env` and set a unique `APP_KEY`, production `APP_URL`, database
+   credentials, and `APP_DEBUG=false`. `DB_HOST` must be `db` when using the
+   included Compose file:
+
+   ```env
+   APP_ENV=production
+   APP_DEBUG=false
+   APP_URL=https://your-domain.example
+   DB_HOST=db
+   DB_DATABASE=sales_maralabs
+   DB_USERNAME=sales
+   DB_PASSWORD=use-a-long-password
+   DB_ROOT_PASSWORD=use-a-different-long-password
+   ```
+
+   Generate an application key with:
+
+   ```bash
+   docker compose run --rm app php artisan key:generate --show
+   ```
+
+   Copy the returned value into `APP_KEY`.
+4. Build and start the containers:
+
+   ```bash
+   docker compose up -d --build
+   ```
+5. Run the database migrations and publish the upload link:
+
+   ```bash
+   docker compose exec app php artisan migrate --force
+   docker compose exec app php artisan storage:link
+   docker compose exec app php artisan optimize
+   ```
+
+The application is available at `http://localhost:8080`. The database and
+uploaded files are stored in Docker volumes, so the application source is not
+bind-mounted over the built `vendor` and `public/build` directories.
+
+### Production requirements
+
+- Put a reverse proxy or load balancer in front of port 80 and terminate TLS
+  there.
+- Run a separate worker for database-backed jobs:
+
+  ```bash
+  docker compose exec -d app php artisan queue:work --tries=3
+  ```
+
+- Back up the `db_data` and `storage_data` volumes.
+- For multiple application replicas, use S3-compatible storage instead of the
+  local `public` disk and run queue workers as a separate service.
+
+## Deploy the Docker image on Vercel
+
+Vercel supports HTTP containers using a root-level `Dockerfile.vercel`.
+The included [`Dockerfile.vercel`](./Dockerfile.vercel) starts Laravel's
+HTTP server on Vercel's `$PORT`.
+
+Vercel does not run the included `docker-compose.yml`, MySQL container, or
+Docker volumes. Before deploying, provision these services separately:
+
+- An external MySQL-compatible database
+- S3-compatible object storage for uploads and generated files
+- A queue service or a separate worker host if background jobs are required
+
+In Vercel:
+
+1. Import this repository.
+2. Leave the project root as the repository root.
+3. Use the default Dockerfile detection. Do not set a Node/Vite build command.
+4. Add the production environment variables under **Settings > Environment
+   Variables**, including `APP_KEY`, `APP_URL`, `DB_*`, and the storage
+   provider variables.
+5. Deploy.
+
+At minimum, set:
+
+```env
+APP_ENV=production
+APP_DEBUG=false
+APP_URL=https://your-project.vercel.app
+APP_KEY=base64:your-generated-key
+
+DB_CONNECTION=mysql
+DB_HOST=your-external-database-host
+DB_PORT=3306
+DB_DATABASE=your-database
+DB_USERNAME=your-user
+DB_PASSWORD=your-password
+
+SESSION_DRIVER=database
+CACHE_STORE=database
+QUEUE_CONNECTION=sync
+FILESYSTEM_DISK=s3
+```
+
+Run migrations from a machine that has the repository and the production
+database credentials:
+
+```bash
+php artisan migrate --force
+```
+
+Do not use the local `public` disk for production Vercel uploads: container
+filesystem changes are not durable between instances or deployments. Configure
+the `s3` disk with `AWS_*` variables instead.
+
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
 ## Learning Laravel

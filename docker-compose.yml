@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   app:
     build:
@@ -9,14 +7,14 @@ services:
     restart: unless-stopped
     env_file: ./.env
     ports:
-      - "127.0.0.1:8080:80"
+      - "8080:80"
     volumes:
-      - .:/var/www/html
       - storage_data:/var/www/html/storage
     networks:
       - maralabs-net
     depends_on:
-      - db
+      db:
+        condition: service_healthy
 
   db:
     image: mysql:8.0
@@ -27,6 +25,11 @@ services:
       MYSQL_USER: ${DB_USERNAME}
       MYSQL_PASSWORD: ${DB_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root -p$${DB_ROOT_PASSWORD}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
     volumes:
       - db_data:/var/lib/mysql
     networks:
