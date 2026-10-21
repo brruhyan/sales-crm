@@ -50,9 +50,6 @@ class AdminPanelProvider extends PanelProvider
                     ->label('Log Activity')
                
             ])
-            ->brandName('AksyonSales')
-            ->brandLogo(asset('M with border.png'))
-            ->brandLogoHeight('3rem')
             ->colors([
                 'primary' => Color::Red,
             ])

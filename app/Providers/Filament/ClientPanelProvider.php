@@ -2,7 +2,6 @@
 
 namespace App\Providers\Filament;
 
-use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -20,12 +19,8 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use App\Filament\Client\Widgets\DealsWidget;
-use App\Filament\Widgets\DealsPerMonth;
 use App\Filament\Widgets\DealsValuePerMonth;
 use App\Filament\Widgets\ProjectsWidget;
-use App\Http\Middleware\CheckUserApproved;
-use App\Filament\Client\Pages\Auth\Register;
-use App\Http\Middleware\SendVerificationEmailOnFirstAttempt;
 use App\Filament\Client\Widgets\LeadsWidget;
 use Filament\Enums\ThemeMode;
 
@@ -49,10 +44,6 @@ class ClientPanelProvider extends PanelProvider
             ->id('client')
             ->path('client')
             ->sidebarCollapsibleOnDesktop()
-            ->login()
-            ->emailVerification()
-            ->registration(action: Register::class)
-            ->passwordReset()
             ->viteTheme('resources/css/filament/client/theme.css')
             ->plugins([
                 BriskTheme::make(),
@@ -62,26 +53,17 @@ class ClientPanelProvider extends PanelProvider
                             ->directory('images/backgrounds/filament-client')
                     ),
             ])
-            // Header Changes
-            ->brandName('AksyonSales')
-            ->brandLogo(asset('M with border.png'))
-            ->brandLogoHeight('3rem')
             ->colors([
                 'primary' => Color::Amber,
             ])
-            ->discoverResources(in: app_path('Filament/Client/Resources'), for: 'App\Filament\Client\Resources')
-            ->discoverPages(in: app_path('Filament/Client/Pages'), for: 'App\Filament\Client\Pages')
             ->pages([
                 Dashboard::class,
             ])
-            ->databaseNotifications()
             ->widgets([
                 LeadsWidget::class,
                 DealsWidget::class,
-                DealsPerMonth::class,
                 DealsValuePerMonth::class,
             ])
-            ->discoverWidgets(in: app_path('Filament/Client/Widgets'), for: 'App\Filament\Client\Widgets')
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
@@ -93,11 +75,7 @@ class ClientPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
             ])
-            ->authMiddleware([
-                Authenticate::class,
-                CheckUserApproved::class,
-                SendVerificationEmailOnFirstAttempt::class,
-            ]);
+            ->authMiddleware([]);
     }
     protected function getWidgets(): array
     {
