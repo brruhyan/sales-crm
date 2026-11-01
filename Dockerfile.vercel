@@ -1,7 +1,7 @@
 FROM dunglas/frankenphp:1-php8.4-bookworm AS base
 
 RUN cp "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" \
-    && install-php-extensions bcmath gd intl pdo_pgsql zip
+    && install-php-extensions bcmath gd intl pdo_sqlite zip
 
 WORKDIR /app
 
@@ -18,6 +18,16 @@ RUN composer install \
 
 COPY . .
 RUN composer dump-autoload --classmap-authoritative
+RUN mkdir -p database \
+    && touch database/database.sqlite \
+    && APP_KEY=base64:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA= \
+       DB_CONNECTION=sqlite \
+       DB_DATABASE=/app/database/database.sqlite \
+       php artisan migrate --force \
+    && APP_KEY=base64:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA= \
+       DB_CONNECTION=sqlite \
+       DB_DATABASE=/app/database/database.sqlite \
+       php artisan db:seed --force
 
 FROM node:22-bookworm-slim AS assets
 
@@ -36,7 +46,6 @@ COPY --from=dependencies --chown=www-data:www-data /app /app
 COPY --from=assets --chown=www-data:www-data /app/public/build /app/public/build
 COPY --chown=www-data:www-data Caddyfile /etc/frankenphp/Caddyfile
 COPY --chown=www-data:www-data docker/vercel-entrypoint.sh /usr/local/bin/vercel-entrypoint
-COPY --chown=www-data:www-data docker/migrate-and-seed.php /app/docker/migrate-and-seed.php
 
 RUN chmod +x /usr/local/bin/vercel-entrypoint \
     && mkdir -p \
@@ -50,10 +59,10 @@ ENV PORT=80 \
     APP_ENV=production \
     APP_DEBUG=false \
     LOG_CHANNEL=stderr \
-    DB_CONNECTION=pgsql \
-    CACHE_STORE=file \
-    SESSION_DRIVER=database \
-    SESSION_CONNECTION=pgsql \
+    DB_CONNECTION=sqlite \
+    DB_DATABASE=/tmp/sales-crm.sqlite \
+    CACHE_STORE=array \
+    SESSION_DRIVER=cookie \
     SESSION_EXPIRE_ON_CLOSE=true \
     SESSION_SECURE_COOKIE=true \
     QUEUE_CONNECTION=sync \

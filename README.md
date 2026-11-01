@@ -87,14 +87,15 @@ bind-mounted over the built `vendor` and `public/build` directories.
 - For multiple application replicas, use S3-compatible storage instead of the
   local `public` disk and run queue workers as a separate service.
 
-## Deploy the app on Vercel with Aiven PostgreSQL
+## Deploy the app on Vercel with temporary SQLite
 
 This repository includes a Vercel container configuration using FrankenPHP:
 [`Dockerfile.vercel`](./Dockerfile.vercel), [`Caddyfile`](./Caddyfile), and
-[`vercel.json`](./vercel.json). The Vercel image uses Aiven PostgreSQL for
-persistent application data. Encrypted cookie-backed sessions do not require a
-shared filesystem, and `SESSION_EXPIRE_ON_CLOSE=true` makes the browser session
-cookie disappear when the page/browser is closed.
+[`vercel.json`](./vercel.json). The image creates and seeds a SQLite template
+while building, then copies it to `/tmp` when each container starts. Encrypted
+cookie-backed sessions do not require a shared filesystem, and
+`SESSION_EXPIRE_ON_CLOSE=true` makes the browser session cookie disappear when
+the page/browser is closed.
 
 ### Vercel deployment
 
@@ -110,15 +111,6 @@ cookie disappear when the page/browser is closed.
    ```env
    APP_KEY=base64:your-generated-key
    APP_URL=https://your-project.vercel.app
-   DB_CONNECTION=pgsql
-   DB_HOST=your-aiven-host
-   DB_PORT=5432
-   DB_DATABASE=defaultdb
-   DB_USERNAME=avnadmin
-   DB_PASSWORD=your-aiven-password
-   DB_SSLMODE=require
-   SESSION_DRIVER=database
-   SESSION_CONNECTION=pgsql
    ```
 
    Generate a key locally with `php artisan key:generate --show`. Keep the
@@ -134,15 +126,11 @@ the `Dockerfile.vercel` container service. The container listens on Vercel's
 `PORT` through FrankenPHP and routes requests through Laravel's `public`
 directory.
 
-The container automatically runs migrations against Aiven on startup while
-holding a PostgreSQL advisory lock, preventing concurrent Vercel instances
-from running the same migration simultaneously. To run all seeders once,
-temporarily add `RUN_SEEDERS=true` in Vercel, deploy once, then remove that
-variable and redeploy. Do not leave it enabled because some seeders create new
-demo records each time.
-
-Vercel's local filesystem is still not durable. Configure external object
-storage before relying on uploaded files, and use `FILESYSTEM_DISK=s3`.
+Migrations and seeders run during the image build, not during each request.
+Records created afterward remain available across requests handled by the same
+warm container. Vercel may route a later request to another container, or
+replace a container, so temporary records and local uploads can disappear.
+This mode is appropriate for a demo, not durable CRM data.
 
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
