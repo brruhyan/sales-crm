@@ -132,10 +132,12 @@ the `Dockerfile.vercel` container service. The container listens on Vercel's
 `PORT` through FrankenPHP and routes requests through Laravel's `public`
 directory.
 
-The container automatically runs migrations against Aiven on startup. To run
-all seeders once, temporarily add `RUN_SEEDERS=true` in Vercel, deploy once,
-then remove that variable and redeploy. Do not leave it enabled because some
-seeders create new demo records each time.
+The container automatically runs migrations against Aiven on startup while
+holding a PostgreSQL advisory lock, preventing concurrent Vercel instances
+from running the same migration simultaneously. To run all seeders once,
+temporarily add `RUN_SEEDERS=true` in Vercel, deploy once, then remove that
+variable and redeploy. Do not leave it enabled because some seeders create new
+demo records each time.
 
 Vercel's local filesystem is still not durable. Configure external object
 storage before relying on uploaded files, and use `FILESYSTEM_DISK=s3`.

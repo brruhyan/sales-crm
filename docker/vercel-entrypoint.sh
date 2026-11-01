@@ -2,10 +2,6 @@
 
 set -eu
 
-php artisan migrate --force
-
-if [ "${RUN_SEEDERS:-false}" = "true" ]; then
-    php artisan db:seed --force
-fi
+php docker/migrate-and-seed.php
 
 exec "$@"
