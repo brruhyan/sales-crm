@@ -25,17 +25,29 @@ class DealsPerMonth extends ChartWidget
         }
 
         $userId = $this->record->id ?? Auth::id();
+        $driver = DB::connection()->getDriverName();
+        $dateExpression = 'COALESCE(actual_close_date, updated_at)';
+        $yearExpression = match ($driver) {
+            'sqlite' => "strftime('%Y', {$dateExpression})",
+            'pgsql' => "EXTRACT(YEAR FROM {$dateExpression})",
+            default => "YEAR({$dateExpression})",
+        };
+        $monthExpression = match ($driver) {
+            'sqlite' => "strftime('%m', {$dateExpression})",
+            'pgsql' => "EXTRACT(MONTH FROM {$dateExpression})",
+            default => "MONTH({$dateExpression})",
+        };
 
         $dealsPerMonth = Deal::query()
             ->where('user_id', $userId)
             ->where('status', 'Deal Won')
-            ->where(DB::raw('COALESCE(actual_close_date, updated_at)'), '>=', Carbon::now()->subMonths(11)->startOfMonth())
+            ->where(DB::raw($dateExpression), '>=', Carbon::now()->subMonths(11)->startOfMonth())
             ->select(
                 DB::raw('COUNT(*) as count'),
-                DB::raw('YEAR(COALESCE(actual_close_date, updated_at)) as year'),
-                DB::raw('MONTH(COALESCE(actual_close_date, updated_at)) as month')
+                DB::raw("{$yearExpression} as year"),
+                DB::raw("{$monthExpression} as month")
             )
-            ->groupBy(DB::raw('YEAR(COALESCE(actual_close_date, updated_at))'), DB::raw('MONTH(COALESCE(actual_close_date, updated_at))'))
+            ->groupBy(DB::raw($yearExpression), DB::raw($monthExpression))
             ->get()
             ->keyBy(function ($item) {
                 return $item->year . '-' . str_pad($item->month, 2, '0', STR_PAD_LEFT);

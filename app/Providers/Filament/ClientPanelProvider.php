@@ -59,6 +59,10 @@ class ClientPanelProvider extends PanelProvider
             ->pages([
                 Dashboard::class,
             ])
+            ->discoverResources(
+                in: app_path('Filament/Client/Resources'),
+                for: 'App\\Filament\\Client\\Resources'
+            )
             ->widgets([
                 LeadsWidget::class,
                 DealsWidget::class,
