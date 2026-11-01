@@ -6,7 +6,9 @@ set -eu
 export DB_CONNECTION=sqlite
 export DB_DATABASE=/tmp/sales-crm.sqlite
 export CACHE_STORE=array
-export SESSION_DRIVER=file
+export SESSION_DRIVER=cookie
+export SESSION_EXPIRE_ON_CLOSE=true
+export SESSION_SECURE_COOKIE=true
 export QUEUE_CONNECTION=sync
 
 if [ ! -f "$DB_DATABASE" ]; then

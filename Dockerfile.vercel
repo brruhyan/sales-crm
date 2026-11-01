@@ -53,8 +53,9 @@ ENV PORT=80 \
     DB_CONNECTION=sqlite \
     DB_DATABASE=/tmp/sales-crm.sqlite \
     CACHE_STORE=array \
-    SESSION_DRIVER=file \
+    SESSION_DRIVER=cookie \
     SESSION_EXPIRE_ON_CLOSE=true \
+    SESSION_SECURE_COOKIE=true \
     QUEUE_CONNECTION=sync \
     FILESYSTEM_DISK=local
 

@@ -97,9 +97,9 @@ container instance.
 
 The SQLite file and local uploads are intentionally ephemeral. Vercel can
 restart or scale an instance at any time, so records are not guaranteed to
-survive a restart, deployment, or scale-out. File-backed sessions are kept
-only in the current instance, and `SESSION_EXPIRE_ON_CLOSE=true` makes the
-browser session cookie disappear when the page/browser is closed.
+survive a restart, deployment, or scale-out. Encrypted cookie-backed sessions
+do not require a shared filesystem, and `SESSION_EXPIRE_ON_CLOSE=true` makes
+the browser session cookie disappear when the page/browser is closed.
 This is suitable for a demo or temporary workspace, not production CRM data.
 
 ### Vercel deployment
