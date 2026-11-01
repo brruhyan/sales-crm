@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Product;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class ProductSeeder extends Seeder
 {
@@ -24,7 +24,6 @@ class ProductSeeder extends Seeder
             [
                 'product_name' => 'Data Fusion 360',
                 'description' => 'Advanced Data Integration and Analytics Platform',
-                'category' => 'MaraBiz',
                 'link' => 'https://maralabs.ph/marabiz/datafusion-360/',
                 'sellable' => true,
             ],
@@ -32,7 +31,6 @@ class ProductSeeder extends Seeder
             [
                 'product_name' => 'AksyonSentral',
                 'description' => 'Incident Managment and Data Aggregator Platform',
-                'category' => 'MaraBiz',
                 'link' => 'https://maralabs.ph/marabiz/aksyon-sentral/',
                 'sellable' => true,
             ],
@@ -40,14 +38,24 @@ class ProductSeeder extends Seeder
             [
                 'product_name' => 'AksyonMap',
                 'description' => 'Geographic Information System (GIS) and Mapping Product',
-                'category' => 'MaraBiz',
                 'link' => 'https://maralabs.ph/marabiz/aksyon-map/',
                 'sellable' => true,
             ]
         ];
 
         foreach ($services as $service) {
-            Product::create([...$service, 'user_id' => $userId]);
+            DB::table('products')->updateOrInsert(
+                [
+                    'product_name' => $service['product_name'],
+                    'user_id' => $userId,
+                ],
+                [
+                    ...$service,
+                    'user_id' => $userId,
+                    'updated_at' => now(),
+                    'created_at' => now(),
+                ],
+            );
         }
     }
 }
