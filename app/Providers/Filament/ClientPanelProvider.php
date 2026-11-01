@@ -3,7 +3,6 @@
 namespace App\Providers\Filament;
 
 use Filament\Http\Middleware\AuthenticateSession;
-use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Pages\Dashboard;
@@ -24,6 +23,7 @@ use App\Filament\Client\Widgets\ClosingWidget;
 use App\Filament\Widgets\DealsValuePerMonth;
 use App\Filament\Widgets\ProjectsWidget;
 use App\Filament\Client\Widgets\LeadsWidget;
+use App\Http\Middleware\AutoLoginClientUser;
 use Filament\Enums\ThemeMode;
 
 // Login Verification
@@ -45,7 +45,6 @@ class ClientPanelProvider extends PanelProvider
         return $panel
             ->id('client')
             ->path('client')
-            ->login()
             ->sidebarCollapsibleOnDesktop()
             ->viteTheme('resources/css/filament/client/theme.css')
             ->plugins([
@@ -84,7 +83,7 @@ class ClientPanelProvider extends PanelProvider
                 DispatchServingFilamentEvent::class,
             ])
             ->authMiddleware([
-                Authenticate::class,
+                AutoLoginClientUser::class,
             ]);
     }
     protected function getWidgets(): array
