@@ -24,7 +24,6 @@ class DealsValuePerMonth extends ChartWidget
             $months->push(Carbon::now()->subMonths($i));
         }
 
-        $userId = $this->record->id ?? Auth::id();
         $driver = DB::connection()->getDriverName();
         $dateExpression = 'COALESCE(actual_close_date, updated_at)';
         $yearExpression = match ($driver) {
@@ -39,7 +38,13 @@ class DealsValuePerMonth extends ChartWidget
         };
 
         $dealsValuePerMonth = Deal::query()
-            ->where('user_id', $userId)
+            ->where(function ($query): void {
+                $query->whereNull('user_id');
+
+                if (Auth::id() !== null) {
+                    $query->orWhere('user_id', Auth::id());
+                }
+            })
             ->where('status', 'Deal Won')
             ->where(DB::raw($dateExpression), '>=', Carbon::now()->subMonths(11)->startOfMonth())
             ->select(
