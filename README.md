@@ -87,20 +87,14 @@ bind-mounted over the built `vendor` and `public/build` directories.
 - For multiple application replicas, use S3-compatible storage instead of the
   local `public` disk and run queue workers as a separate service.
 
-## Deploy the app on Vercel without an external database
+## Deploy the app on Vercel with Aiven PostgreSQL
 
 This repository includes a Vercel container configuration using FrankenPHP:
 [`Dockerfile.vercel`](./Dockerfile.vercel), [`Caddyfile`](./Caddyfile), and
-[`vercel.json`](./vercel.json). The Vercel image uses SQLite in `/tmp`, which
-requires no database service. The entrypoint runs the migrations and all
-seeders once for each new container instance.
-
-The SQLite file and local uploads are intentionally ephemeral. Vercel can
-restart or scale an instance at any time, so records are not guaranteed to
-survive a restart, deployment, or scale-out. Encrypted cookie-backed sessions
-do not require a shared filesystem, and `SESSION_EXPIRE_ON_CLOSE=true` makes
-the browser session cookie disappear when the page/browser is closed.
-This is suitable for a demo or temporary workspace, not production CRM data.
+[`vercel.json`](./vercel.json). The Vercel image uses Aiven PostgreSQL for
+persistent application data. Encrypted cookie-backed sessions do not require a
+shared filesystem, and `SESSION_EXPIRE_ON_CLOSE=true` makes the browser session
+cookie disappear when the page/browser is closed.
 
 ### Vercel deployment
 
@@ -116,6 +110,13 @@ This is suitable for a demo or temporary workspace, not production CRM data.
    ```env
    APP_KEY=base64:your-generated-key
    APP_URL=https://your-project.vercel.app
+   DB_CONNECTION=pgsql
+   DB_HOST=your-aiven-host
+   DB_PORT=5432
+   DB_DATABASE=defaultdb
+   DB_USERNAME=avnadmin
+   DB_PASSWORD=your-aiven-password
+   DB_SSLMODE=require
    ```
 
    Generate a key locally with `php artisan key:generate --show`. Keep the
@@ -131,10 +132,13 @@ the `Dockerfile.vercel` container service. The container listens on Vercel's
 `PORT` through FrankenPHP and routes requests through Laravel's `public`
 directory.
 
-Because Vercel's container filesystem is not durable, use an external database
-and object storage before this app is used for real CRM data. In that case,
-override the SQLite defaults with `DB_*`, change the session/cache drivers to
-shared stores, and configure `FILESYSTEM_DISK=s3`.
+The container automatically runs migrations against Aiven on startup. To run
+all seeders once, temporarily add `RUN_SEEDERS=true` in Vercel, deploy once,
+then remove that variable and redeploy. Do not leave it enabled because some
+seeders create new demo records each time.
+
+Vercel's local filesystem is still not durable. Configure external object
+storage before relying on uploaded files, and use `FILESYSTEM_DISK=s3`.
 
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
 

@@ -1,7 +1,7 @@
 FROM dunglas/frankenphp:1-php8.4-bookworm AS base
 
 RUN cp "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" \
-    && install-php-extensions bcmath gd intl pdo_sqlite zip
+    && install-php-extensions bcmath gd intl pdo_pgsql zip
 
 WORKDIR /app
 
@@ -49,9 +49,8 @@ ENV PORT=80 \
     APP_ENV=production \
     APP_DEBUG=false \
     LOG_CHANNEL=stderr \
-    DB_CONNECTION=sqlite \
-    DB_DATABASE=/tmp/sales-crm.sqlite \
-    CACHE_STORE=array \
+    DB_CONNECTION=pgsql \
+    CACHE_STORE=file \
     SESSION_DRIVER=cookie \
     SESSION_EXPIRE_ON_CLOSE=true \
     SESSION_SECURE_COOKIE=true \
