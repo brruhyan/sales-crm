@@ -62,6 +62,13 @@ class ContactResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()->where('user_id', Auth::id());
+        return parent::getEloquentQuery()
+            ->where(function (Builder $query): void {
+                $query->whereNull('user_id');
+
+                if (Auth::id() !== null) {
+                    $query->orWhere('user_id', Auth::id());
+                }
+            });
     }
 }

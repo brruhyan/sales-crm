@@ -14,11 +14,11 @@ class AdminUserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::firstOrCreate(
-            ['email' => 'bryan@maralabs.ph'],
+        User::updateOrCreate(
+            ['email' => 'test@test.com'],
             [
                 'name' => 'Admin',
-                'password' => Hash::make('Stickpage1!'),
+                'password' => Hash::make('test123'),
                 'is_admin' => true,
                 'approved' => true,
                 'tin_number' => '123-456-789',
@@ -28,7 +28,7 @@ class AdminUserSeeder extends Seeder
         );
         
         $this->command->info('Admin user created successfully!');
-        $this->command->info('Email: bryan@maralabs.ph');
-        $this->command->info('Password: Stickpage1!');
+        $this->command->info('Email: test@test.com');
+        $this->command->info('Password: test123');
     }
 }

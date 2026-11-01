@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -14,31 +13,29 @@ class ProductSeeder extends Seeder
 
     public function run(): void
     {
-        $userId = User::query()->value('id');
-
-        if ($userId === null) {
-            throw new \RuntimeException('A user is required before products can be seeded.');
-        }
+        DB::table('products')
+            ->whereIn('product_name', ['Data Fusion 360', 'AksyonSentral', 'AksyonMap'])
+            ->delete();
 
         $services = [
             [
-                'product_name' => 'Data Fusion 360',
-                'description' => 'Advanced Data Integration and Analytics Platform',
-                'link' => 'https://maralabs.ph/marabiz/datafusion-360/',
+                'product_name' => 'Placeholder Product One',
+                'description' => 'Placeholder product for demonstration purposes.',
+                'link' => null,
                 'sellable' => true,
             ],
 
             [
-                'product_name' => 'AksyonSentral',
-                'description' => 'Incident Managment and Data Aggregator Platform',
-                'link' => 'https://maralabs.ph/marabiz/aksyon-sentral/',
+                'product_name' => 'Placeholder Product Two',
+                'description' => 'Placeholder product for demonstration purposes.',
+                'link' => null,
                 'sellable' => true,
             ],
 
             [
-                'product_name' => 'AksyonMap',
-                'description' => 'Geographic Information System (GIS) and Mapping Product',
-                'link' => 'https://maralabs.ph/marabiz/aksyon-map/',
+                'product_name' => 'Placeholder Product Three',
+                'description' => 'Placeholder product for demonstration purposes.',
+                'link' => null,
                 'sellable' => true,
             ]
         ];
@@ -47,11 +44,11 @@ class ProductSeeder extends Seeder
             DB::table('products')->updateOrInsert(
                 [
                     'product_name' => $service['product_name'],
-                    'user_id' => $userId,
+                    'user_id' => null,
                 ],
                 [
                     ...$service,
-                    'user_id' => $userId,
+                    'user_id' => null,
                     'updated_at' => now(),
                     'created_at' => now(),
                 ],

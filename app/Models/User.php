@@ -87,7 +87,7 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
     public function canAccessPanel(Panel $panel): bool
     {
     if ($panel->getId() === 'client') {
-        return $this->approved;
+        return $this->approved && $this->is_admin;
     }
 
     if ($panel->getId() === 'admin') {
@@ -107,4 +107,3 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
         $this->notify(new CustomVerifyEmailNotification());
     }
 }
-

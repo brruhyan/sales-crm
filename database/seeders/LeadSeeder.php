@@ -13,17 +13,13 @@ class LeadSeeder extends Seeder
      */
     public function run(): void
     {
-        $user = \App\Models\User::where('email', 'test@example.com')->first();
+        $contacts = Contact::whereNull('user_id')->get();
 
-        if ($user) {
-            $contacts = Contact::where('user_id', $user->id)->get();
-
-            for ($i = 0; $i < 15; $i++) {
-                Leads::factory()->create([
-                    'user_id' => $user->id,
-                    'contact_id' => $contacts->isNotEmpty() ? $contacts->random()->id : null,
-                ]);
-            }
+        for ($i = 0; $i < 15; $i++) {
+            Leads::factory()->create([
+                'user_id' => null,
+                'contact_id' => $contacts->isNotEmpty() ? $contacts->random()->id : null,
+            ]);
         }
     }
 }

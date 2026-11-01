@@ -67,7 +67,13 @@ class LeadsResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
-            ->where('user_id', Auth::id())
+            ->where(function (Builder $query): void {
+                $query->whereNull('user_id');
+
+                if (Auth::id() !== null) {
+                    $query->orWhere('user_id', Auth::id());
+                }
+            })
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);
@@ -76,7 +82,13 @@ class LeadsResource extends Resource
     public static function getRecordRouteBindingEloquentQuery(): Builder
     {
         return parent::getRecordRouteBindingEloquentQuery()
-            ->where('user_id', Auth::id())
+            ->where(function (Builder $query): void {
+                $query->whereNull('user_id');
+
+                if (Auth::id() !== null) {
+                    $query->orWhere('user_id', Auth::id());
+                }
+            })
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);

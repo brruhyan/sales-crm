@@ -14,19 +14,15 @@ class DealSeeder extends Seeder
      */
     public function run(): void
     {
-        $user = \App\Models\User::where('email', 'test@example.com')->first();
+        $leads = Leads::whereNull('user_id')->get();
+        $contacts = Contact::whereNull('user_id')->get();
 
-        if ($user) {
-            $leads = Leads::where('user_id', $user->id)->get();
-            $contacts = Contact::where('user_id', $user->id)->get();
-
-            for ($i = 0; $i < 12; $i++) {
-                Deal::factory()->create([
-                    'user_id' => $user->id,
-                    'lead_id' => $leads->isNotEmpty() ? $leads->random()->id : null,
-                    'contact_id' => $contacts->isNotEmpty() ? $contacts->random()->id : null,
-                ]);
-            }
+        for ($i = 0; $i < 12; $i++) {
+            Deal::factory()->create([
+                'user_id' => null,
+                'lead_id' => $leads->isNotEmpty() ? $leads->random()->id : null,
+                'contact_id' => $contacts->isNotEmpty() ? $contacts->random()->id : null,
+            ]);
         }
     }
 }

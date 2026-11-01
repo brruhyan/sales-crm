@@ -3,6 +3,7 @@
 namespace App\Providers\Filament;
 
 use Filament\Http\Middleware\AuthenticateSession;
+use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Pages\Dashboard;
@@ -44,6 +45,7 @@ class ClientPanelProvider extends PanelProvider
         return $panel
             ->id('client')
             ->path('client')
+            ->login()
             ->sidebarCollapsibleOnDesktop()
             ->viteTheme('resources/css/filament/client/theme.css')
             ->plugins([
@@ -81,7 +83,9 @@ class ClientPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
             ])
-            ->authMiddleware([]);
+            ->authMiddleware([
+                Authenticate::class,
+            ]);
     }
     protected function getWidgets(): array
     {
@@ -93,11 +97,12 @@ class ClientPanelProvider extends PanelProvider
     public function canAccessPanel(Panel $panel): bool
     {
         if ($panel->getId() === 'admin') {
-            return $this->isAdmin; 
+            return auth()->user()?->is_admin === true;
         }
 
         if ($panel->getId() === 'client') {
-            return true; 
+            return auth()->user()?->approved === true
+                && auth()->user()?->is_admin === true;
         }
 
         return false;

@@ -12,12 +12,8 @@ class ContactSeeder extends Seeder
      */
     public function run(): void
     {
-        $user = \App\Models\User::where('email', 'test@example.com')->first();
-
-        if ($user) {
-            Contact::factory(10)->create([
-                'user_id' => $user->id,
-            ]);
-        }
+        Contact::factory(10)->create([
+            'user_id' => null,
+        ]);
     }
 }
