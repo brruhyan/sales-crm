@@ -1,41 +1,64 @@
-FROM php:8.4-cli
+FROM dunglas/frankenphp:1-php8.4-bookworm AS base
 
-WORKDIR /var/www/html
+RUN cp "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" \
+    && install-php-extensions bcmath gd intl pdo_sqlite zip
 
-RUN apt-get update && apt-get install -y \
-    git \
-    unzip \
-    libpng-dev \
-    libjpeg-dev \
-    libwebp-dev \
-    libzip-dev \
-    libicu-dev \
-    libpq-dev \
-    curl \
-    && pecl install redis \
-    && docker-php-ext-enable redis \
-    && docker-php-ext-configure gd --with-jpeg --with-webp \
-    && docker-php-ext-install -j$(nproc) gd pdo pdo_mysql pdo_pgsql zip bcmath intl \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+WORKDIR /app
 
-RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
-    && apt-get install -y nodejs \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+FROM base AS dependencies
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+COPY composer.json composer.lock ./
+RUN composer install \
+    --no-dev \
+    --no-interaction \
+    --no-progress \
+    --no-scripts \
+    --prefer-dist \
+    --optimize-autoloader
 
 COPY . .
+RUN composer dump-autoload --no-dev --classmap-authoritative
 
-RUN composer install --no-interaction --no-dev --prefer-dist --optimize-autoloader
+FROM node:22-bookworm-slim AS assets
+
+WORKDIR /app
+
+COPY package.json package-lock.json ./
 RUN npm ci
 
+COPY --from=dependencies /app/vendor /app/vendor
+COPY . .
 RUN npm run build
-RUN php artisan storage:link
-RUN chown -R www-data:www-data storage bootstrap/cache
 
-ENV APP_ENV=production
-ENV APP_DEBUG=false
+FROM base AS runtime
 
-CMD ["sh", "-c", "php artisan serve --host=0.0.0.0 --port=${PORT:-8080}"]
+COPY --from=dependencies --chown=www-data:www-data /app /app
+COPY --from=assets --chown=www-data:www-data /app/public/build /app/public/build
+COPY --chown=www-data:www-data Caddyfile /etc/frankenphp/Caddyfile
+COPY --chown=www-data:www-data docker/vercel-entrypoint.sh /usr/local/bin/vercel-entrypoint
+
+RUN chmod +x /usr/local/bin/vercel-entrypoint \
+    && mkdir -p \
+        storage/framework/cache \
+        storage/framework/sessions \
+        storage/framework/views \
+        bootstrap/cache \
+    && chown -R www-data:www-data storage bootstrap/cache /config/caddy /data/caddy
+
+ENV PORT=80 \
+    APP_ENV=production \
+    APP_DEBUG=false \
+    LOG_CHANNEL=stderr \
+    DB_CONNECTION=sqlite \
+    DB_DATABASE=/tmp/sales-crm.sqlite \
+    CACHE_STORE=array \
+    SESSION_DRIVER=file \
+    SESSION_EXPIRE_ON_CLOSE=true \
+    QUEUE_CONNECTION=sync \
+    FILESYSTEM_DISK=local
+
+USER www-data
+
+ENTRYPOINT ["vercel-entrypoint"]
+CMD ["frankenphp", "run", "--config", "/etc/frankenphp/Caddyfile"]

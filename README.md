@@ -87,60 +87,54 @@ bind-mounted over the built `vendor` and `public/build` directories.
 - For multiple application replicas, use S3-compatible storage instead of the
   local `public` disk and run queue workers as a separate service.
 
-## Deploy the Docker image on Vercel
+## Deploy the app on Vercel without an external database
 
-Vercel supports HTTP containers using a root-level `Dockerfile.vercel`.
-The included [`Dockerfile.vercel`](./Dockerfile.vercel) starts Laravel's
-HTTP server on Vercel's `$PORT`.
+This repository includes a Vercel container configuration using FrankenPHP:
+[`Dockerfile.vercel`](./Dockerfile.vercel), [`Caddyfile`](./Caddyfile), and
+[`vercel.json`](./vercel.json). The Vercel image uses SQLite in `/tmp`, which
+requires no database service. The entrypoint runs the migrations once for each
+container instance.
 
-Vercel does not run the included `docker-compose.yml`, MySQL container, or
-Docker volumes. Before deploying, provision these services separately:
+The SQLite file and local uploads are intentionally ephemeral. Vercel can
+restart or scale an instance at any time, so records are not guaranteed to
+survive a restart, deployment, or scale-out. File-backed sessions are kept
+only in the current instance, and `SESSION_EXPIRE_ON_CLOSE=true` makes the
+browser session cookie disappear when the page/browser is closed.
+This is suitable for a demo or temporary workspace, not production CRM data.
 
-- An external MySQL-compatible database
-- S3-compatible object storage for uploads and generated files
-- A queue service or a separate worker host if background jobs are required
+### Vercel deployment
 
-In Vercel:
+1. Install the Vercel CLI and log in:
 
-1. Import this repository.
-2. Leave the project root as the repository root.
-3. Use the default Dockerfile detection. Do not set a Node/Vite build command.
-4. Add the production environment variables under **Settings > Environment
-   Variables**, including `APP_KEY`, `APP_URL`, `DB_*`, and the storage
-   provider variables.
-5. Deploy.
+   ```bash
+   npm install -g vercel
+   vercel login
+   ```
+2. From the repository root, run `vercel` and link the project.
+3. In **Settings > Environment Variables**, add:
 
-At minimum, set:
+   ```env
+   APP_KEY=base64:your-generated-key
+   APP_URL=https://your-project.vercel.app
+   ```
 
-```env
-APP_ENV=production
-APP_DEBUG=false
-APP_URL=https://your-project.vercel.app
-APP_KEY=base64:your-generated-key
+   Generate a key locally with `php artisan key:generate --show`. Keep the
+   same key for the project; do not commit it.
+4. Deploy:
 
-DB_CONNECTION=mysql
-DB_HOST=your-external-database-host
-DB_PORT=3306
-DB_DATABASE=your-database
-DB_USERNAME=your-user
-DB_PASSWORD=your-password
+   ```bash
+   vercel deploy --prod
+   ```
 
-SESSION_DRIVER=database
-CACHE_STORE=database
-QUEUE_CONNECTION=sync
-FILESYSTEM_DISK=s3
-```
+Do not set a Node build command or a Node output directory. Vercel must use
+the `Dockerfile.vercel` container service. The container listens on Vercel's
+`PORT` through FrankenPHP and routes requests through Laravel's `public`
+directory.
 
-Run migrations from a machine that has the repository and the production
-database credentials:
-
-```bash
-php artisan migrate --force
-```
-
-Do not use the local `public` disk for production Vercel uploads: container
-filesystem changes are not durable between instances or deployments. Configure
-the `s3` disk with `AWS_*` variables instead.
+Because Vercel's container filesystem is not durable, use an external database
+and object storage before this app is used for real CRM data. In that case,
+override the SQLite defaults with `DB_*`, change the session/cache drivers to
+shared stores, and configure `FILESYSTEM_DISK=s3`.
 
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
