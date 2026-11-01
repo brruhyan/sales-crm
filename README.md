@@ -92,8 +92,8 @@ bind-mounted over the built `vendor` and `public/build` directories.
 This repository includes a Vercel container configuration using FrankenPHP:
 [`Dockerfile.vercel`](./Dockerfile.vercel), [`Caddyfile`](./Caddyfile), and
 [`vercel.json`](./vercel.json). The Vercel image uses SQLite in `/tmp`, which
-requires no database service. The entrypoint runs the migrations once for each
-container instance.
+requires no database service. The entrypoint runs the migrations and all
+seeders once for each new container instance.
 
 The SQLite file and local uploads are intentionally ephemeral. Vercel can
 restart or scale an instance at any time, so records are not guaranteed to

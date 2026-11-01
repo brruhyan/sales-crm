@@ -19,6 +19,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use App\Filament\Client\Widgets\DealsWidget;
+use App\Filament\Client\Widgets\ClosingWidget;
 use App\Filament\Widgets\DealsValuePerMonth;
 use App\Filament\Widgets\ProjectsWidget;
 use App\Filament\Client\Widgets\LeadsWidget;
@@ -66,6 +67,7 @@ class ClientPanelProvider extends PanelProvider
             ->widgets([
                 LeadsWidget::class,
                 DealsWidget::class,
+                ClosingWidget::class,
                 DealsValuePerMonth::class,
             ])
             ->middleware([

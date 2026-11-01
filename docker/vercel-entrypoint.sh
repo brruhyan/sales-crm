@@ -14,6 +14,7 @@ export QUEUE_CONNECTION=sync
 if [ ! -f "$DB_DATABASE" ]; then
     touch "$DB_DATABASE"
     php artisan migrate --force
+    php artisan db:seed --force
 fi
 
 exec "$@"
