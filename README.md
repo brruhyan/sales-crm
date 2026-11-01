@@ -117,6 +117,8 @@ cookie disappear when the page/browser is closed.
    DB_USERNAME=avnadmin
    DB_PASSWORD=your-aiven-password
    DB_SSLMODE=require
+   SESSION_DRIVER=database
+   SESSION_CONNECTION=pgsql
    ```
 
    Generate a key locally with `php artisan key:generate --show`. Keep the
