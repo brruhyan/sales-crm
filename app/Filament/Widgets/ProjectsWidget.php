@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 class ProjectsWidget extends StatsOverviewWidget
 {
-    protected static ?string $pollingInterval = '10s';
+    protected ?string $pollingInterval = '10s';
 
     protected function getStats(): array
     {

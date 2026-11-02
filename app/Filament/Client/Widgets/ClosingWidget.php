@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ClosingWidget extends StatsOverviewWidget
 {
-    protected static ?string $pollingInterval = '10s';
+    protected ?string $pollingInterval = '10s';
 
     protected function getStats(): array
     {
