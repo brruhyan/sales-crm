@@ -22,7 +22,7 @@ class ApproveClosingAction extends Action
             ->action(function (Closing $record) {
                 $record->update(['status' => 'Closed Won']);
 
-                $record->user->notify(new ClosingApprovedNotification($record->title));
+                $record->user?->notify(new ClosingApprovedNotification($record->title));
 
                 Notification::make()
                     ->title('Closing approved successfully.')

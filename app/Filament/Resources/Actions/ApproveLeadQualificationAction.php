@@ -22,7 +22,7 @@ class ApproveLeadQualificationAction extends Action
             ->action(function (Leads $record) {
                 $record->update(['status' => 'Qualified']);
 
-                $record->user->notify(new LeadApprovedNotification($record->lead_title));
+                $record->user?->notify(new LeadApprovedNotification($record->lead_title));
 
                 Notification::make()
                     ->title('Lead qualification approved successfully.')

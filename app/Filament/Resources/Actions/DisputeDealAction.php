@@ -33,7 +33,7 @@ class DisputeDealAction extends Action
                     'dispute_reason' => $data['reason'],
                 ]);
 
-                $record->user->notify(new DealDisputeNotification($record->title, $data['reason']));
+                $record->user?->notify(new DealDisputeNotification($record->title, $data['reason']));
 
                 Notification::make()
                     ->title('Deal disputed successfully.')

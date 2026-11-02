@@ -32,7 +32,7 @@ class DisputeLeadAction extends Action
                     'dispute_reason' => $data['reason'],
                 ]);
 
-                $record->user->notify(new LeadDisputeNotification($record->lead_title, $data['reason']));
+                $record->user?->notify(new LeadDisputeNotification($record->lead_title, $data['reason']));
 
                 Notification::make()
                     ->title('Lead qualification disputed successfully.')

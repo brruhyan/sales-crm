@@ -22,7 +22,7 @@ class ApproveDealAction extends Action
             ->action(function (Deal $record) {
                 $record->update(['status' => 'Closed Won']);
 
-                $record->user->notify(new DealApprovedNotification($record->title));
+                $record->user?->notify(new DealApprovedNotification($record->title));
 
                 Notification::make()
                     ->title('Deal approved successfully.')

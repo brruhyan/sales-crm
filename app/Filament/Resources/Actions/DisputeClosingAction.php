@@ -33,7 +33,7 @@ class DisputeClosingAction extends Action
                     'dispute_reason' => $data['reason'],
                 ]);
 
-                $record->user->notify(new ClosingDisputeNotification($record->title, $data['reason']));
+                $record->user?->notify(new ClosingDisputeNotification($record->title, $data['reason']));
 
                 Notification::make()
                     ->title('Closing disputed successfully.')
