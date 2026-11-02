@@ -61,10 +61,17 @@ class LeadsForm
                                     ->label('Company/Partner')
                                     ->helperText('Select existing or create new partner')
                                     ->options(function () {
-                                        if (Auth::check()) {
-                                            return Auth::user()->partners()->pluck('name', 'id')->toArray();
-                                        }
-                                        return [];
+                                        return Partner::query()
+                                            ->where(function ($query): void {
+                                                $query->whereNull('user_id');
+
+                                                if (Auth::id() !== null) {
+                                                    $query->orWhere('user_id', Auth::id());
+                                                }
+                                            })
+                                            ->orderBy('name')
+                                            ->pluck('name', 'id')
+                                            ->toArray();
                                     })
                                     ->searchable()
                                     ->createOptionForm([
